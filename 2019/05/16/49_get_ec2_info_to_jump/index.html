@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  
+    <meta name="description" content="fighting">
+  
+
+  
+    <meta name="keywords" content="best">
+  
+
+  
+    <meta name="author" content="zhaodan">
+  
+
+  
+    <meta name="copyright" content="zhaodan">
+  
+
+  
+
+  <title>「Python3」实现获取aws实例信息导入jumpserver --整理版又来了 | Hexo</title>
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+    <link href="https://cdn.bootcss.com/highlight.js/9.15.6/styles/monokai.min.css" rel="stylesheet">
+  
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+  <div class="root-container">
+    <!-- navbar -->
+<nav class="navbar">
+  <div class="navbar-content">
+    <!-- logo -->
+    <div class="navbar-logo">
+      <a href="/">
+        
+          Hexo
+        
+      </a>
+    </div>
+    <!-- link -->
+    <div class="navbar-link">
+      <div class="navbar-btn">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <ul class="navbar-list">
+        
+          <li class="navbar-list-item"><a href="/">HOME</a></li>
+        
+          <li class="navbar-list-item"><a href="/about">ABOUT</a></li>
+        
+          <li class="navbar-list-item"><a href="/tags">TAGS</a></li>
+        
+          <li class="navbar-list-item"><a href="/categories">CATEGORIES</a></li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    
+<!-- header container -->
+<header class="header-container post">
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+    <div class="header-content">
+      <div class="post-image" style="background-image: url(https://qiniu.miiiku.xyz/src/images/banner.jpg)"></div>
+      <div class="post-text">
+        <div class="type-wrap">
+          
+        </div>
+        <h1 class="title-wrap">「Python3」实现获取aws实例信息导入jumpserver --整理版又来了</h1>
+        <h2 class="title-sub-wrap">
+          <strong>zhaodan</strong>
+          <span>发布于</span>
+          
+  <a href="javascript:;" class="article-date">
+    <time datetime="2019-05-15T16:00:00.000Z" itemprop="datePublished">2019-05-16</time>
+  </a>
+
+        </h2>
+      </div>
+    </div>
+  
+
+  
+  
+
+  </header>
+
+    <!-- 文章 -->
+
+<!-- 文章内容 -->
+
+<div class="body-container">
+  <article class="content-container article-container">
+    <div class="article-content">
+      
+      
+
+      <section class="article-entry">
+        <ol>
+<li>此脚本的作用是获取aws备注信息写入jumpserver的备注信息中</li>
+<li>秘钥节点信息请修改credentials.ini配置文件，修改下面region支持不同的地区</li>
+<li>更新新增加的资产不需要删除直接导入，更新现有的资产信息需要先删除jumpserver中现有的资产，删除操作执行方式打开register_ec2函数中的delete</li>
+<li>导入时先执行导入service_data（即先导入服务器的资产）再执行导入全部，执行方式打开main里的service_data</li>
+<li>原因还是因为3，已经存在资产不能再次导入，如果先导入全部，再执行导入服务器资会导致分组失败</li>
+</ol>
+<p>说明：工作需求，线上服务器几百台，手动写到jumpserver里不现实，这个脚本是使用AWS的SDK和jumpserver的SDK、RESTAPI实现从aws获取实例的信息然后自动导入jumpserver，因为jumpserver已经导入的实例存在唯一的UUID，所以重复导入会有问题，要先删除原来的实例才能重新导入，（jumpserver应该也支持更新的实例信息的接口，需要信息为list，有时间再继续研究）<br>第一个是配置文件，将aws和jumpserver需要的秘钥信息提取到了一个文件里，通过第二个脚本读取获取认证信息<br>整理版将脚本中的变量信息都提取到了配置文件中，方便更改</p>
+<p>配置信息[region] 通过更改region来实现支持不同的地区：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-section">[dev]</span><br><span class="hljs-attr">aws_access_key_id</span>=XXX<br><span class="hljs-attr">aws_secret_access_key</span>=XXX<br><span class="hljs-attr">aws_region</span>=XXX<br><br><span class="hljs-section">[aws_cn]</span><br><span class="hljs-attr">aws_access_key_id</span>=XXX<br><span class="hljs-attr">aws_secret_access_key</span>=XXX<br><span class="hljs-attr">aws_region</span>=XXX<br><br><span class="hljs-section">[aws_ko]</span><br><span class="hljs-attr">aws_access_key_id</span> = XXX<br><span class="hljs-attr">aws_secret_access_key</span> = XXX<br><span class="hljs-attr">aws_region</span> = XXX<br><br><span class="hljs-section">[jms_cn]</span><br><span class="hljs-attr">jms_server</span> = http://XX.XX.XX.XX<br><span class="hljs-attr">jms_port</span> = XX<br><span class="hljs-attr">jms_username</span> = XX<br><span class="hljs-attr">jms_password</span> = XX<br><span class="hljs-attr">jms_user</span> = XX<br><span class="hljs-attr">jms_dev_node</span> = XX<br><span class="hljs-attr">jms_default_node</span> = XX<br></code></pre></td></tr></table></figure>
+
+<p>执行时更改要执行的地区region、aws_local信息，打开register函数：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br></pre></td><td class="code"><pre><code class="hljs routeros">import configparser<br>import boto3<br><span class="hljs-keyword">from</span> jms import service<br>import requests<br>import json<br>import uuid<br><span class="hljs-keyword">from</span> pprint import pprint<br><br>cfg = configparser.ConfigParser()<br>cfg.read(<span class="hljs-string">'credentials.ini'</span>)<br>region = <span class="hljs-string">'jms_cn'</span><br>jump_service = service.UserService(<span class="hljs-attribute">endpoint</span>=cfg.get(region,'jms_server'))<br>jump_service.login(<span class="hljs-attribute">username</span>=cfg.get(region,'jms_username'),password=cfg.get(region,'jms_password'),pubkey=None)<br>jump_endpoint = cfg.<span class="hljs-builtin-name">get</span>(region, <span class="hljs-string">'jms_server'</span>)<br>admin = cfg.<span class="hljs-builtin-name">get</span>(region,<span class="hljs-string">'jms_username'</span>)<br>passowrd = cfg.<span class="hljs-builtin-name">get</span>(region,<span class="hljs-string">'jms_password'</span>)<br>jump_user = cfg.<span class="hljs-builtin-name">get</span>(region,<span class="hljs-string">'jms_user'</span>)<br>jump_dev_node_name = cfg.<span class="hljs-builtin-name">get</span>(region,<span class="hljs-string">'jms_dev_node'</span>)<br>jump_default_node_name = cfg.<span class="hljs-builtin-name">get</span>(region,<span class="hljs-string">'jms_default_node'</span>)<br><span class="hljs-comment"># assents = jump_service.get_assets()</span><br><br>def get_aws_info(local,default_node_uuid):<br>    session = boto3.session.Session(<span class="hljs-attribute">aws_access_key_id</span>=cfg.get(local, <span class="hljs-string">'aws_access_key_id'</span>), <span class="hljs-attribute">aws_secret_access_key</span>=cfg.get(local,'aws_secret_access_key'), <span class="hljs-attribute">region_name</span>=cfg.get(local,'aws_region'))<br>    ec2_resource = session.resource(<span class="hljs-string">'ec2'</span>)<br>    ec2_list = []<br>    admin_user_uuid = get_user_info()<br>    <span class="hljs-keyword">for</span><span class="hljs-built_in"> instance </span><span class="hljs-keyword">in</span> ec2_resource.instances.all():<br>        ec2_server = &#123;&#125;<br>        ec2_Name_index = [i <span class="hljs-keyword">for</span> i, x <span class="hljs-keyword">in</span> enumerate(instance.tags) <span class="hljs-keyword">if</span> x[<span class="hljs-string">'Key'</span>].<span class="hljs-builtin-name">find</span>(<span class="hljs-string">'Name'</span>) == 0]<br>    # <span class="hljs-builtin-name">print</span>(ec2_Name_index)<br>    # name = []<br>    # <span class="hljs-keyword">for</span> i, x <span class="hljs-keyword">in</span> enumerate(instance.tags):<br>    #     <span class="hljs-keyword">if</span> x[<span class="hljs-string">'Key'</span>].<span class="hljs-builtin-name">find</span>(<span class="hljs-string">'Name'</span>) == 0:<br>    #         name.append(i)<br>    #         <span class="hljs-builtin-name">print</span>(name)<br>        ec2_Service_index = [i <span class="hljs-keyword">for</span> i, x <span class="hljs-keyword">in</span> enumerate(instance.tags) <span class="hljs-keyword">if</span> x[<span class="hljs-string">'Key'</span>].<span class="hljs-builtin-name">find</span>(<span class="hljs-string">'Service'</span>) == 0]<br>    #   ec2_server[<span class="hljs-string">'id'</span>] = instance.id<br>        ec2_server[<span class="hljs-string">'id'</span>] = str(uuid.uuid3(uuid.NAMESPACE_DNS, instance.id))<br>        ec2_server[<span class="hljs-string">'ip'</span>] = instance.private_ip_address<br>        ec2_server[<span class="hljs-string">'hostname'</span>] = instance.tags[ec2_Name_index[0]][<span class="hljs-string">'Value'</span>]<br>        ec2_server[<span class="hljs-string">'protocol'</span>] = <span class="hljs-string">'ssh'</span><br>        ec2_server[<span class="hljs-string">'port'</span>] = <span class="hljs-string">'22'</span><br>        ec2_server[<span class="hljs-string">'platform'</span>] = <span class="hljs-string">'Linux'</span><br>        ec2_server[<span class="hljs-string">'is_active'</span>] = <span class="hljs-string">'true'</span><br>        ec2_server[<span class="hljs-string">'comment'</span>] = instance.tags[ec2_Service_index[0]][<span class="hljs-string">'Value'</span>]<br>        ec2_server[<span class="hljs-string">'admin_user'</span>] = admin_user_uuid<br>        ec2_server[<span class="hljs-string">'nodes'</span>] = [default_node_uuid]<br>        ec2_server[<span class="hljs-string">'org_name'</span>] = <span class="hljs-string">'DEFAULT'</span><br>        ec2_list.append(ec2_server)<br>    return ec2_list<br><br>def services_list_info(default_node_uuid):<br>    service_list = []<br>    <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> range(len(ec2_list)):<br>        <span class="hljs-keyword">if</span> ec2_list[j][<span class="hljs-string">'hostname'</span>].__contains__(<span class="hljs-string">'match'</span>) <span class="hljs-keyword">or</span> ec2_list[j][<span class="hljs-string">'hostname'</span>].__contains__(<span class="hljs-string">'multiplay'</span>) <span class="hljs-keyword">or</span> \<br>                ec2_list[j][<span class="hljs-string">'hostname'</span>].__contains__(<span class="hljs-string">'crossservice'</span>) <span class="hljs-keyword">or</span> ec2_list[j][<span class="hljs-string">'hostname'</span>].__contains__(<span class="hljs-string">'auth'</span>) <span class="hljs-keyword">or</span> \<br>                ec2_list[j][<span class="hljs-string">'hostname'</span>].__contains__(<span class="hljs-string">'gamex'</span>) <span class="hljs-keyword">or</span> ec2_list[j][<span class="hljs-string">'hostname'</span>].__contains__(<span class="hljs-string">'pay'</span>) <span class="hljs-keyword">or</span> \<br>                ec2_list[j][<span class="hljs-string">'hostname'</span>].__contains__(<span class="hljs-string">'gatex'</span>) <span class="hljs-keyword">or</span> ec2_list[j][<span class="hljs-string">'hostname'</span>].__contains__(<span class="hljs-string">'crossall'</span>):<br>            service_list.append(ec2_list[j])<br>    service_node_list = []<br>    <span class="hljs-keyword">for</span> k <span class="hljs-keyword">in</span> service_list:<br>        node_server = &#123;&#125;<br>        node_server[<span class="hljs-string">'id'</span>] = k[<span class="hljs-string">'id'</span>]<br>        node_server[<span class="hljs-string">'ip'</span>] = k[<span class="hljs-string">'ip'</span>]<br>        node_server[<span class="hljs-string">'hostname'</span>] = k[<span class="hljs-string">'hostname'</span>]<br>        node_server[<span class="hljs-string">'protocol'</span>] = k[<span class="hljs-string">'protocol'</span>]<br>        node_server[<span class="hljs-string">'port'</span>] = k[<span class="hljs-string">'port'</span>]<br>        node_server[<span class="hljs-string">'platform'</span>] = k[<span class="hljs-string">'platform'</span>]<br>        node_server[<span class="hljs-string">'is_active'</span>] = <span class="hljs-string">'true'</span><br>        node_server[<span class="hljs-string">'comment'</span>] = k[<span class="hljs-string">'comment'</span>]<br>        node_server[<span class="hljs-string">'admin_user'</span>] = k[<span class="hljs-string">'admin_user'</span>]<br>        node_server[<span class="hljs-string">'nodes'</span>] = [default_node_uuid]<br>        node_server[<span class="hljs-string">'org_name'</span>] = k[<span class="hljs-string">'org_name'</span>]<br>        service_node_list.append(node_server)<br>    return service_node_list<br><br>def get_token():<br>    url = <span class="hljs-string">'%s/api/users/v1/auth/'</span> % jump_endpoint<br>    query_args = &#123;<br>        <span class="hljs-string">"username"</span>: admin,<br>        <span class="hljs-string">"password"</span>: passowrd<br>    &#125;<br>    response = requests.post(url, data = query_args)<br>    return json.loads(response.text)[<span class="hljs-string">'token'</span>]<br><br>def get_nodes_info():<br>    url_nodes = <span class="hljs-string">'%s/api/assets/v1/nodes/'</span> % jump_endpoint<br>    token = get_token()<br>    header_info = &#123; <span class="hljs-string">"Authorization"</span>: <span class="hljs-string">'Bearer '</span> + token &#125;<br>    response = requests.<span class="hljs-builtin-name">get</span>(url_nodes, <span class="hljs-attribute">headers</span>=header_info)<br><span class="hljs-comment">#    pprint(json.loads(response.text))</span><br>    nodes_info = json.loads(response.text)<br>    nodes_list = []<br>    <span class="hljs-keyword">for</span> nodes <span class="hljs-keyword">in</span> nodes_info:<br>        nodes_server = &#123;&#125;<br>        nodes_server[<span class="hljs-string">'id'</span>] = nodes[<span class="hljs-string">'id'</span>]<br>        nodes_server[<span class="hljs-string">'value'</span>] = nodes[<span class="hljs-string">'value'</span>]<br>        nodes_list.append(nodes_server)<br>    service_node_info = &#123;&#125;<br>   <span class="hljs-built_in"> service </span>= nodes_list[0][<span class="hljs-string">'value'</span>]<br>   <span class="hljs-built_in"> default </span>= nodes_list[1][<span class="hljs-string">'value'</span>]<br>    service_node_info[service] = nodes_list[0][<span class="hljs-string">'id'</span>]<br>    service_node_info[default] = nodes_list[1][<span class="hljs-string">'id'</span>]<br>    service_node_uuid = service_node_info[jump_dev_node_name]<br>    default_node_uuid = service_node_info[jump_default_node_name]<br>    return default_node_uuid,service_node_uuid<br><br>def get_user_info():<br>    url_nodes = <span class="hljs-string">'%s/api/assets/v1/admin-user/'</span> % jump_endpoint<br>    token = get_token()<br>    header_info = &#123; <span class="hljs-string">"Authorization"</span>: <span class="hljs-string">'Bearer '</span> + token &#125;<br>    response = requests.<span class="hljs-builtin-name">get</span>(url_nodes, <span class="hljs-attribute">headers</span>=header_info)<br>    users_info = json.loads(response.text)<br>    users_server = &#123;&#125;<br>    <span class="hljs-keyword">for</span><span class="hljs-built_in"> users </span><span class="hljs-keyword">in</span> users_info:<br>        users_server[users[<span class="hljs-string">'name'</span>]] = users[<span class="hljs-string">'id'</span>]<br>    admin_uuid = users_server[jump_user]<br>    return admin_uuid<br><br>def register_ec2(data):<br>    url = <span class="hljs-string">'%s/api/assets/v1/assets/'</span> % jump_endpoint<br>    token = get_token()<br>    header_info = &#123;<span class="hljs-string">'Content-Type'</span>: <span class="hljs-string">'application/json'</span>, <span class="hljs-string">'Accept'</span>: <span class="hljs-string">'application/json'</span>,<span class="hljs-string">"Authorization"</span>: <span class="hljs-string">'Bearer '</span> + token&#125;<br><span class="hljs-comment">#    requests.delete(url, headers = header_info, data=json.dumps(data))</span><br>    requests.post(url, headers = header_info, <span class="hljs-attribute">data</span>=json.dumps(data))<br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">'__main__'</span>:<br>    get_user_info()<br>    nodes_list = get_nodes_info()<br>    default_node_uuid = nodes_list[0]<br>    service_node_uuid = nodes_list[1]<br>    aws_local = <span class="hljs-string">'aws_cn'</span><br>    ec2_list = get_aws_info(aws_local,default_node_uuid)<br>    service_list = services_list_info(service_node_uuid)<br><br>    <span class="hljs-keyword">for</span> ec2_data <span class="hljs-keyword">in</span> ec2_list:<br>        <span class="hljs-builtin-name">print</span>(ec2_data)<br>        # register_ec2(ec2_data)<br><br>    # <span class="hljs-keyword">for</span> service_data <span class="hljs-keyword">in</span> service_list:<br>    #     <span class="hljs-builtin-name">print</span>(service_data)<br>    #     register_ec2(service_data)<br></code></pre></td></tr></table></figure>
+
+      </section>
+
+      <section class="article-footer">
+        
+      </section>
+
+      <section class="article-navs">
+        
+<nav class="card-container card-article-nav">
+  <div class="card-wrap">
+    
+      <div id="article-nav-newer" class="card-item">
+        <article>
+          
+          <a class="card-link article-nav-link" href="/2019/05/23/50_%E5%88%A0%E9%99%A4S3%E8%BF%87%E6%9C%9F%E5%AE%89%E8%A3%85%E5%8C%85/"></a>
+          <strong class="article-nav-caption">Newer</strong>
+          <p class="article-nav-title">
+            
+              「Python3」删除S3上过期的zip安装包
+            
+          </p>
+        </article>
+      </div>
+    
+    
+      <div id="article-nav-older" class="card-item">
+        <article>
+          
+          <a class="card-link article-nav-link" href="/2019/05/15/48_get_fact_to_aws/"></a>
+          <strong class="article-nav-caption">Older</strong>
+          <p class="article-nav-title">
+            
+              「Python3」获取本地代码信息写入aws tag中 -- 整理版来了
+            
+          </p>
+        </article>
+      </div>
+    
+  </div>
+</nav>
+
+      </section>
+    </div>
+  </article>
+</div>
+
+    <!-- footer container -->
+<footer id="footer" class="footer">
+  <div class="footer-container">
+     
+    <p>&copy; 2020 <a href="/" target="_blank">zhaodan</a></p>
+
+    
+      <p id="hitokoto"></p>
+      <script src="https://v1.hitokoto.cn/?c=a&amp;encode=js&select=%23hitokoto" defer></script>
+    
+
+    
+
+    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> Theme - <a href="https://github.com/miiiku/flex-block" target="_blank">flex-block</a></p>
+  </div>
+</footer>
+  </div>
+
+  <div class="back-to-top-fixed">
+    <svg class="icon icon-back-to-top" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M725.333333 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8l-213.333333-213.333333c-17.066667-17.066667-17.066667-42.666667 0-59.733333s42.666667-17.066667 59.733333 0l213.333333 213.333333c17.066667 17.066667 17.066667 42.666667 0 59.733333C746.666667 422.4 738.133333 426.666667 725.333333 426.666667z"></path>
+  <path d="M298.666667 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8-17.066667-17.066667-17.066667-42.666667 0-59.733333l213.333333-213.333333c17.066667-17.066667 42.666667-17.066667 59.733333 0s17.066667 42.666667 0 59.733333l-213.333333 213.333333C320 422.4 311.466667 426.666667 298.666667 426.666667z"></path>
+  <path d="M512 896c-25.6 0-42.666667-17.066667-42.666667-42.666667L469.333333 170.666667c0-25.6 17.066667-42.666667 42.666667-42.666667s42.666667 17.066667 42.666667 42.666667l0 682.666667C554.666667 878.933333 537.6 896 512 896z"></path>
+</svg> 
+  </div>
+
+  
+  
+
+
+  <!-- aplayer 音频 start -->
+  
+<link rel="stylesheet" href="/lib/APlayer.min.css">
+
+  
+<script src="/lib/APlayer.min.js"></script>
+
+  <script type="text/javascript">
+    const aplayer = document.querySelectorAll(".aplayer");
+    aplayer && initaplayer(aplayer);
+    function initaplayer(els) {
+      let elsArr = Array.from(els);
+      elsArr.forEach(el => {
+        new APlayer({
+          container: el,
+          audio: { ...el.dataset },
+          theme: "#b7daff",
+          lrcType: 3,
+          autoplay: false,
+          loop: false,
+          mutex: true,
+        });
+      });
+    }
+  </script>
+  <!-- aplayer 音频 end -->
+  
+
+<!-- dplayer 视频 start -->
+
+<link rel="stylesheet" href="/lib/DPlayer.min.css">
+
+
+<script src="/lib/DPlayer.min.js"></script>
+
+<script type="text/javascript">
+  const dplayer = document.querySelectorAll(".dplayer");
+  dplayer && initDPlayer(dplayer);
+  function initDPlayer(els) {
+    let elsArr = Array.from(els);
+    elsArr.forEach(el => {
+      let url = el.dataset.url;
+      let cover = el.dataset.cover;
+      new DPlayer({
+        container: el,
+        video: { url: url, pic: cover },
+        theme: "#b7daff",
+        autoplay: false,
+        loop: false,
+        mutex: true,
+      });
+    });
+  }
+</script>
+<!-- dplayer 视频 end -->
+
+
+<!-- waterfall 瀑布流 start -->
+
+<script src="/lib/waterfall.min.js"></script>
+
+<script type="text/javascript">
+
+const waterfalls = document.querySelectorAll(".waterfall-container");
+
+if (waterfalls && waterfalls.length > 0) {
+  waterfalls.forEach((waterfall, index) => {
+    let cls = "waterfall-container-" + index;
+    waterfall.classList.add(cls);
+    initWaterfall(cls, waterfall);
+  });
+}
+
+function initWaterfall(selector, el) {
+  const options = {};
+  if (Object.keys(el.dataset).length > 0) {
+    for (let k in el.dataset) {
+      options[k] = el.dataset[k];
+    }
+  }
+  waterfall(`.${selector}`, options);
+}
+</script>
+<!-- waterfall 瀑布流 end -->
+
+
+  <!-- zoom start -->
+  
+<script src="/lib/zoom.min.js"></script>
+
+  <script type="text/javascript">
+    document.querySelector(".article-content") && zoom(".article-content");
+  </script>
+  <!-- zoom end -->
+  
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+<script src="/js/script.js"></script>
+
+  
+  <!-- 尾部用户自定义相关内容 -->
+
+</body>
+</html>

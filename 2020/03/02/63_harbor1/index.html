@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  
+    <meta name="description" content="fighting">
+  
+
+  
+    <meta name="keywords" content="best">
+  
+
+  
+    <meta name="author" content="zhaodan">
+  
+
+  
+    <meta name="copyright" content="zhaodan">
+  
+
+  
+
+  <title>harbor调研 | Hexo</title>
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+    <link href="https://cdn.bootcss.com/highlight.js/9.15.6/styles/monokai.min.css" rel="stylesheet">
+  
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+  <div class="root-container">
+    <!-- navbar -->
+<nav class="navbar">
+  <div class="navbar-content">
+    <!-- logo -->
+    <div class="navbar-logo">
+      <a href="/">
+        
+          Hexo
+        
+      </a>
+    </div>
+    <!-- link -->
+    <div class="navbar-link">
+      <div class="navbar-btn">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <ul class="navbar-list">
+        
+          <li class="navbar-list-item"><a href="/">HOME</a></li>
+        
+          <li class="navbar-list-item"><a href="/about">ABOUT</a></li>
+        
+          <li class="navbar-list-item"><a href="/tags">TAGS</a></li>
+        
+          <li class="navbar-list-item"><a href="/categories">CATEGORIES</a></li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    
+<!-- header container -->
+<header class="header-container post">
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+    <div class="header-content">
+      <div class="post-image" style="background-image: url(https://qiniu.miiiku.xyz/src/images/banner.jpg)"></div>
+      <div class="post-text">
+        <div class="type-wrap">
+          
+        </div>
+        <h1 class="title-wrap">harbor调研</h1>
+        <h2 class="title-sub-wrap">
+          <strong>zhaodan</strong>
+          <span>发布于</span>
+          
+  <a href="javascript:;" class="article-date">
+    <time datetime="2020-03-01T16:00:00.000Z" itemprop="datePublished">2020-03-02</time>
+  </a>
+
+        </h2>
+      </div>
+    </div>
+  
+
+  
+  
+
+  </header>
+
+    <!-- 文章 -->
+
+<!-- 文章内容 -->
+
+<div class="body-container">
+  <article class="content-container article-container">
+    <div class="article-content">
+      
+      
+
+      <section class="article-entry">
+        <p>前提： 因为公司想要将线上服务统一使用K8s进行部署，那之前的tar安装包就成了images，因此要考虑新的存储方案。结合github信息和网友的使用经验，整理出了以下harbor信息。</p>
+<p>开源镜像存储仓库<br>私有化的镜像部署<br>官方的说法是：Harbor是一个用于存储和分发Docker镜像的企业级Registry服务器。通过添加一些企业必需的功能特性，例如安全、标识和管理等，扩展了开源Docker Distribution。作为一个企业级私有Registry服务器，Harbor提供了更好的性能和安全。提升用户使用Registry构建和运行环境传输镜像的效率。</p>
+<p>harbor存在的原因：</p>
+<ol>
+<li>提供分层传输机制，优化网络传输<br>Docker镜像是是分层的，如果每次传输都使用全量文件显然不经济，所以用FTP的方式并不适合。必须提供识别分层传输的机制，以层的UUID为标识，确定传输的对象。</li>
+<li>提供WEB界面，优化用户体验<br>只用镜像的名字来进行上传下载显然很不方便，需要有一个用户界面可以支持登陆、搜索功能，包括区分公有、私有镜像。</li>
+<li>支持水平扩展集群<br>当有用户对镜像的上传下载操作集中在某服务器，需要对相应的访问压力作分解。上面这些就是Docker Registry所完成的主要工作，而Habor在此之上，又提供了用户、同步等诸多特性。<br>Harbor两个容易误解的点：</li>
+<li>harbor功能<br>镜像的存储harbor使用的是官方的docker registry服务去完成，至于registry是用本地存储或者s3都是可以的，harbor的功能是在此之上提供用户权限管理、镜像复制等功能，提高使用的registry的效率。</li>
+<li>镜像复制<br>通过docker registry 的API去拷贝，这种做法屏蔽了繁琐的底层文件操作、不仅可以利用现有docker registry功能不必重复造轮子，而且可以解决冲突和一致性的问题。<br>harbor的组件及功能：</li>
+</ol>
+<p>组件<br>功能<br>proxy<br>nginx前端代理，主要分发前端页面ui访问、镜像上传下载流量<br>ui<br>提供了一个web管理页面，包括前端页面和后端API，底层使用mysql数据库<br>registry<br>镜像仓库，负责存储镜像文件，当镜像上传完毕后通过hook通知ui创建repository， registry的token认证通过ui组件完成<br>adminserver<br>系统的配置管理中心附带检查存储用量，ui和jobserver启动时候需要加载adminserver的配置<br>jobserver<br>负责镜像复制工作，和registry通信，从一个registry pull镜像push到另一个registry，并记录job log<br>log<br>日志汇总组件，通过docker的log-driver把日志汇总到一起</p>
+<p>功能优点：<br>用户管理三种角色：在最高管理员权限系统管理员admin外还有，项目管理员 MDRWS 、开发人员 RWS 、访客 RS 、<br>项目管理：项目是一组镜像仓库的逻辑集合，是权限管理和资源管理的单元划分。一个项目下面有多个镜像仓库，并且关联多个不同角色的成员，镜像复制也是基于项目的，通过添加复制规则，可以将项目下面的镜像从一个harbor迁移到另一个harbor，通过日志可查看复制过程，并有retry机制。<br>配置管理、日志查询：配置管理主要是配置harbor的认证模式，企业内部使用，通常都是对接到公司LDAP上面，harbor也支持数据库认证，可以设置token的有效时间。用户对镜像的pull和push操作都可以被harbor记录下来。<br>优点：<br>        本身自带 docker 私有仓库<br>        支持基于角色的权限管理<br>        支持 LDAP<br>安装环境：<br>        支持k8s的helm安装和本地安装<br>        需要安装docker并运行<br>        docker-compose<br>        docker engine<br>        Harbor offline installer<br>        redis<br>        mysql<br>        Openssl<br>要求：<br>        最低配置要求2核4G40G<br>        需要开放443 4443 80端口 https http<br>        生产环境中建议使用https</p>
+<hr>
+<p>应用：<br>        我们在当前的企业应用中，Docker的镜像仓库配置成harbor，在容器启动是会拉取harbor中的镜像。在实际使用过程中，一个镜像库可能是不够用的，下例情况下我们可能会需要部署多个镜像仓库：<br>        1. 国外的公有镜像下载过慢，需要一个中转仓库进行加速<br>        2. 容器规模较大，一个镜像仓库不堪重负<br>        3. 对系统稳定性要求高，需要多个仓库保证高可用性<br>        4. 镜像仓库有多级规划，下级仓库依赖上级仓库<br>集群考虑：<br>        一致性<br>        实时性<br>        可用性<br>应用场景的考虑：<br>        1. 国内地区和海外地区的harbor统一还是分开、如果统一，优点、难点，如果分开，优点、难点<br>        2. 国内业务和海外业务是否有关联性会互相影响<br>        3.海外是否会受网络影响速度<br>海内外统一harbor：<br>        优点：统一镜像管理、统一权限管理、节省服务器成本<br>        难点：选择节点、节点之间通信、网络速度、项目管理<br>海内外harbor分开：<br>        优点：集群架构简单、集群节点通信无阻碍、没有网络延迟问题<br>        难点：集群分开管理<br>目标：容灾备份<br>目前有两种主流的方案解决这个问题：<br>双主复制<br>多harbor实例共享后端存储<br>双主复制：双主复制其实就是复用主从同步，实现两个harbor节点之间的双向同步，来保证数据的一致性，然后在两台harbor前端顶一个负载均衡器，将进来的请求分流到不同的实例中去，只要有一个实例中有了新的镜像，就自动的同步复制到另外的的实例中去，这样实现了负载均衡，也避免了单点故障，在一定程度上实现了Harbor的高可用性。<br>问题：可能会存在数据不一致问题，需要手动重启复制策略才能再次进行同步。<br>多harbor实例共享后端存储：共享后端存储算就是多个Harbor实例共享同一个后端存储，任何一个实例持久化到存储的镜像，都可被其他实例中读取。通过前置LB进来的请求，可以分流到不同的实例中去处理，这样就实现了负载均衡，也避免了单点故障。</p>
+<p>在实际生产环境中部署需要考虑三个问题：</p>
+<ol>
+<li>选取共享存储，Harbor的后端存储目前支持AWS S3、OSS 、Openstack Swift, Ceph等。</li>
+<li>Session在不同的实例上共享，在最新的harbor中，默认session会存放在redis中，我们只需要将redis独立出来即可。可以通过redis sentinel或者redis cluster等方式来保证redis的可用性。</li>
+<li>Harbor多实例数据库问题，将harbor中的数据库拆出来独立部署即可。让多实例共用一个外部数据库，数据库的高可用也可以通过数据库的高可用方案保证。<br>harbor高可用部署：<pre><code>通过三个harbor完成高可用部署，通过负载均衡器对外提供服务，共享数据库与缓存。</code></pre><a href="https://postimg.cc/G9RR7wKB" target="_blank" rel="noopener"><img src="https://i.postimg.cc/2jb55CBx/harbor.png" alt="harbor.png"></a></li>
+</ol>
+<p>github：<a href="https://github.com/goharbor/harbor/blob/v1.10.0/README.md" target="_blank" rel="noopener">https://github.com/goharbor/harbor/blob/v1.10.0/README.md</a><br><a href="https://github.com/goharbor/harbor/blob/v1.10.0/docs/installation_guide.md" target="_blank" rel="noopener">https://github.com/goharbor/harbor/blob/v1.10.0/docs/installation_guide.md</a><br><a href="https://github.com/goharbor/harbor/tree/master/docs/1.10" target="_blank" rel="noopener">https://github.com/goharbor/harbor/tree/master/docs/1.10</a><br>demo： <a href="https://demo.goharbor.io/harbor/projects" target="_blank" rel="noopener">https://demo.goharbor.io/harbor/projects</a><br>参考文档：<a href="https://www.kubernetes.org.cn/1738.html" target="_blank" rel="noopener">https://www.kubernetes.org.cn/1738.html</a><br><a href="https://tonybai.com/2017/06/09/setup-a-high-availability-private-registry-based-on-harbor-and-cephfs/" target="_blank" rel="noopener">https://tonybai.com/2017/06/09/setup-a-high-availability-private-registry-based-on-harbor-and-cephfs/</a></p>
+
+      </section>
+
+      <section class="article-footer">
+        
+      </section>
+
+      <section class="article-navs">
+        
+<nav class="card-container card-article-nav">
+  <div class="card-wrap">
+    
+      <div id="article-nav-newer" class="card-item">
+        <article>
+          
+          <a class="card-link article-nav-link" href="/2020/03/05/64_harbor2/"></a>
+          <strong class="article-nav-caption">Newer</strong>
+          <p class="article-nav-title">
+            
+              harborV1.10.1 共享存储库预演测试
+            
+          </p>
+        </article>
+      </div>
+    
+    
+      <div id="article-nav-older" class="card-item">
+        <article>
+          
+          <a class="card-link article-nav-link" href="/2020/02/24/62_jenkins%E8%87%AA%E5%8A%A8%E6%89%93%E5%8C%85maven%E9%A1%B9%E7%9B%AE%E8%B8%A9%E5%9D%91/"></a>
+          <strong class="article-nav-caption">Older</strong>
+          <p class="article-nav-title">
+            
+              jenkins自动打包maven类型项目踩坑记录
+            
+          </p>
+        </article>
+      </div>
+    
+  </div>
+</nav>
+
+      </section>
+    </div>
+  </article>
+</div>
+
+    <!-- footer container -->
+<footer id="footer" class="footer">
+  <div class="footer-container">
+     
+    <p>&copy; 2020 <a href="/" target="_blank">zhaodan</a></p>
+
+    
+      <p id="hitokoto"></p>
+      <script src="https://v1.hitokoto.cn/?c=a&amp;encode=js&select=%23hitokoto" defer></script>
+    
+
+    
+
+    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> Theme - <a href="https://github.com/miiiku/flex-block" target="_blank">flex-block</a></p>
+  </div>
+</footer>
+  </div>
+
+  <div class="back-to-top-fixed">
+    <svg class="icon icon-back-to-top" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M725.333333 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8l-213.333333-213.333333c-17.066667-17.066667-17.066667-42.666667 0-59.733333s42.666667-17.066667 59.733333 0l213.333333 213.333333c17.066667 17.066667 17.066667 42.666667 0 59.733333C746.666667 422.4 738.133333 426.666667 725.333333 426.666667z"></path>
+  <path d="M298.666667 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8-17.066667-17.066667-17.066667-42.666667 0-59.733333l213.333333-213.333333c17.066667-17.066667 42.666667-17.066667 59.733333 0s17.066667 42.666667 0 59.733333l-213.333333 213.333333C320 422.4 311.466667 426.666667 298.666667 426.666667z"></path>
+  <path d="M512 896c-25.6 0-42.666667-17.066667-42.666667-42.666667L469.333333 170.666667c0-25.6 17.066667-42.666667 42.666667-42.666667s42.666667 17.066667 42.666667 42.666667l0 682.666667C554.666667 878.933333 537.6 896 512 896z"></path>
+</svg> 
+  </div>
+
+  
+  
+
+
+  <!-- aplayer 音频 start -->
+  
+<link rel="stylesheet" href="/lib/APlayer.min.css">
+
+  
+<script src="/lib/APlayer.min.js"></script>
+
+  <script type="text/javascript">
+    const aplayer = document.querySelectorAll(".aplayer");
+    aplayer && initaplayer(aplayer);
+    function initaplayer(els) {
+      let elsArr = Array.from(els);
+      elsArr.forEach(el => {
+        new APlayer({
+          container: el,
+          audio: { ...el.dataset },
+          theme: "#b7daff",
+          lrcType: 3,
+          autoplay: false,
+          loop: false,
+          mutex: true,
+        });
+      });
+    }
+  </script>
+  <!-- aplayer 音频 end -->
+  
+
+<!-- dplayer 视频 start -->
+
+<link rel="stylesheet" href="/lib/DPlayer.min.css">
+
+
+<script src="/lib/DPlayer.min.js"></script>
+
+<script type="text/javascript">
+  const dplayer = document.querySelectorAll(".dplayer");
+  dplayer && initDPlayer(dplayer);
+  function initDPlayer(els) {
+    let elsArr = Array.from(els);
+    elsArr.forEach(el => {
+      let url = el.dataset.url;
+      let cover = el.dataset.cover;
+      new DPlayer({
+        container: el,
+        video: { url: url, pic: cover },
+        theme: "#b7daff",
+        autoplay: false,
+        loop: false,
+        mutex: true,
+      });
+    });
+  }
+</script>
+<!-- dplayer 视频 end -->
+
+
+<!-- waterfall 瀑布流 start -->
+
+<script src="/lib/waterfall.min.js"></script>
+
+<script type="text/javascript">
+
+const waterfalls = document.querySelectorAll(".waterfall-container");
+
+if (waterfalls && waterfalls.length > 0) {
+  waterfalls.forEach((waterfall, index) => {
+    let cls = "waterfall-container-" + index;
+    waterfall.classList.add(cls);
+    initWaterfall(cls, waterfall);
+  });
+}
+
+function initWaterfall(selector, el) {
+  const options = {};
+  if (Object.keys(el.dataset).length > 0) {
+    for (let k in el.dataset) {
+      options[k] = el.dataset[k];
+    }
+  }
+  waterfall(`.${selector}`, options);
+}
+</script>
+<!-- waterfall 瀑布流 end -->
+
+
+  <!-- zoom start -->
+  
+<script src="/lib/zoom.min.js"></script>
+
+  <script type="text/javascript">
+    document.querySelector(".article-content") && zoom(".article-content");
+  </script>
+  <!-- zoom end -->
+  
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+<script src="/js/script.js"></script>
+
+  
+  <!-- 尾部用户自定义相关内容 -->
+
+</body>
+</html>

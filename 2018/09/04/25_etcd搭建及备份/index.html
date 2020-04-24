@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  
+    <meta name="description" content="fighting">
+  
+
+  
+    <meta name="keywords" content="best">
+  
+
+  
+    <meta name="author" content="zhaodan">
+  
+
+  
+    <meta name="copyright" content="zhaodan">
+  
+
+  
+
+  <title>etcd搭建和备份 | Hexo</title>
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+    <link href="https://cdn.bootcss.com/highlight.js/9.15.6/styles/monokai.min.css" rel="stylesheet">
+  
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+  <div class="root-container">
+    <!-- navbar -->
+<nav class="navbar">
+  <div class="navbar-content">
+    <!-- logo -->
+    <div class="navbar-logo">
+      <a href="/">
+        
+          Hexo
+        
+      </a>
+    </div>
+    <!-- link -->
+    <div class="navbar-link">
+      <div class="navbar-btn">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <ul class="navbar-list">
+        
+          <li class="navbar-list-item"><a href="/">HOME</a></li>
+        
+          <li class="navbar-list-item"><a href="/about">ABOUT</a></li>
+        
+          <li class="navbar-list-item"><a href="/tags">TAGS</a></li>
+        
+          <li class="navbar-list-item"><a href="/categories">CATEGORIES</a></li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    
+<!-- header container -->
+<header class="header-container post">
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+    <div class="header-content">
+      <div class="post-image" style="background-image: url(https://qiniu.miiiku.xyz/src/images/banner.jpg)"></div>
+      <div class="post-text">
+        <div class="type-wrap">
+          
+        </div>
+        <h1 class="title-wrap">etcd搭建和备份</h1>
+        <h2 class="title-sub-wrap">
+          <strong>zhaodan</strong>
+          <span>发布于</span>
+          
+  <a href="javascript:;" class="article-date">
+    <time datetime="2018-09-03T16:00:00.000Z" itemprop="datePublished">2018-09-04</time>
+  </a>
+
+        </h2>
+      </div>
+    </div>
+  
+
+  
+  
+
+  </header>
+
+    <!-- 文章 -->
+
+<!-- 文章内容 -->
+
+<div class="body-container">
+  <article class="content-container article-container">
+    <div class="article-content">
+      
+      
+
+      <section class="article-entry">
+        <ol>
+<li>Download etcd.tar.gz</li>
+<li>编写etcd的supervisor启动脚本</li>
+</ol>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs stata">etcd1<br>[root@VM_7_centos opt]# <span class="hljs-keyword">cat</span> /etc/supervisord/<span class="hljs-keyword">conf</span>.<span class="hljs-keyword">d</span>/etcd.<span class="hljs-keyword">conf</span><br>[<span class="hljs-keyword">program</span>:etcd]<br>directory=/opt/etcd/etcd-data<br>command=/usr/<span class="hljs-keyword">local</span>/bin/etcd<br>  -name ip-xx-xx-xx-7<br>  --data-<span class="hljs-keyword">dir</span> /opt/etcd/etcd-data<br>  -initial-advertise-peer-urls http:<span class="hljs-comment">//xx.xx.xx.7:2380</span><br>  -listen-peer-urls http:<span class="hljs-comment">//xx.xx.xx.7:2380</span><br>  -listen-client-urls http:<span class="hljs-comment">//xx.xx.xx.7:2379,http://127.0.0.1:2379</span><br>  -advertise-client-urls http:<span class="hljs-comment">//xx.xx.xx.7:2379</span><br>  -initial-<span class="hljs-keyword">cluster</span>-<span class="hljs-keyword">token</span> etcd-<span class="hljs-keyword">cluster</span>-wpys<br>  -initial-<span class="hljs-keyword">cluster</span> ip-xx-xx-xx-7=http:<span class="hljs-comment">//xx.xx.xx.7:2380,ip-xx-xx-xx-9=http://xx.xx.xx.9:2380</span><br>stdout_logfile=/opt/supervisor/<span class="hljs-keyword">log</span>/etcd.<span class="hljs-keyword">log</span><br>user=root<br>redirect_stderr=true<br></code></pre></td></tr></table></figure>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs stata">etcd2<br>[root@VM_9_centos opt]# <span class="hljs-keyword">cat</span> /etc/supervisord/<span class="hljs-keyword">conf</span>.<span class="hljs-keyword">d</span>/etcd.<span class="hljs-keyword">conf</span><br>[<span class="hljs-keyword">program</span>:etcd]<br>directory=/opt/etcd/etcd-data<br>command=/usr/<span class="hljs-keyword">local</span>/bin/etcd<br>  -name ip-xx-xx-xx-9<br>  --data-<span class="hljs-keyword">dir</span> /opt/etcd/etcd-data<br>  -initial-advertise-peer-urls http:<span class="hljs-comment">//xx.xx.xx.9:2380</span><br>  -listen-peer-urls http:<span class="hljs-comment">//xx.xx.xx.9:2380</span><br>  -listen-client-urls http:<span class="hljs-comment">//xx.xx.xx.9:2379,http://127.0.0.1:2379</span><br>  -advertise-client-urls http:<span class="hljs-comment">//xx.xx.xx.9:2379</span><br>  -initial-<span class="hljs-keyword">cluster</span>-<span class="hljs-keyword">token</span> etcd-<span class="hljs-keyword">cluster</span>-wpys<br>  -initial-<span class="hljs-keyword">cluster</span> ip-xx-xx-xx-7=http:<span class="hljs-comment">//xx.xx.xx.7:2380,ip-xx-xx-xx-9=http://xx.xx.xx.9:2380</span><br>stdout_logfile=/opt/supervisor/<span class="hljs-keyword">log</span>/etcd.<span class="hljs-keyword">log</span><br>user=root<br>redirect_stderr=true<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs routeros">[root@ip conf.d]# cat etcd_viewer.conf<br>[program:etcd_viewer]<br><span class="hljs-attribute">directory</span>=/opt/etcd-viewer/<br><span class="hljs-attribute">command</span>=/usr/local/apache-maven-3.3.3/bin/mvn jetty:run<br><span class="hljs-attribute">stdout_logfile</span>=/opt/supervisor/log/etcd-viewer.log<br><span class="hljs-attribute">user</span>=root<br><span class="hljs-attribute">redirect_stderr</span>=<span class="hljs-literal">true</span><br><br><br>[root@ip conf.d]# cat skydns.conf<br>[program:skydns]<br><span class="hljs-attribute">directory</span>=/opt/supervisor/<br><span class="hljs-comment">#command=/usr/bin/skydns</span><br><span class="hljs-comment">#  -addr=0.0.0.0:53</span><br><span class="hljs-comment">#  -machines=http://127.0.0.1:2379</span><br><span class="hljs-comment">#  -nameservers="":53</span><br><span class="hljs-comment">#  -discover=true</span><br><span class="hljs-comment">#  -domain="xxx.net."</span><br><span class="hljs-attribute">command</span>=/usr/local/bin/skydns<br><span class="hljs-comment">#  -discover=true</span><br>  <span class="hljs-attribute">-machines</span>=<span class="hljs-string">"http://10.xx.xx.xx:2379,http://10.xx.xx.xx"</span><br>  <span class="hljs-attribute">-verbose</span>=<span class="hljs-literal">true</span><br><span class="hljs-attribute">stdout_logfile</span>=/opt/supervisor/log/skydns.log<br><span class="hljs-attribute">user</span>=root<br><span class="hljs-attribute">redirect_stderr</span>=<span class="hljs-literal">true</span><br></code></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>备份</li>
+</ol>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs armasm"># etcdctl <span class="hljs-keyword">backup </span>--<span class="hljs-meta">data</span>-dir=/<span class="hljs-meta">opt</span>/etcd/etcd-<span class="hljs-meta">data</span> --<span class="hljs-keyword">backup-dir=/tmp/etcd-backup-`date </span>+%y%m%d%H`<br></code></pre></td></tr></table></figure>
+<ol start="4">
+<li>还原</li>
+</ol>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs haskell">停止etcd，将备份数据拷贝到<span class="hljs-class"><span class="hljs-keyword">data</span>-dir下，启动配置需加上<span class="hljs-comment">--force-new-cluster参数，启动etcd</span></span><br></code></pre></td></tr></table></figure>
+
+      </section>
+
+      <section class="article-footer">
+        
+      </section>
+
+      <section class="article-navs">
+        
+<nav class="card-container card-article-nav">
+  <div class="card-wrap">
+    
+      <div id="article-nav-newer" class="card-item">
+        <article>
+          
+          <a class="card-link article-nav-link" href="/2018/09/12/27_docker/"></a>
+          <strong class="article-nav-caption">Newer</strong>
+          <p class="article-nav-title">
+            
+              Docker
+            
+          </p>
+        </article>
+      </div>
+    
+    
+      <div id="article-nav-older" class="card-item">
+        <article>
+          
+          <a class="card-link article-nav-link" href="/2018/09/03/24_gitlab%E6%90%AD%E5%BB%BA%E5%A4%87%E4%BB%BD%E5%8F%8A%E8%BF%98%E5%8E%9F/"></a>
+          <strong class="article-nav-caption">Older</strong>
+          <p class="article-nav-title">
+            
+              gitlab搭建、备份及还原
+            
+          </p>
+        </article>
+      </div>
+    
+  </div>
+</nav>
+
+      </section>
+    </div>
+  </article>
+</div>
+
+    <!-- footer container -->
+<footer id="footer" class="footer">
+  <div class="footer-container">
+     
+    <p>&copy; 2020 <a href="/" target="_blank">zhaodan</a></p>
+
+    
+      <p id="hitokoto"></p>
+      <script src="https://v1.hitokoto.cn/?c=a&amp;encode=js&select=%23hitokoto" defer></script>
+    
+
+    
+
+    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> Theme - <a href="https://github.com/miiiku/flex-block" target="_blank">flex-block</a></p>
+  </div>
+</footer>
+  </div>
+
+  <div class="back-to-top-fixed">
+    <svg class="icon icon-back-to-top" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M725.333333 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8l-213.333333-213.333333c-17.066667-17.066667-17.066667-42.666667 0-59.733333s42.666667-17.066667 59.733333 0l213.333333 213.333333c17.066667 17.066667 17.066667 42.666667 0 59.733333C746.666667 422.4 738.133333 426.666667 725.333333 426.666667z"></path>
+  <path d="M298.666667 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8-17.066667-17.066667-17.066667-42.666667 0-59.733333l213.333333-213.333333c17.066667-17.066667 42.666667-17.066667 59.733333 0s17.066667 42.666667 0 59.733333l-213.333333 213.333333C320 422.4 311.466667 426.666667 298.666667 426.666667z"></path>
+  <path d="M512 896c-25.6 0-42.666667-17.066667-42.666667-42.666667L469.333333 170.666667c0-25.6 17.066667-42.666667 42.666667-42.666667s42.666667 17.066667 42.666667 42.666667l0 682.666667C554.666667 878.933333 537.6 896 512 896z"></path>
+</svg> 
+  </div>
+
+  
+  
+
+
+  <!-- aplayer 音频 start -->
+  
+<link rel="stylesheet" href="/lib/APlayer.min.css">
+
+  
+<script src="/lib/APlayer.min.js"></script>
+
+  <script type="text/javascript">
+    const aplayer = document.querySelectorAll(".aplayer");
+    aplayer && initaplayer(aplayer);
+    function initaplayer(els) {
+      let elsArr = Array.from(els);
+      elsArr.forEach(el => {
+        new APlayer({
+          container: el,
+          audio: { ...el.dataset },
+          theme: "#b7daff",
+          lrcType: 3,
+          autoplay: false,
+          loop: false,
+          mutex: true,
+        });
+      });
+    }
+  </script>
+  <!-- aplayer 音频 end -->
+  
+
+<!-- dplayer 视频 start -->
+
+<link rel="stylesheet" href="/lib/DPlayer.min.css">
+
+
+<script src="/lib/DPlayer.min.js"></script>
+
+<script type="text/javascript">
+  const dplayer = document.querySelectorAll(".dplayer");
+  dplayer && initDPlayer(dplayer);
+  function initDPlayer(els) {
+    let elsArr = Array.from(els);
+    elsArr.forEach(el => {
+      let url = el.dataset.url;
+      let cover = el.dataset.cover;
+      new DPlayer({
+        container: el,
+        video: { url: url, pic: cover },
+        theme: "#b7daff",
+        autoplay: false,
+        loop: false,
+        mutex: true,
+      });
+    });
+  }
+</script>
+<!-- dplayer 视频 end -->
+
+
+<!-- waterfall 瀑布流 start -->
+
+<script src="/lib/waterfall.min.js"></script>
+
+<script type="text/javascript">
+
+const waterfalls = document.querySelectorAll(".waterfall-container");
+
+if (waterfalls && waterfalls.length > 0) {
+  waterfalls.forEach((waterfall, index) => {
+    let cls = "waterfall-container-" + index;
+    waterfall.classList.add(cls);
+    initWaterfall(cls, waterfall);
+  });
+}
+
+function initWaterfall(selector, el) {
+  const options = {};
+  if (Object.keys(el.dataset).length > 0) {
+    for (let k in el.dataset) {
+      options[k] = el.dataset[k];
+    }
+  }
+  waterfall(`.${selector}`, options);
+}
+</script>
+<!-- waterfall 瀑布流 end -->
+
+
+  <!-- zoom start -->
+  
+<script src="/lib/zoom.min.js"></script>
+
+  <script type="text/javascript">
+    document.querySelector(".article-content") && zoom(".article-content");
+  </script>
+  <!-- zoom end -->
+  
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+<script src="/js/script.js"></script>
+
+  
+  <!-- 尾部用户自定义相关内容 -->
+
+</body>
+</html>

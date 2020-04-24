@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  
+    <meta name="description" content="fighting">
+  
+
+  
+    <meta name="keywords" content="best">
+  
+
+  
+    <meta name="author" content="zhaodan">
+  
+
+  
+    <meta name="copyright" content="zhaodan">
+  
+
+  
+
+  <title>搭建德国CDH(踩坑无数后整理版) | Hexo</title>
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+    <link href="https://cdn.bootcss.com/highlight.js/9.15.6/styles/monokai.min.css" rel="stylesheet">
+  
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+  <div class="root-container">
+    <!-- navbar -->
+<nav class="navbar">
+  <div class="navbar-content">
+    <!-- logo -->
+    <div class="navbar-logo">
+      <a href="/">
+        
+          Hexo
+        
+      </a>
+    </div>
+    <!-- link -->
+    <div class="navbar-link">
+      <div class="navbar-btn">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <ul class="navbar-list">
+        
+          <li class="navbar-list-item"><a href="/">HOME</a></li>
+        
+          <li class="navbar-list-item"><a href="/about">ABOUT</a></li>
+        
+          <li class="navbar-list-item"><a href="/tags">TAGS</a></li>
+        
+          <li class="navbar-list-item"><a href="/categories">CATEGORIES</a></li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    
+<!-- header container -->
+<header class="header-container post">
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+    <div class="header-content">
+      <div class="post-image" style="background-image: url(https://qiniu.miiiku.xyz/src/images/banner.jpg)"></div>
+      <div class="post-text">
+        <div class="type-wrap">
+          
+        </div>
+        <h1 class="title-wrap">搭建德国CDH(踩坑无数后整理版)</h1>
+        <h2 class="title-sub-wrap">
+          <strong>zhaodan</strong>
+          <span>发布于</span>
+          
+  <a href="javascript:;" class="article-date">
+    <time datetime="2019-12-17T16:00:00.000Z" itemprop="datePublished">2019-12-18</time>
+  </a>
+
+        </h2>
+      </div>
+    </div>
+  
+
+  
+  
+
+  </header>
+
+    <!-- 文章 -->
+
+<!-- 文章内容 -->
+
+<div class="body-container">
+  <article class="content-container article-container">
+    <div class="article-content">
+      
+      
+
+      <section class="article-entry">
+        <p>注： 发出来的文档包含IP皆为内网IP，密码也为文档效果更改</p>
+<p>#####三台CentOS Linux release 7.5.1804 (Core)服务器：<br>[cdh]<br>172.17.4.9<br>172.17.4.10<br>172.17.4.11<br>#####新建一个普通用户，给予超级用户权限（所有节点）：<br>[root@cdh1-172-17-4-9 ~]# groupadd -r aiot<br>[root@cdh1-172-17-4-9 ~]# useradd -d /home/aiot/ -m -s /bin/bash -c “administrator user” -g aiot -p passwd -r aiot<br>[root@cdh1-172-17-4-9 ~]# passwd aiot<br>更改用户 aiot 的密码 。<br>新的 密码：passwd<br>无效的密码： 密码包含用户名在某些地方<br>重新输入新的 密码：passwd<br>passwd：所有的身份验证令牌已经成功更新。<br>[root@cdh1-172-17-4-9 ~]# vim /etc/sudoers</p>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs ada">root    <span class="hljs-keyword">ALL</span>=(<span class="hljs-keyword">ALL</span>)       <span class="hljs-keyword">ALL</span><br>aiot <span class="hljs-keyword">ALL</span>=(<span class="hljs-keyword">ALL</span>) NOPASSWD: <span class="hljs-keyword">ALL</span><br></code></pre></td></tr></table></figure>
+<p>#####安装必要包（所有节点）：<br>yum install httpd -y<br>yum install ntp -y</p>
+<p>#####配置域名解析、主机名（所有节点）：</p>
+<p>[root@cdh1-172-17-4-9 ~]# cat /etc/hosts</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs angelscript">::<span class="hljs-number">1</span> VM_4_4_centos VM_4_4_centos<br>::<span class="hljs-number">1</span> localhost.localdomain localhost<br>::<span class="hljs-number">1</span> localhost6.localdomain6 localhost6<br><span class="hljs-number">127.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span> localhost localhost.localdomain VM_4_9_centos<br><span class="hljs-number">172.17</span><span class="hljs-number">.4</span><span class="hljs-number">.9</span> cdh1<span class="hljs-number">-172</span><span class="hljs-number">-17</span><span class="hljs-number">-4</span><span class="hljs-number">-9</span><br><span class="hljs-number">172.17</span><span class="hljs-number">.4</span><span class="hljs-number">.10</span> cdh2<span class="hljs-number">-172</span><span class="hljs-number">-17</span><span class="hljs-number">-4</span><span class="hljs-number">-10</span><br><span class="hljs-number">172.17</span><span class="hljs-number">.4</span><span class="hljs-number">.11</span> cdh3<span class="hljs-number">-172</span><span class="hljs-number">-17</span><span class="hljs-number">-4</span><span class="hljs-number">-11</span><br></code></pre></td></tr></table></figure>
+<p>[root@cdh1-172-17-4-9 ~]# hostnamectl set-hostname cdh1-172-17-4-9<br>[root@cdh2-172-17-4-10 ~]# cat /etc/hosts</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs angelscript"><span class="hljs-number">127.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span> VM_4_10_centos VM_4_10_centos<br><span class="hljs-number">127.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span> localhost.localdomain localhost<br><span class="hljs-number">127.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span> localhost4.localdomain4 localhost4<br>::<span class="hljs-number">1</span> VM_4_10_centos VM_4_10_centos<br>::<span class="hljs-number">1</span> localhost.localdomain localhost<br>::<span class="hljs-number">1</span> localhost6.localdomain6 localhost6<br><span class="hljs-number">172.17</span><span class="hljs-number">.4</span><span class="hljs-number">.9</span> cdh1<span class="hljs-number">-172</span><span class="hljs-number">-17</span><span class="hljs-number">-4</span><span class="hljs-number">-9</span><br><span class="hljs-number">172.17</span><span class="hljs-number">.4</span><span class="hljs-number">.10</span> cdh2<span class="hljs-number">-172</span><span class="hljs-number">-17</span><span class="hljs-number">-4</span><span class="hljs-number">-10</span><br><span class="hljs-number">172.17</span><span class="hljs-number">.4</span><span class="hljs-number">.11</span> cdh3<span class="hljs-number">-172</span><span class="hljs-number">-17</span><span class="hljs-number">-4</span><span class="hljs-number">-11</span><br></code></pre></td></tr></table></figure>
+<p>[root@cdh2-172-17-4-10 ~]# hostnamectl set-hostname cdh2-172-17-4-10<br>[root@cdh3-172-17-4-11 ~]# cat /etc/hosts</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs angelscript"><span class="hljs-number">127.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span> VM_4_11_centos VM_4_11_centos<br><span class="hljs-number">127.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span> localhost.localdomain localhost<br><span class="hljs-number">127.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span> localhost4.localdomain4 localhost4<br>::<span class="hljs-number">1</span> VM_4_11_centos VM_4_11_centos<br>::<span class="hljs-number">1</span> localhost.localdomain localhost<br>::<span class="hljs-number">1</span> localhost6.localdomain6 localhost6<br><span class="hljs-number">172.17</span><span class="hljs-number">.4</span><span class="hljs-number">.9</span> cdh1<span class="hljs-number">-172</span><span class="hljs-number">-17</span><span class="hljs-number">-4</span><span class="hljs-number">-9</span><br><span class="hljs-number">172.17</span><span class="hljs-number">.4</span><span class="hljs-number">.10</span> cdh2<span class="hljs-number">-172</span><span class="hljs-number">-17</span><span class="hljs-number">-4</span><span class="hljs-number">-10</span><br><span class="hljs-number">172.17</span><span class="hljs-number">.4</span><span class="hljs-number">.11</span> cdh3<span class="hljs-number">-172</span><span class="hljs-number">-17</span><span class="hljs-number">-4</span><span class="hljs-number">-11</span><br></code></pre></td></tr></table></figure>
+<p>[root@cdh3-172-17-4-11 ~]# hostnamectl set-hostname cdh3-172-17-4-11</p>
+<p>#####关闭防火墙和SELINUX（所有节点）：<br>[root@cdh1-172-17-4-9 ~]# getenforce<br>Disabled<br>[root@cdh1-172-17-4-9 ~]# systemctl stop firewalld<br>[root@cdh1-172-17-4-9 ~]# systemctl disable firewalld.service<br>[root@cdh1-172-17-4-9 ~]# vim /etc/selinux/config<br>SELINUX=disabled</p>
+<p>#####切换普通用户，配置三机互信（所有节点）：<br>[root@cdh1-172-17-4-9 ~]# su - aiot<br>[aiot@cdh1-172-17-4-9 ~]$ whoami<br>aiot<br>[aiot@cdh1-172-17-4-9 ~]$ mkdir .ssh<br>[aiot@cdh1-172-17-4-9 ~]$ chmod 750 .ssh<br>[aiot@cdh1-172-17-4-9 ~]$ ssh-keygen -t rsa<br>Generating public/private rsa key pair.<br>Enter file in which to save the key (/home/aiot//.ssh/id_rsa):<br>Enter passphrase (empty for no passphrase):<br>Enter same passphrase again:<br>Your identification has been saved in /home/aiot//.ssh/id_rsa.<br>Your public key has been saved in /home/aiot//.ssh/id_rsa.pub.<br>The key fingerprint is:<br>SHA256:MEtv2UxJl5VddGmG+RegPLaTi8n2Z0fo6LHHEbJthYw aiot@cdh1-172-17-4-9<br>The key’s randomart image is:<br>+—[RSA 2048]—-+<br>|          . .+=+<em>|<br>|         ..ooo.=o|<br>|      +   o=o = .|<br>|     . = =.E++ o.|<br>|      . S o++ + .|<br>|       .. o.o= . |<br>|         = o= o  |<br>|        . ..o</em> . |<br>|          .++ .  |<br>+—-[SHA256]—–+<br>[aiot@cdh1-172-17-4-9 ~]$ cat /home/aiot/.ssh/id_rsa.pub &gt;&gt; /home/aiot/.ssh/authorized_keys<br>[aiot@cdh1-172-17-4-9 ~]$ chmod 600 /home/aiot/.ssh/authorized_keys<br>[aiot@cdh1-172-17-4-9 ~]$ cat .ssh/authorized_keys</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs angelscript">ssh-rsa ********* <span class="hljs-symbol">aiot@</span>cdh1<span class="hljs-number">-172</span><span class="hljs-number">-17</span><span class="hljs-number">-4</span><span class="hljs-number">-9</span><br></code></pre></td></tr></table></figure>
+<p>[aiot@cdh1-172-17-4-9 ~]$ vim .ssh/authorized_keys<br>[aiot@cdh1-172-17-4-9 ~]$ cat .ssh/authorized_keys</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs angelscript">ssh-rsa ********* <span class="hljs-symbol">aiot@</span>cdh1<span class="hljs-number">-172</span><span class="hljs-number">-17</span><span class="hljs-number">-4</span><span class="hljs-number">-9</span><br>ssh-rsa ********* <span class="hljs-symbol">aiot@</span>cdh2<span class="hljs-number">-172</span><span class="hljs-number">-17</span><span class="hljs-number">-4</span><span class="hljs-number">-10</span><br>ssh-rsa ********* <span class="hljs-symbol">aiot@</span>cdh3<span class="hljs-number">-172</span><span class="hljs-number">-17</span><span class="hljs-number">-4</span><span class="hljs-number">-11</span><br></code></pre></td></tr></table></figure>
+<p>[aiot@cdh1-172-17-4-9 ~]$ ssh 172.17.4.10 date<br>Are you sure you want to continue connecting (yes/no)? yes<br>Warning: Permanently added ‘172.17.4.10’ (ECDSA) to the list of known hosts.<br>Mon Dec 23 10:16:27 CST 2019<br>[aiot@cdh1-172-17-4-9 ~]$ logout</p>
+<p>#####配置时钟同步（所有节点）：</p>
+<p>[root@cdh1-172-17-4-9 ~]# sudo vim /etc/ntp.conf</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs routeros"><span class="hljs-comment">#server 0.centos.pool.ntp.org iburst</span><br><span class="hljs-comment">#server 1.centos.pool.ntp.org iburst</span><br><span class="hljs-comment">#server 2.centos.pool.ntp.org iburst</span><br><span class="hljs-comment">#server 3.centos.pool.ntp.org iburst</span><br>server 0.pool.ntp.org<br>server 1.pool.ntp.org<br>server 2.pool.ntp.org<br></code></pre></td></tr></table></figure>
+<p>[root@cdh1-172-17-4-9 ~]# sudo systemctl enable ntpd<br>[root@cdh1-172-17-4-9 ~]# sudo systemctl start ntpd<br>[root@cdh1-172-17-4-9 ~]# sudo systemctl status ntpd<br>● ntpd.service - Network Time Service<br>   Loaded: loaded (/usr/lib/systemd/system/ntpd.service; enabled; vendor preset: disabled)<br>   Active: active (running) since 一 2019-12-23 09:56:25 CST; 22min ago<br> Main PID: 10113 (ntpd)<br>   CGroup: /system.slice/ntpd.service<br>           └─10113 /usr/sbin/ntpd -u ntp:ntp -g<br>12月 23 09:56:25 cdh1-172-17-4-9 ntpd[10113]: ntp_io: estimated max descriptors: 1024, initial socket boundary: 16<br>12月 23 09:56:25 cdh1-172-17-4-9 ntpd[10113]: Listen normally on 0 lo 127.0.0.1 UDP 123<br>12月 23 09:56:25 cdh1-172-17-4-9 ntpd[10113]: Listen normally on 1 eth0 172.17.4.9 UDP 123<br>12月 23 09:56:25 cdh1-172-17-4-9 ntpd[10113]: Listen normally on 2 lo ::1 UDP 123<br>12月 23 09:56:25 cdh1-172-17-4-9 ntpd[10113]: Listen normally on 3 eth0 fe80::5054:ff:feeb:37bf UDP 123<br>12月 23 09:56:25 cdh1-172-17-4-9 ntpd[10113]: Listening on routing socket on fd #20 for interface updates<br>12月 23 09:56:25 cdh1-172-17-4-9 ntpd[10113]: 0.0.0.0 c016 06 restart<br>12月 23 09:56:25 cdh1-172-17-4-9 ntpd[10113]: 0.0.0.0 c012 02 freq_set kernel -2.846 PPM<br>12月 23 09:56:25 cdh1-172-17-4-9 systemd[1]: Started Network Time Service.<br>12月 23 09:56:32 cdh1-172-17-4-9 ntpd[10113]: 0.0.0.0 c615 05 clock_sync</p>
+<p>#####禁用大透明页，设置vm.swappiness（主节点）：</p>
+<p>[root@cdh1-172-17-4-9 ~]# sudo vim /etc/sysctl.conf</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">vm.swappiness</span>=<span class="hljs-number">10</span><br></code></pre></td></tr></table></figure>
+<p>[aiot@cdh1-172-17-4-9 ~]$ sudo sysctl vm.swappiness=10<br>vm.swappiness = 10<br>[aiot@cdh1-172-17-4-9 ~]$ sudo vim /etc/rc.local</p>
+<figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs crystal">echo never &gt; <span class="hljs-regexp">/sys/kernel</span><span class="hljs-regexp">/mm/transparent</span>_hugepage/defrag<br>echo never &gt; <span class="hljs-regexp">/sys/kernel</span><span class="hljs-regexp">/mm/transparent</span>_hugepage/enabled<br></code></pre></td></tr></table></figure>
+<p>[aiot@cdh1-172-17-4-9 ~]$ sudo chmod +x /etc/rc.d/rc.local</p>
+<p>并在终端使用root执行</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> <span class="hljs-built_in">echo</span> never &gt; /sys/kernel/mm/transparent_hugepage/defrag</span><br><span class="hljs-meta">#</span><span class="bash"> <span class="hljs-built_in">echo</span> never &gt; /sys/kernel/mm/transparent_hugepage/enabled</span><br></code></pre></td></tr></table></figure>
+<p>#####安装jdk（所有节点）：</p>
+<p>[aiot@cdh1-172-17-4-9 ~]$ sudo rpm -qa | grep java<br>[aiot@cdh1-172-17-4-9 ~]$ sudo mkdir -p /usr/java<br>下载java、mysql-connecter<br>[aiot@cdh1-172-17-4-9 ~]$ sudo tar -zxvf /tmp/jdk-8u181-linux-x64.tar.gz -C /usr/java/<br>[aiot@cdh1-172-17-4-9 ~]$ sudo ln -s /usr/java/jdk1.8.0_181 /usr/java/jdk<br>[aiot@cdh1-172-17-4-9 ~]$ sudo vim /etc/profile</p>
+<figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs crystal">export JAVA_HOME=<span class="hljs-regexp">/usr/java</span><span class="hljs-regexp">/jdk</span><br><span class="hljs-regexp">export PATH=$PATH:$JAVA_HOME/bin</span><br>export CLASSPATH=.:$JAVA_HOME/<span class="hljs-class"><span class="hljs-keyword">lib</span>:$<span class="hljs-title">CLASSPATH</span></span><br></code></pre></td></tr></table></figure>
+<p>[aiot@cdh1-172-17-4-9 ~]$ source /etc/profile<br>[aiot@cdh1-172-17-4-9 ~]$ vim ~/.bashrc</p>
+<figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs crystal">export JAVA_HOME=<span class="hljs-regexp">/usr/java</span><span class="hljs-regexp">/jdk</span><br><span class="hljs-regexp">export PATH=$PATH:$JAVA_HOME/bin</span><br>export CLASSPATH=.:$JAVA_HOME/<span class="hljs-class"><span class="hljs-keyword">lib</span>:$<span class="hljs-title">CLASSPATH</span></span><br></code></pre></td></tr></table></figure>
+<p>[aiot@cdh1-172-17-4-9 ~]$ vim ~/.bash_profile<br>export JAVA_HOME=/usr/java/jdk<br>export PATH=$PATH:$JAVA_HOME/bin<br>export CLASSPATH=.:$JAVA_HOME/lib:$CLASSPATH<br>[aiot@cdh1-172-17-4-9 ~]$ echo $JAVA_HOME<br>/usr/java/jdk</p>
+<p>#####拷贝数据库连接jar包（所有节点）：</p>
+<p>[aiot@cdh1-172-17-4-9 ~]$ sudo mkdir -p /usr/share/java<br>[aiot@cdh1-172-17-4-9 ~]$ sudo cp /tmp/mysql-connector-java-5.1.46.jar /usr/share/java/mysql-connector-java.jar<br>[aiot@cdh1-172-17-4-9 ~]$ ls /usr/share/java/<br>mysql-connector-java.jar</p>
+<p>#####安装mysql57并建库授权（所有节点）：</p>
+<p>[aiot@cdh1-172-17-4-9 ~]$ sudo rpm -qa | grep mariadb<br>mariadb-libs-5.5.56-2.el7.x86_64<br>[aiot@cdh1-172-17-4-9 ~]$ sudo rpm -e mariadb-libs-5.5.56-2.el7.x86_64 –nodeps<br>[aiot@cdh1-172-17-4-9 ~]$ sudo rpm -qa | grep mariadb<br>[aiot@cdh1-172-17-4-9 ~]$ sudo yum -y install libaio<br>[aiot@cdh2-172-17-4-10 ~]$ cd /tmp<br>[aiot@cdh2-172-17-4-10 tmp]$ ls<br>2f0a2e365ded13cde49324756eacd7de          nv_driver_install.log<br>ansible_command_payload_Vt5UHt            nv_gpu_conf.log<br>cvm_init.log                              setRps.log<br>hsperfdata_root                           systemd-private-21cc3095c6d247a897c48ae1c72ff7c6-ntpd.service-e0cbwM<br>jdk-8u181-linux-x64.tar.gz                systemd-private-62cdd337e72f463daa0d3e2e36bc16a9-ntpd.service-hG5zxr<br>mysql-5.7.20-1.el7.x86_64.rpm-bundle.tar  virtio_blk_affinity.log<br>mysql-connector-java-5.1.46.jar           virtio_blk_affinity_udev.log<br>net_affinity.log<br>[aiot@cdh2-172-17-4-10 tmp]$ tar -xvf mysql-5.7.20-1.el7.x86_64.rpm-bundle.tar<br>mysql-community-minimal-debuginfo-5.7.20-1.el7.x86_64.rpm<br>mysql-community-embedded-5.7.20-1.el7.x86_64.rpm<br>mysql-community-libs-compat-5.7.20-1.el7.x86_64.rpm<br>mysql-community-libs-5.7.20-1.el7.x86_64.rpm<br>mysql-community-embedded-compat-5.7.20-1.el7.x86_64.rpm<br>mysql-community-devel-5.7.20-1.el7.x86_64.rpm<br>mysql-community-server-5.7.20-1.el7.x86_64.rpm<br>mysql-community-server-minimal-5.7.20-1.el7.x86_64.rpm<br>mysql-community-client-5.7.20-1.el7.x86_64.rpm<br>mysql-community-test-5.7.20-1.el7.x86_64.rpm<br>mysql-community-common-5.7.20-1.el7.x86_64.rpm<br>mysql-community-embedded-devel-5.7.20-1.el7.x86_64.rpm<br>参考： <a href="http://www.seaxiang.com/blog/mysql_libnuma_error" target="_blank" rel="noopener">http://www.seaxiang.com/blog/mysql_libnuma_error</a><br>[aiot@cdh1-172-17-4-9 aiot]$ sudo yum install numactl<br>sudo rpm -ivh mysql-community-common-5.7.20-1.el7.x86_64.rpm<br>sudo rpm -ivh mysql-community-libs-5.7.20-1.el7.x86_64.rpm<br>sudo rpm -ivh mysql-community-libs-compat-5.7.20-1.el7.x86_64.rpm<br>sudo rpm -ivh mysql-community-client-5.7.20-1.el7.x86_64.rpm<br>sudo rpm -ivh mysql-community-server-5.7.20-1.el7.x86_64.rpm<br>[aiot@cdh1-172-17-4-9 aiot]$ sudo mkdir -p /data/mysqldata/mysql<br>[aiot@cdh2-172-17-4-10 aiot]$ sudo su<br>[root@cdh2-172-17-4-10 aiot]# cp /etc/my.cnf /tmp<br>[root@cdh2-172-17-4-10 aiot]# echo &gt; /etc/my.cnf<br>[root@cdh2-172-17-4-10 aiot]# vim /etc/my.cnf</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-section">[mysqld]</span><br><span class="hljs-attr">datadir</span>=/data/mysqldata/mysql<br><span class="hljs-attr">socket</span>=/var/lib/mysql/mysql.sock<br><span class="hljs-attr">transaction-isolation</span>=READ-COMMITTED<br><span class="hljs-attr">symbolic-links</span>=<span class="hljs-number">0</span><br><span class="hljs-attr">key_buffer_size</span>=<span class="hljs-number">32</span>M<br><span class="hljs-attr">max_allowed_packet</span>=<span class="hljs-number">32</span>M<br><span class="hljs-attr">thread_stack</span>=<span class="hljs-number">256</span>K<br><span class="hljs-attr">thread_cache_size</span>=<span class="hljs-number">64</span><br><span class="hljs-attr">query_cache_limit</span>=<span class="hljs-number">8</span>M<br><span class="hljs-attr">query_cache_size</span>=<span class="hljs-number">64</span>M<br><span class="hljs-attr">query_cache_type</span>=<span class="hljs-number">1</span><br><span class="hljs-attr">max_connections</span>=<span class="hljs-number">550</span><br><span class="hljs-attr">log_bin</span>=/data/mysqldata/mysql/mysql_binary_log<br><span class="hljs-attr">server_id</span>=<span class="hljs-number">1</span><br><span class="hljs-attr">binlog_format</span>=mixed<br><span class="hljs-attr">read_buffer_size</span>=<span class="hljs-number">2</span>M<br><span class="hljs-attr">read_rnd_buffer_size</span>=<span class="hljs-number">16</span>M<br><span class="hljs-attr">sort_buffer_size</span>=<span class="hljs-number">8</span>M<br><span class="hljs-attr">join_buffer_size</span>=<span class="hljs-number">8</span>M<br><span class="hljs-attr">innodb_file_per_table</span>=<span class="hljs-number">1</span><br><span class="hljs-attr">innodb_flush_log_at_trx_commit</span>=<span class="hljs-number">2</span><br><span class="hljs-attr">innodb_log_buffer_size</span>=<span class="hljs-number">64</span>M<br><span class="hljs-attr">innodb_buffer_pool_size</span>=<span class="hljs-number">4</span>G<br><span class="hljs-attr">innodb_thread_concurrency</span>=<span class="hljs-number">8</span><br><span class="hljs-attr">innodb_flush_method</span>=O_DIRECT<br><span class="hljs-attr">innodb_log_file_size</span>=<span class="hljs-number">512</span>M<br><span class="hljs-attr">log-error</span>=/var/log/mysqld.log<br><span class="hljs-attr">pid-file</span>=/var/run/mysqld/mysqld.pid<br><span class="hljs-attr">sql_mode</span>=STRICT_ALL_TABLES<br></code></pre></td></tr></table></figure>
+<p>[root@cdh1-172-17-4-9 aiot]# exit<br>[aiot@cdh1-172-17-4-9 aiot]$ sudo systemctl enable mysqld<br>[aiot@cdh1-172-17-4-9 aiot]$ sudo systemctl start mysqld<br>[aiot@cdh1-172-17-4-9 aiot]$ sudo systemctl status mysqld -l<br>● mysqld.service - MySQL Server<br>   Loaded: loaded (/usr/lib/systemd/system/mysqld.service; enabled; vendor preset: disabled)<br>   Active: active (running) since Mon 2019-12-23 12:02:52 CST; 4s ago<br>     Docs: man:mysqld(8)<br>           <a href="http://dev.mysql.com/doc/refman/en/using-systemd.html" target="_blank" rel="noopener">http://dev.mysql.com/doc/refman/en/using-systemd.html</a><br>  Process: 28580 ExecStart=/usr/sbin/mysqld –daemonize –pid-file=/var/run/mysqld/mysqld.pid $MYSQLD_OPTS (code=exited, status=0/SUCCESS)<br>  Process: 28486 ExecStartPre=/usr/bin/mysqld_pre_systemd (code=exited, status=0/SUCCESS)<br> Main PID: 28583 (mysqld)<br>   CGroup: /system.slice/mysqld.service<br>           └─28583 /usr/sbin/mysqld –daemonize –pid-file=/var/run/mysqld/mysqld.pid<br>Dec 23 12:02:42 cdh1-172-17-4-9 systemd[1]: Starting MySQL Server…<br>Dec 23 12:02:52 cdh1-172-17-4-9 systemd[1]: Started MySQL Server.<br>[aiot@cdh1-172-17-4-9 aiot]$ sudo grep ‘temporary password’ /var/log/mysqld.log<br>2019-12-23T04:02:49.050303Z 1 [Note] A temporary password is generated for root@localhost: JwXY&amp;drNk6l0<br>[aiot@cdh1-172-17-4-9 aiot]$ mysql -u root -p<br>Enter password:<br>Welcome to the MySQL monitor.  Commands end with ; or \g.<br>Your MySQL connection id is 3<br>Server version: 5.7.20-log<br>Copyright (c) 2000, 2017, Oracle and/or its affiliates. All rights reserved.<br>Oracle is a registered trademark of Oracle Corporation and/or its<br>affiliates. Other names may be trademarks of their respective<br>owners.<br>Type ‘help;’ or ‘\h’ for help. Type ‘\c’ to clear the current input statement.</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">mysql&gt; <span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">USER</span> <span class="hljs-keyword">USER</span>() IDENTIFIED <span class="hljs-keyword">BY</span> <span class="hljs-string">'passwd!@$'</span>;<br>Query OK, <span class="hljs-number">0</span> <span class="hljs-keyword">rows</span> affected (<span class="hljs-number">0.00</span> sec)<br><br><span class="hljs-keyword">grant</span> <span class="hljs-keyword">all</span> <span class="hljs-keyword">privileges</span> <span class="hljs-keyword">on</span> *.* <span class="hljs-keyword">to</span> <span class="hljs-string">'root'</span>@<span class="hljs-string">'%'</span> identified <span class="hljs-keyword">by</span> <span class="hljs-string">'Aiot2019!@$'</span> <span class="hljs-keyword">with</span> <span class="hljs-keyword">grant</span> <span class="hljs-keyword">option</span>;<br><span class="hljs-keyword">create</span> <span class="hljs-keyword">database</span> scm <span class="hljs-keyword">DEFAULT</span> CHARSET utf8 <span class="hljs-keyword">COLLATE</span> utf8_general_ci;<br><span class="hljs-keyword">create</span> <span class="hljs-keyword">database</span> hive <span class="hljs-keyword">DEFAULT</span> CHARSET utf8 <span class="hljs-keyword">COLLATE</span> utf8_general_ci;<br><span class="hljs-keyword">create</span> <span class="hljs-keyword">database</span> oozie <span class="hljs-keyword">DEFAULT</span> CHARSET utf8 <span class="hljs-keyword">COLLATE</span> utf8_general_ci;<br><span class="hljs-keyword">create</span> <span class="hljs-keyword">database</span> hue <span class="hljs-keyword">DEFAULT</span> CHARSET utf8 <span class="hljs-keyword">COLLATE</span> utf8_general_ci;<br><span class="hljs-keyword">create</span> <span class="hljs-keyword">database</span> nas <span class="hljs-keyword">DEFAULT</span> CHARSET utf8 <span class="hljs-keyword">COLLATE</span> utf8_general_ci;<br><span class="hljs-keyword">create</span> <span class="hljs-keyword">database</span> actmonitor <span class="hljs-keyword">DEFAULT</span> CHARSET utf8 <span class="hljs-keyword">COLLATE</span> utf8_general_ci;<br><span class="hljs-keyword">create</span> <span class="hljs-keyword">database</span> rptmgn <span class="hljs-keyword">DEFAULT</span> CHARSET utf8 <span class="hljs-keyword">COLLATE</span> utf8_general_ci;<br><span class="hljs-keyword">create</span> <span class="hljs-keyword">database</span> navmetas <span class="hljs-keyword">DEFAULT</span> CHARSET utf8 <span class="hljs-keyword">COLLATE</span> utf8_general_ci;<br><span class="hljs-keyword">create</span> <span class="hljs-keyword">database</span> sentry <span class="hljs-keyword">DEFAULT</span> CHARSET utf8 <span class="hljs-keyword">COLLATE</span> utf8_general_ci;<br><span class="hljs-keyword">grant</span> <span class="hljs-keyword">all</span> <span class="hljs-keyword">privileges</span> <span class="hljs-keyword">on</span> *.* <span class="hljs-keyword">to</span> <span class="hljs-string">'admin'</span>@<span class="hljs-string">'%'</span> identified <span class="hljs-keyword">by</span> <span class="hljs-string">'Aiot2019!@$'</span> <span class="hljs-keyword">with</span> <span class="hljs-keyword">grant</span> <span class="hljs-keyword">option</span>;<br><span class="hljs-keyword">grant</span> <span class="hljs-keyword">all</span> <span class="hljs-keyword">privileges</span> <span class="hljs-keyword">on</span> scm.* <span class="hljs-keyword">to</span> <span class="hljs-string">'scm'</span>@<span class="hljs-string">'%'</span> identified <span class="hljs-keyword">by</span> <span class="hljs-string">'Aiot2019!@$'</span> <span class="hljs-keyword">with</span> <span class="hljs-keyword">grant</span> <span class="hljs-keyword">option</span>;<br><span class="hljs-keyword">grant</span> <span class="hljs-keyword">all</span> <span class="hljs-keyword">privileges</span> <span class="hljs-keyword">on</span> hive.* <span class="hljs-keyword">to</span> <span class="hljs-string">'hive'</span>@<span class="hljs-string">'%'</span> identified <span class="hljs-keyword">by</span> <span class="hljs-string">'Aiot2019!@$'</span> <span class="hljs-keyword">with</span> <span class="hljs-keyword">grant</span> <span class="hljs-keyword">option</span>;<br><span class="hljs-keyword">grant</span> <span class="hljs-keyword">all</span> <span class="hljs-keyword">privileges</span> <span class="hljs-keyword">on</span> oozie.* <span class="hljs-keyword">to</span> <span class="hljs-string">'oozie'</span>@<span class="hljs-string">'%'</span> identified <span class="hljs-keyword">by</span> <span class="hljs-string">'Aiot2019!@$'</span> <span class="hljs-keyword">with</span> <span class="hljs-keyword">grant</span> <span class="hljs-keyword">option</span>;<br><span class="hljs-keyword">grant</span> <span class="hljs-keyword">all</span> <span class="hljs-keyword">privileges</span> <span class="hljs-keyword">on</span> hue.* <span class="hljs-keyword">to</span> <span class="hljs-string">'hue'</span>@<span class="hljs-string">'%'</span> identified <span class="hljs-keyword">by</span> <span class="hljs-string">'Aiot2019!@$'</span> <span class="hljs-keyword">with</span> <span class="hljs-keyword">grant</span> <span class="hljs-keyword">option</span>;<br><span class="hljs-keyword">grant</span> <span class="hljs-keyword">all</span> <span class="hljs-keyword">privileges</span> <span class="hljs-keyword">on</span> nas.* <span class="hljs-keyword">to</span> <span class="hljs-string">'nas'</span>@<span class="hljs-string">'%'</span> identified <span class="hljs-keyword">by</span> <span class="hljs-string">'Aiot2019!@$'</span> <span class="hljs-keyword">with</span> <span class="hljs-keyword">grant</span> <span class="hljs-keyword">option</span>;<br><span class="hljs-keyword">grant</span> <span class="hljs-keyword">all</span> <span class="hljs-keyword">privileges</span> <span class="hljs-keyword">on</span> actmonitor.* <span class="hljs-keyword">to</span> <span class="hljs-string">'actmonitor'</span>@<span class="hljs-string">'%'</span> identified <span class="hljs-keyword">by</span> <span class="hljs-string">'Aiot2019!@$'</span> <span class="hljs-keyword">with</span> <span class="hljs-keyword">grant</span> <span class="hljs-keyword">option</span>;<br><span class="hljs-keyword">grant</span> <span class="hljs-keyword">all</span> <span class="hljs-keyword">privileges</span> <span class="hljs-keyword">on</span> rptmgn.* <span class="hljs-keyword">to</span> <span class="hljs-string">'rptmgn'</span>@<span class="hljs-string">'%'</span> identified <span class="hljs-keyword">by</span> <span class="hljs-string">'Aiot2019!@$'</span> <span class="hljs-keyword">with</span> <span class="hljs-keyword">grant</span> <span class="hljs-keyword">option</span>;<br><span class="hljs-keyword">grant</span> <span class="hljs-keyword">all</span> <span class="hljs-keyword">privileges</span> <span class="hljs-keyword">on</span> navmetas.* <span class="hljs-keyword">to</span> <span class="hljs-string">'navmetas'</span>@<span class="hljs-string">'%'</span> identified <span class="hljs-keyword">by</span> <span class="hljs-string">'Aiot2019!@$'</span> <span class="hljs-keyword">with</span> <span class="hljs-keyword">grant</span> <span class="hljs-keyword">option</span>;<br><span class="hljs-keyword">grant</span> <span class="hljs-keyword">all</span> <span class="hljs-keyword">privileges</span> <span class="hljs-keyword">on</span> sentry.* <span class="hljs-keyword">to</span> <span class="hljs-string">'sentry'</span>@<span class="hljs-string">'%'</span> identified <span class="hljs-keyword">by</span> <span class="hljs-string">'Aiot2019!@$'</span> <span class="hljs-keyword">with</span> <span class="hljs-keyword">grant</span> <span class="hljs-keyword">option</span>;<br>flush <span class="hljs-keyword">privileges</span>;<br>mysql&gt; <span class="hljs-keyword">show</span> databases;<br>+<span class="hljs-comment">--------------------+</span><br>| <span class="hljs-keyword">Database</span>           |<br>+<span class="hljs-comment">--------------------+</span><br>| information_schema |<br>| actmonitor         |<br>| hive               |<br>| hue                |<br>| mysql              |<br>| nas                |<br>| navmetas           |<br>| oozie              |<br>| performance_schema |<br>| rptmgn             |<br>| scm                |<br>| sentry             |<br>| sys                |<br>+<span class="hljs-comment">--------------------+</span><br><span class="hljs-number">13</span> <span class="hljs-keyword">rows</span> <span class="hljs-keyword">in</span> <span class="hljs-keyword">set</span> (<span class="hljs-number">0.00</span> sec)<br></code></pre></td></tr></table></figure>
+
+<p>#####配置httpd（主节点）：</p>
+<p>[aiot@cdh1-172-17-4-9 aiot]$ sudo vim /etc/httpd/conf/httpd.conf</p>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs jboss-cli">找到增加 <span class="hljs-string">.parcel</span><br>  AddType application/x-gzip <span class="hljs-string">.gz</span> <span class="hljs-string">.tgz</span> <span class="hljs-string">.parcel</span><br>找到修改：<br>&lt;Directory <span class="hljs-string">"/var/www/cgi-bin"</span>&gt;<br>    AllowOverride None<br>    Options FollowSymLinks<br>    Order deny,allow<br>    allow from all<br>&lt;<span class="hljs-string">/Directory</span>&gt;<br></code></pre></td></tr></table></figure>
+
+<p>[aiot@cdh1-172-17-4-9 aiot]$ sudo systemctl start httpd<br>[aiot@cdh1-172-17-4-9 aiot]$ sudo systemctl status httpd<br>● httpd.service - The Apache HTTP Server<br>   Loaded: loaded (/usr/lib/systemd/system/httpd.service; disabled; vendor preset: disabled)<br>   Active: active (running) since Mon 2019-12-23 12:23:22 CST; 2min 18s ago<br>     Docs: man:httpd(8)<br>           man:apachectl(8)<br> Main PID: 31242 (httpd)<br>   Status: “Total requests: 0; Current requests/sec: 0; Current traffic:   0 B/sec”<br>   CGroup: /system.slice/httpd.service<br>           ├─31242 /usr/sbin/httpd -DFOREGROUND<br>           ├─31243 /usr/sbin/httpd -DFOREGROUND<br>           ├─31244 /usr/sbin/httpd -DFOREGROUND<br>           ├─31245 /usr/sbin/httpd -DFOREGROUND<br>           ├─31246 /usr/sbin/httpd -DFOREGROUND<br>           └─31247 /usr/sbin/httpd -DFOREGROUND<br>Dec 23 12:23:22 cdh1-172-17-4-9 systemd[1]: Starting The Apache HTTP Server…<br>Dec 23 12:23:22 cdh1-172-17-4-9 httpd[31242]: AH00558: httpd: Could not reliably determine the server’s fully qua…ssage<br>Dec 23 12:23:22 cdh1-172-17-4-9 systemd[1]: Started The Apache HTTP Server.<br>Hint: Some lines were ellipsized, use -l to show in full.<br>[aiot@cdh1-172-17-4-9 aiot]$ sudo systemctl enable httpd<br>Created symlink from /etc/systemd/system/multi-user.target.wants/httpd.service to /usr/lib/systemd/system/httpd.service.</p>
+<p>#####搭建本地仓库（海外服务器很快（主节点）：）</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs awk">sudo wget --recursive --no-parent --no-host-directories https:<span class="hljs-regexp">//</span>archive.cloudera.com<span class="hljs-regexp">/cdh6/</span><span class="hljs-number">6.2</span>.<span class="hljs-number">0</span><span class="hljs-regexp">/parcels/</span>CDH-<span class="hljs-number">6.2</span>.<span class="hljs-number">0</span>-<span class="hljs-number">1</span>.cdh6.<span class="hljs-number">2.0</span>.p0.<span class="hljs-number">967373</span>-el7.parcel -P <span class="hljs-regexp">/var/</span>www<span class="hljs-regexp">/html/</span>cloudera-repos<br>sudo wget --recursive --no-parent --no-host-directories https:<span class="hljs-regexp">//</span>archive.cloudera.com<span class="hljs-regexp">/cdh6/</span><span class="hljs-number">6.2</span>.<span class="hljs-number">0</span><span class="hljs-regexp">/parcels/</span>CDH-<span class="hljs-number">6.2</span>.<span class="hljs-number">0</span>-<span class="hljs-number">1</span>.cdh6.<span class="hljs-number">2.0</span>.p0.<span class="hljs-number">967373</span>-el7.parcel.sha1 -P <span class="hljs-regexp">/var/</span>www<span class="hljs-regexp">/html/</span>cloudera-repos<br>sudo wget --recursive --no-parent --no-host-directories https:<span class="hljs-regexp">//</span>archive.cloudera.com<span class="hljs-regexp">/cdh6/</span><span class="hljs-number">6.2</span>.<span class="hljs-number">0</span><span class="hljs-regexp">/parcels/</span>CDH-<span class="hljs-number">6.2</span>.<span class="hljs-number">0</span>-<span class="hljs-number">1</span>.cdh6.<span class="hljs-number">2.0</span>.p0.<span class="hljs-number">967373</span>-el7.parcel.sha256 -P <span class="hljs-regexp">/var/</span>www<span class="hljs-regexp">/html/</span>cloudera-repos<br>sudo wget --recursive --no-parent --no-host-directories https:<span class="hljs-regexp">//</span>archive.cloudera.com<span class="hljs-regexp">/cdh6/</span><span class="hljs-number">6.2</span>.<span class="hljs-number">0</span><span class="hljs-regexp">/parcels/m</span>anifest.json -P <span class="hljs-regexp">/var/</span>www<span class="hljs-regexp">/html/</span>cloudera-repos<br>sudo wget --recursive --no-parent --no-host-directories https:<span class="hljs-regexp">//</span>archive.cloudera.com<span class="hljs-regexp">/gplextras6/</span><span class="hljs-number">6.2</span>.<span class="hljs-number">0</span><span class="hljs-regexp">/parcels/</span> -P <span class="hljs-regexp">/var/</span>www<span class="hljs-regexp">/html/</span>cloudera-repos<br>sudo wget --recursive --no-parent --no-host-directories https:<span class="hljs-regexp">//</span>archive.cloudera.com<span class="hljs-regexp">/cm6/</span><span class="hljs-number">6.2</span>.<span class="hljs-number">0</span><span class="hljs-regexp">/redhat7/</span> -P <span class="hljs-regexp">/var/</span>www<span class="hljs-regexp">/html/</span>cloudera-repos<br>sudo wget https:<span class="hljs-regexp">//</span>archive.cloudera.com<span class="hljs-regexp">/cm6/</span><span class="hljs-number">6.2</span>.<span class="hljs-number">0</span><span class="hljs-regexp">/allkeys.asc -P /</span>var<span class="hljs-regexp">/www/</span>html<span class="hljs-regexp">/cloudera-repos/</span>cm6<span class="hljs-regexp">/6.2.0/</span><br> sudo wget https:<span class="hljs-regexp">//</span>archive.cloudera.com<span class="hljs-regexp">/cm6/</span><span class="hljs-number">6.2</span>.<span class="hljs-number">0</span><span class="hljs-regexp">/cloudera-manager-installer.bin -P /</span>var<span class="hljs-regexp">/www/</span>html<span class="hljs-regexp">/cloudera-repos/</span>cm6<span class="hljs-regexp">/6.2.0/</span><br>sudo wget --recursive --no-parent --no-host-directories https:<span class="hljs-regexp">//</span>archive.cloudera.com<span class="hljs-regexp">/kafka/</span>parcels<span class="hljs-regexp">/4/</span> -P <span class="hljs-regexp">/var/</span>www<span class="hljs-regexp">/html/</span>cloudera-repos<br>sudo wget --recursive --no-parent --no-host-directories http:<span class="hljs-regexp">//</span>archive.cloudera.com<span class="hljs-regexp">/sqoop-connectors/</span>parcels<span class="hljs-regexp">/latest/</span> -P <span class="hljs-regexp">/var/</span>www<span class="hljs-regexp">/html/</span>cloudera-repos<br></code></pre></td></tr></table></figure>
+
+<p>[aiot@cdh2-172-17-4-10 ~]$ sudo chmod -R ugo+rX /var/www/html/cloudera-repos/cdh6<br>[aiot@cdh2-172-17-4-10 ~]$ sudo chmod -R ugo+rX /var/www/html/cloudera-repos/gplextras6<br>[aiot@cdh2-172-17-4-10 ~]$ sudo chmod -R ugo+rX /var/www/html/cloudera-repos/cm6<br>[aiot@cdh2-172-17-4-10 ~]$ sudo chmod -R ugo+rX /var/www/html/cloudera-repos/kafka<br>[aiot@cdh2-172-17-4-10 ~]$ sudo chmod -R ugo+rX /var/www/html/cloudera-repos/sqoop-connectors</p>
+<p>#####配置本地yum源（所有节点，源指向主节点）：<br>[aiot@cdh1-172-17-4-9 ~]$ cat /etc/yum.repos.d/cloudera-manager6.2.0.repo</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-section">[cloudera-manager]</span><br><span class="hljs-attr">name</span>=Cloudera Manager <span class="hljs-number">6.2</span>.<span class="hljs-number">0</span><br><span class="hljs-attr">baseurl</span>=http://<span class="hljs-number">172.17</span>.<span class="hljs-number">4.9</span>/cloudera-repos/cm6/<span class="hljs-number">6.2</span>.<span class="hljs-number">0</span>/redhat7/yum/<br><span class="hljs-attr">gpgkey</span>=http://<span class="hljs-number">172.17</span>.<span class="hljs-number">4.9</span>/cloudera-repos/cm6/<span class="hljs-number">6.2</span>.<span class="hljs-number">0</span>/redhat7/yum/RPM-GPG-KEY-cloudera<br><span class="hljs-attr">gpgcheck</span>=<span class="hljs-number">1</span><br><span class="hljs-attr">enabled</span>=<span class="hljs-number">1</span><br><span class="hljs-attr">autorefresh</span>=<span class="hljs-number">0</span><br><span class="hljs-attr">type</span>=rpm-md<br></code></pre></td></tr></table></figure>
+<p>[aiot@cdh1-172-17-4-9 ~]$ cat /etc/yum.repos.d/cloudera-manager-gplextras6.2.0.repo</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-section">[cloudera-manager-gplextras]</span><br><span class="hljs-attr">name</span>=Cloudera Manager gplextras <span class="hljs-number">6.2</span>.<span class="hljs-number">0</span><br><span class="hljs-attr">baseurl</span>=http://<span class="hljs-number">172.17</span>.<span class="hljs-number">4.9</span>/cloudera-repos/gplextras6/<span class="hljs-number">6.2</span>.<span class="hljs-number">0</span>/redhat7/yum/<br><span class="hljs-attr">gpgkey</span>=http://<span class="hljs-number">172.17</span>.<span class="hljs-number">4.9</span>/cloudera-repos/gplextras6/<span class="hljs-number">6.2</span>.<span class="hljs-number">0</span>/redhat7/yum/RPM-GPG-KEY-cloudera<br><span class="hljs-attr">gpgcheck</span>=<span class="hljs-number">1</span><br><span class="hljs-attr">enabled</span>=<span class="hljs-number">1</span><br><span class="hljs-attr">autorefresh</span>=<span class="hljs-number">0</span><br><span class="hljs-attr">type</span>=rpm-md<br></code></pre></td></tr></table></figure>
+
+<p>sudo wget –recursive –no-parent –no-host-directories <a href="http://archive.cloudera.com/gplextras6/6.2.0/redhat7/yum/repodata/" target="_blank" rel="noopener">http://archive.cloudera.com/gplextras6/6.2.0/redhat7/yum/repodata/</a> -P /var/www/html/cloudera-repos</p>
+<p>[aiot@cdh1-172-17-4-9 ~]$ sudo yum clean all<br>[aiot@cdh1-172-17-4-9 ~]$ sudo yum makecache<br>#####更新系统<br>[aiot@cdh1-172-17-4-9 ~]$ sudo yum update</p>
+<p>#####安装cloudera<br>[aiot@cdh1-172-17-4-9 ~]$ sudo yum -y search cloudera-manager</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs routeros">Loaded plugins: fastestmirror, langpacks<br>Loading<span class="hljs-built_in"> mirror </span>speeds <span class="hljs-keyword">from</span> cached hostfile<br>============================================= N/S matched: cloudera-manager =============================================<br>cloudera-manager-agent.x86_64 : The Cloudera Manager Agent<br>cloudera-manager-daemons.x86_64 : Provides daemons <span class="hljs-keyword">for</span> monitoring Hadoop <span class="hljs-keyword">and</span> related tools.<br>cloudera-manager-server.x86_64 : The Cloudera Manager Server<br>cloudera-manager-server-db-2.x86_64 : Embedded database <span class="hljs-keyword">for</span> the Cloudera Manager Server<br>  Name <span class="hljs-keyword">and</span> summary matches only, use <span class="hljs-string">"search all"</span> <span class="hljs-keyword">for</span> everything.<br></code></pre></td></tr></table></figure>
+<p>[aiot@cdh1-172-17-4-9 ~]$ sudo yum install cloudera-manager-daemons  cloudera-manager-server<br>[aiot@cdh1-172-17-4-9 ~]$ sudo -E /opt/cloudera/cm/schema/scm_prepare_database.sh mysql scm scm ‘Aiot2019!@$’<br>···<br>JAVA_HOME=/usr/java/jdk<br>Verifying that we can write to /etc/cloudera-scm-server<br>Creating SCM configuration file in /etc/cloudera-scm-server<br>Executing:  /usr/java/jdk/bin/java -cp /usr/share/java/mysql-connector-java.jar:/usr/share/java/oracle-connector-java.jar:/usr/share/java/postgresql-connector-java.jar:/opt/cloudera/cm/schema/../lib/* com.cloudera.enterprise.dbutil.DbCommandExecutor /etc/cloudera-scm-server/db.properties com.cloudera.cmf.db.<br>Mon Dec 23 15:24:48 CST 2019 WARN: Establishing SSL connection without server’s identity verification is not recommended. According to MySQL 5.5.45+, 5.6.26+ and 5.7.6+ requirements SSL connection must be established by default if explicit option isn’t set. For compliance with existing applications not using SSL the verifyServerCertificate property is set to ‘false’. You need either to explicitly disable SSL by setting useSSL=false, or set useSSL=true and provide truststore for server certificate verification.<br>[                          main] DbCommandExecutor              INFO  Successfully connected to database.<br>All done, your SCM database is configured correctly!<br>···</p>
+<p>[aiot@cdh1-172-17-4-9 ~]$ sudo mkdir -p /data/cloudera/parcels<br>[aiot@cdh1-172-17-4-9 ~]$ sudo chown -R cloudera-scm:cloudera-scm /data/cloudera/parcels<br>[aiot@cdh1-172-17-4-9 ~]$ sudo chown -R cloudera-scm:cloudera-scm /data/cloudera<br>[aiot@cdh1-172-17-4-9 ~]$ sudo mkdir -p /data/cloudera/parcel-repo<br>[aiot@cdh1-172-17-4-9 ~]$ sudo chown -R cloudera-scm:cloudera-scm /data/cloudera/parcel-repo<br>[aiot@cdh1-172-17-4-9 ~]$ sudo chown -R cloudera-scm:cloudera-scm /data/cloudera<br>[aiot@cdh1-172-17-4-9 ~]$ sudo mkdir -p /data/cloudera/parcel-cache<br>[aiot@cdh1-172-17-4-9 ~]$ sudo chown -R cloudera-scm:cloudera-scm /data/cloudera/parcel-cache<br>[aiot@cdh1-172-17-4-9 ~]$ sudo chown -R cloudera-scm:cloudera-scm /data/cloudera/</p>
+<p>[aiot@cdh1-172-17-4-9 ~]$ sudo systemctl start cloudera-scm-server<br>[aiot@cdh1-172-17-4-9 ~]$ sudo systemctl status cloudera-scm-server<br>[aiot@cdh1-172-17-4-9 ~]$ sudo tail -f /var/log/cloudera-scm-server/cloudera-scm-server.log</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs angelscript"><span class="hljs-number">2019</span><span class="hljs-number">-12</span><span class="hljs-number">-23</span> <span class="hljs-number">15</span>:<span class="hljs-number">26</span>:<span class="hljs-number">22</span>,<span class="hljs-number">723</span> INFO WebServerImpl:com.cloudera.server.cmf.WebServerImpl: Started Jetty server.<br></code></pre></td></tr></table></figure>
+
+      </section>
+
+      <section class="article-footer">
+        
+      </section>
+
+      <section class="article-navs">
+        
+<nav class="card-container card-article-nav">
+  <div class="card-wrap">
+    
+      <div id="article-nav-newer" class="card-item">
+        <article>
+          
+          <a class="card-link article-nav-link" href="/2019/12/19/60_rocketmq/"></a>
+          <strong class="article-nav-caption">Newer</strong>
+          <p class="article-nav-title">
+            
+              rocketmq搭建精简版
+            
+          </p>
+        </article>
+      </div>
+    
+    
+      <div id="article-nav-older" class="card-item">
+        <article>
+          
+          <a class="card-link article-nav-link" href="/2019/06/20/55_jenkins%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/"></a>
+          <strong class="article-nav-caption">Older</strong>
+          <p class="article-nav-title">
+            
+              jenkins在生产环境中的应用部署
+            
+          </p>
+        </article>
+      </div>
+    
+  </div>
+</nav>
+
+      </section>
+    </div>
+  </article>
+</div>
+
+    <!-- footer container -->
+<footer id="footer" class="footer">
+  <div class="footer-container">
+     
+    <p>&copy; 2020 <a href="/" target="_blank">zhaodan</a></p>
+
+    
+      <p id="hitokoto"></p>
+      <script src="https://v1.hitokoto.cn/?c=a&amp;encode=js&select=%23hitokoto" defer></script>
+    
+
+    
+
+    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> Theme - <a href="https://github.com/miiiku/flex-block" target="_blank">flex-block</a></p>
+  </div>
+</footer>
+  </div>
+
+  <div class="back-to-top-fixed">
+    <svg class="icon icon-back-to-top" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M725.333333 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8l-213.333333-213.333333c-17.066667-17.066667-17.066667-42.666667 0-59.733333s42.666667-17.066667 59.733333 0l213.333333 213.333333c17.066667 17.066667 17.066667 42.666667 0 59.733333C746.666667 422.4 738.133333 426.666667 725.333333 426.666667z"></path>
+  <path d="M298.666667 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8-17.066667-17.066667-17.066667-42.666667 0-59.733333l213.333333-213.333333c17.066667-17.066667 42.666667-17.066667 59.733333 0s17.066667 42.666667 0 59.733333l-213.333333 213.333333C320 422.4 311.466667 426.666667 298.666667 426.666667z"></path>
+  <path d="M512 896c-25.6 0-42.666667-17.066667-42.666667-42.666667L469.333333 170.666667c0-25.6 17.066667-42.666667 42.666667-42.666667s42.666667 17.066667 42.666667 42.666667l0 682.666667C554.666667 878.933333 537.6 896 512 896z"></path>
+</svg> 
+  </div>
+
+  
+  
+
+
+  <!-- aplayer 音频 start -->
+  
+<link rel="stylesheet" href="/lib/APlayer.min.css">
+
+  
+<script src="/lib/APlayer.min.js"></script>
+
+  <script type="text/javascript">
+    const aplayer = document.querySelectorAll(".aplayer");
+    aplayer && initaplayer(aplayer);
+    function initaplayer(els) {
+      let elsArr = Array.from(els);
+      elsArr.forEach(el => {
+        new APlayer({
+          container: el,
+          audio: { ...el.dataset },
+          theme: "#b7daff",
+          lrcType: 3,
+          autoplay: false,
+          loop: false,
+          mutex: true,
+        });
+      });
+    }
+  </script>
+  <!-- aplayer 音频 end -->
+  
+
+<!-- dplayer 视频 start -->
+
+<link rel="stylesheet" href="/lib/DPlayer.min.css">
+
+
+<script src="/lib/DPlayer.min.js"></script>
+
+<script type="text/javascript">
+  const dplayer = document.querySelectorAll(".dplayer");
+  dplayer && initDPlayer(dplayer);
+  function initDPlayer(els) {
+    let elsArr = Array.from(els);
+    elsArr.forEach(el => {
+      let url = el.dataset.url;
+      let cover = el.dataset.cover;
+      new DPlayer({
+        container: el,
+        video: { url: url, pic: cover },
+        theme: "#b7daff",
+        autoplay: false,
+        loop: false,
+        mutex: true,
+      });
+    });
+  }
+</script>
+<!-- dplayer 视频 end -->
+
+
+<!-- waterfall 瀑布流 start -->
+
+<script src="/lib/waterfall.min.js"></script>
+
+<script type="text/javascript">
+
+const waterfalls = document.querySelectorAll(".waterfall-container");
+
+if (waterfalls && waterfalls.length > 0) {
+  waterfalls.forEach((waterfall, index) => {
+    let cls = "waterfall-container-" + index;
+    waterfall.classList.add(cls);
+    initWaterfall(cls, waterfall);
+  });
+}
+
+function initWaterfall(selector, el) {
+  const options = {};
+  if (Object.keys(el.dataset).length > 0) {
+    for (let k in el.dataset) {
+      options[k] = el.dataset[k];
+    }
+  }
+  waterfall(`.${selector}`, options);
+}
+</script>
+<!-- waterfall 瀑布流 end -->
+
+
+  <!-- zoom start -->
+  
+<script src="/lib/zoom.min.js"></script>
+
+  <script type="text/javascript">
+    document.querySelector(".article-content") && zoom(".article-content");
+  </script>
+  <!-- zoom end -->
+  
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+<script src="/js/script.js"></script>
+
+  
+  <!-- 尾部用户自定义相关内容 -->
+
+</body>
+</html>

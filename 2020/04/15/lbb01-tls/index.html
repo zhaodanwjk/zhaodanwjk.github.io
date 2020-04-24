@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  
+    <meta name="description" content="fighting">
+  
+
+  
+    <meta name="keywords" content="best">
+  
+
+  
+    <meta name="author" content="zhaodan">
+  
+
+  
+    <meta name="copyright" content="zhaodan">
+  
+
+  
+
+  <title>游戏服务器TLS实践 | Hexo</title>
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+    <link href="https://cdn.bootcss.com/highlight.js/9.15.6/styles/monokai.min.css" rel="stylesheet">
+  
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+  <div class="root-container">
+    <!-- navbar -->
+<nav class="navbar">
+  <div class="navbar-content">
+    <!-- logo -->
+    <div class="navbar-logo">
+      <a href="/">
+        
+          Hexo
+        
+      </a>
+    </div>
+    <!-- link -->
+    <div class="navbar-link">
+      <div class="navbar-btn">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <ul class="navbar-list">
+        
+          <li class="navbar-list-item"><a href="/">HOME</a></li>
+        
+          <li class="navbar-list-item"><a href="/about">ABOUT</a></li>
+        
+          <li class="navbar-list-item"><a href="/tags">TAGS</a></li>
+        
+          <li class="navbar-list-item"><a href="/categories">CATEGORIES</a></li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    
+<!-- header container -->
+<header class="header-container post">
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+    <div class="header-content">
+      <div class="post-image" style="background-image: url(https://qiniu.miiiku.xyz/src/images/banner.jpg)"></div>
+      <div class="post-text">
+        <div class="type-wrap">
+          
+        </div>
+        <h1 class="title-wrap">游戏服务器TLS实践</h1>
+        <h2 class="title-sub-wrap">
+          <strong>zhaodan</strong>
+          <span>发布于</span>
+          
+  <a href="javascript:;" class="article-date">
+    <time datetime="2020-04-14T16:00:00.000Z" itemprop="datePublished">2020-04-15</time>
+  </a>
+
+        </h2>
+      </div>
+    </div>
+  
+
+  
+  
+
+  </header>
+
+    <!-- 文章 -->
+
+<!-- 文章内容 -->
+
+<div class="body-container">
+  <article class="content-container article-container">
+    <div class="article-content">
+      
+      
+
+      <section class="article-entry">
+        <p>注：给男票开的博客专题，男票看我发博客还想让我帮他买服务器搭建（日结工资的话就给你干╭(╯^╰)╮），因为没有工资，遂发到自己博客上，因为工作时间越久有些知识点不经常梳理真的会忘记，还是要支持下男票梳理自己的知识点(#小声bb#毕竟男票挣得钱钱越来越多我就可以肆无忌惮的裸辞躺尸(。-ω-)zzz</p>
+<p>#游戏服务器TLS实践</p>
+<p>客户端和服务器的TCP通信需要加密， 这里首选TLS（Transport Layer Security <strong>传输层安全性协议</strong>）</p>
+<blockquote>
+<p>安全传输层协议（TLS）用于在两个通信应用程序之间提供保密性和数据完整性。</p>
+</blockquote>
+<h3 id="TLS原理浅析"><a href="#TLS原理浅析" class="headerlink" title="TLS原理浅析"></a>TLS原理浅析</h3><p>TLS可以防止数据交换时被<strong>窃听</strong>和<strong>篡改</strong></p>
+<blockquote>
+<p>The TLS protocol aims primarily to provide privacy and data integrity between two or more communicating computer applications.</p>
+</blockquote>
+<ol>
+<li><p>每个连接都会独立生成秘钥对传输数据进行加密， 生成秘钥的过程就是<strong>TLS握手</strong></p>
+</li>
+<li><p>为了保证秘钥不被窃听和修改， 我们需要对秘钥生成的过程进行加密</p>
+<p>通信双方通过交换一个密文，通过这个密文来生成秘钥。TLS使用RSA来交换密文<br>客户端随机生成一个数， 使用公钥加密， 服务器使用私钥解密</p>
+<blockquote>
+<p>RSA加密算法是一种非对称加密算法。加密密钥（即公开密钥）PK是公开信息，而解密密钥（即秘密密钥）SK是需要保密的。加密算法E和解密算法D也都是公开的。虽然解密密钥SK是由公开密钥PK决定的，由于无法计算出大数n的欧拉函数phi(N)，所以不能根据PK计算出SK。</p>
+</blockquote>
+<p>之所以使用RSA来进行加密随机数， 而不是整个通信数据， 是因为</p>
+<blockquote>
+<p>由于进行的都是大数计算，使得RSA最快的情况也比DES慢上好几倍，无论是软件还是硬件实现。速度一直是RSA的缺陷。一般来说只用于少量数据加密。RSA的速度是对应同样安全级别的对称密码算法的1/1000左右。</p>
+</blockquote>
+<p>使用证书认证(CA, certificate authority)防止中间人攻击。</p>
+</li>
+<li><p>对称加密算法有很多， TLS为了扩展性， 通信双发在一开始需要交换各自支持的加密算法， 然后选取一个双方都支持的算法。</p>
+</li>
+</ol>
+<p>下面使用流程图来解析整个握手过程</p>
+<p><a href="https://postimg.cc/N515bqyv" target="_blank" rel="noopener"><img src="https://i.postimg.cc/HsNXYTdn/lbb-001-tls.png" alt="lbb-001-tls.png"></a></p>
+<p>###go代码实践</p>
+<p>#####服务器代码</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>	cert, err := tls.LoadX509KeyPair(<span class="hljs-string">"server.crt"</span>, <span class="hljs-string">"server.key"</span>)<br>	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>		<span class="hljs-built_in">panic</span>(err)<br>	&#125;<br><br>	certPEMBlock, err := ioutil.ReadFile(<span class="hljs-string">"ca.crt"</span>)<br>	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>		<span class="hljs-built_in">panic</span>(err)<br>	&#125;<br>	capool := x509.NewCertPool()<br>	capool.AppendCertsFromPEM(certPEMBlock)<br><br>	cfg := &amp;tls.Config&#123;<br>		Certificates: []tls.Certificate&#123;cert&#125;,<br>		ClientCAs:capool,<br>		ClientAuth: tls.RequireAndVerifyClientCert,<br>	&#125;<br>	listener, err := tls.Listen(<span class="hljs-string">"tcp"</span>, <span class="hljs-string">":2000"</span>, cfg)<br>	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>		<span class="hljs-built_in">panic</span>(err)<br>	&#125;<br><br>	<span class="hljs-keyword">for</span> &#123;<br>		conn, err := listener.Accept()<br>		<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>			<span class="hljs-built_in">println</span>(err.Error())<br>			<span class="hljs-keyword">continue</span><br>		&#125;<br>		<span class="hljs-keyword">go</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>			txtReader := textproto.NewReader(bufio.NewReader(conn))<br>			line, err := txtReader.ReadLine()<br>			<span class="hljs-built_in">println</span>(line)<br>			<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>				<span class="hljs-built_in">println</span>(err.Error())<br>				<span class="hljs-keyword">return</span><br>			&#125;<br><br>			textWriter := textproto.NewWriter(bufio.NewWriter(conn))<br>			err = textWriter.PrintfLine(<span class="hljs-string">"OK\n"</span>)<br>			<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>				<span class="hljs-built_in">println</span>(err.Error())<br>				<span class="hljs-keyword">return</span><br>			&#125;<br>		&#125;()<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>######LoadX509KeyPair</p>
+<p>加载成对的秘钥, 私钥: server.key,  证书: server.crt</p>
+<blockquote>
+<p>LoadX509KeyPair reads and parses a public/private key pair from a pair of files. The files must contain PEM encoded data</p>
+</blockquote>
+<p><strong>server.key</strong>里的内容就是RSA中的私钥， 可以用以下命令获取(openssl命令的具体参数可以用man openssl查看)</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs angelscript">openssl genrsa -<span class="hljs-keyword">out</span> server.key <span class="hljs-number">1024</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>The genrsa command generates an RSA private key, which essentially involves the generation of two prime numbers.</p>
+</blockquote>
+<p><strong>server.crt</strong>是RSA中的证书， 是用CA的私钥对公钥和相关信息进行签名生成的证书，从证书里面可以拿到公钥</p>
+<p>server.crt的生成过程分为两步</p>
+<p>生成证书请求， 这一步就是用私钥和用户信息生成一份证书请求信息server.csr</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">openssl req -<span class="hljs-built_in">new</span> -key <span class="hljs-keyword">server</span>.key -<span class="hljs-keyword">out</span> <span class="hljs-keyword">server</span>.csr -subj "/C=CN/ST=GZ/L=ZH/O=KSS/OU=KSS/CN=xxx/emailAddress=xxx@xxx"<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>The req command primarily creates and processes certificate requests in PKCS#10 format.  It can additionally create self-signed certificates, for use as root CAs, for example.</p>
+</blockquote>
+<p>然后根据server.csr和ca私钥生成证书server.crt</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-tag">openssl</span> <span class="hljs-selector-tag">ca</span> <span class="hljs-selector-tag">-in</span> <span class="hljs-selector-tag">server</span><span class="hljs-selector-class">.csr</span> <span class="hljs-selector-tag">-cert</span> <span class="hljs-selector-tag">ca</span><span class="hljs-selector-class">.crt</span> <span class="hljs-selector-tag">-keyfile</span> <span class="hljs-selector-tag">ca</span><span class="hljs-selector-class">.key</span> <span class="hljs-selector-tag">-out</span> <span class="hljs-selector-tag">server</span><span class="hljs-selector-class">.crt</span> <span class="hljs-selector-tag">-days</span> 3650<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>The ca command is a minimal certificate authority (CA) application.  It can be used to sign certificate requests in a variety of forms and generate certificate revocation lists (CRLs).</p>
+</blockquote>
+<p>Certificates 存放多个证书链， 是用来在TLS握手阶段交换证书用的。<br>######ClientCAs ClientAuth 服务器验证客户端证书</p>
+<p>ClientCAs是服务器用来存储验证客户端证书的一组根CA证书</p>
+<blockquote>
+<p>ClientCAs defines the set of root certificate authorities that servers use if required to verify a client certificate by the policy in ClientAuth.</p>
+</blockquote>
+<p>证书之间是链式关系， 比如是用证书A签名证书B， 如果我们信任证书A， 那么也会信任证书B。在上述代码中我们把ca证书（ca.crt）设置为根证书，表明我们信任ca证书。服务器在握手阶段拿到客户端的证书, 看其证书链是否受信任（用ca公钥解密，如果成功说明是用根证书签发的）。</p>
+<p>根证书一般来自于权威机构。当前也可以自签发生成根证书</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs stata"># cakey 和 <span class="hljs-keyword">ca</span>.csr 和之前的生成方式一样<br>openssl x509 -req -days 365 -sha1 -extensions v3_ca -signkey cakey.pem<br>-<span class="hljs-keyword">in</span> <span class="hljs-keyword">ca</span>.csr -<span class="hljs-keyword">out</span> certs/<span class="hljs-keyword">ca</span>.cer<br></code></pre></td></tr></table></figure>
+
+<p>#####客户端代码</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>	cert, err := tls.LoadX509KeyPair(<span class="hljs-string">"client.crt"</span>, <span class="hljs-string">"client.key"</span>)<br>	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>		<span class="hljs-built_in">panic</span>(err)<br>	&#125;<br><br>	certPEMBlock, err := ioutil.ReadFile(<span class="hljs-string">"ca.crt"</span>)<br>	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>		<span class="hljs-built_in">panic</span>(err)<br>	&#125;<br>	capool := x509.NewCertPool()<br>	capool.AppendCertsFromPEM(certPEMBlock)<br><br>	cfg := &amp;tls.Config&#123;<br>		Certificates: []tls.Certificate&#123;cert&#125;,<br>		RootCAs:capool,<br>		ServerName:<span class="hljs-string">"xxxxx"</span>,<br>		<span class="hljs-comment">//InsecureSkipVerify:true,</span><br>	&#125;<br><br>	conn, err := tls.Dial(<span class="hljs-string">"tcp"</span>, <span class="hljs-string">"localhost:2000"</span>, cfg)<br>	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>		<span class="hljs-built_in">panic</span>(err)<br>	&#125;<br><br>	textWriter := textproto.NewWriter(bufio.NewWriter(conn))<br>	err = textWriter.PrintfLine(<span class="hljs-string">"hello world\n"</span>)<br>	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>		<span class="hljs-built_in">panic</span>(err)<br>	&#125;<br><br>	txtReader := textproto.NewReader(bufio.NewReader(conn))<br>	line, err := txtReader.ReadLine()<br>	<span class="hljs-built_in">println</span>(line)<br>	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>		<span class="hljs-built_in">println</span>(err.Error())<br>		<span class="hljs-keyword">return</span><br>	&#125;<br>	conn.Close()<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>RootCAs是用来验证服务器的证书的一组根证书<br>ServerName验证服务器的主机名</p>
+
+      </section>
+
+      <section class="article-footer">
+        
+      </section>
+
+      <section class="article-navs">
+        
+<nav class="card-container card-article-nav">
+  <div class="card-wrap">
+    
+    
+      <div id="article-nav-older" class="card-item">
+        <article>
+          
+          <a class="card-link article-nav-link" href="/2020/04/01/67_jumpserver_user/"></a>
+          <strong class="article-nav-caption">Older</strong>
+          <p class="article-nav-title">
+            
+              jumpserver管理用户和系统用户的解释
+            
+          </p>
+        </article>
+      </div>
+    
+  </div>
+</nav>
+
+      </section>
+    </div>
+  </article>
+</div>
+
+    <!-- footer container -->
+<footer id="footer" class="footer">
+  <div class="footer-container">
+     
+    <p>&copy; 2020 <a href="/" target="_blank">zhaodan</a></p>
+
+    
+      <p id="hitokoto"></p>
+      <script src="https://v1.hitokoto.cn/?c=a&amp;encode=js&select=%23hitokoto" defer></script>
+    
+
+    
+
+    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> Theme - <a href="https://github.com/miiiku/flex-block" target="_blank">flex-block</a></p>
+  </div>
+</footer>
+  </div>
+
+  <div class="back-to-top-fixed">
+    <svg class="icon icon-back-to-top" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M725.333333 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8l-213.333333-213.333333c-17.066667-17.066667-17.066667-42.666667 0-59.733333s42.666667-17.066667 59.733333 0l213.333333 213.333333c17.066667 17.066667 17.066667 42.666667 0 59.733333C746.666667 422.4 738.133333 426.666667 725.333333 426.666667z"></path>
+  <path d="M298.666667 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8-17.066667-17.066667-17.066667-42.666667 0-59.733333l213.333333-213.333333c17.066667-17.066667 42.666667-17.066667 59.733333 0s17.066667 42.666667 0 59.733333l-213.333333 213.333333C320 422.4 311.466667 426.666667 298.666667 426.666667z"></path>
+  <path d="M512 896c-25.6 0-42.666667-17.066667-42.666667-42.666667L469.333333 170.666667c0-25.6 17.066667-42.666667 42.666667-42.666667s42.666667 17.066667 42.666667 42.666667l0 682.666667C554.666667 878.933333 537.6 896 512 896z"></path>
+</svg> 
+  </div>
+
+  
+  
+
+
+  <!-- aplayer 音频 start -->
+  
+<link rel="stylesheet" href="/lib/APlayer.min.css">
+
+  
+<script src="/lib/APlayer.min.js"></script>
+
+  <script type="text/javascript">
+    const aplayer = document.querySelectorAll(".aplayer");
+    aplayer && initaplayer(aplayer);
+    function initaplayer(els) {
+      let elsArr = Array.from(els);
+      elsArr.forEach(el => {
+        new APlayer({
+          container: el,
+          audio: { ...el.dataset },
+          theme: "#b7daff",
+          lrcType: 3,
+          autoplay: false,
+          loop: false,
+          mutex: true,
+        });
+      });
+    }
+  </script>
+  <!-- aplayer 音频 end -->
+  
+
+<!-- dplayer 视频 start -->
+
+<link rel="stylesheet" href="/lib/DPlayer.min.css">
+
+
+<script src="/lib/DPlayer.min.js"></script>
+
+<script type="text/javascript">
+  const dplayer = document.querySelectorAll(".dplayer");
+  dplayer && initDPlayer(dplayer);
+  function initDPlayer(els) {
+    let elsArr = Array.from(els);
+    elsArr.forEach(el => {
+      let url = el.dataset.url;
+      let cover = el.dataset.cover;
+      new DPlayer({
+        container: el,
+        video: { url: url, pic: cover },
+        theme: "#b7daff",
+        autoplay: false,
+        loop: false,
+        mutex: true,
+      });
+    });
+  }
+</script>
+<!-- dplayer 视频 end -->
+
+
+<!-- waterfall 瀑布流 start -->
+
+<script src="/lib/waterfall.min.js"></script>
+
+<script type="text/javascript">
+
+const waterfalls = document.querySelectorAll(".waterfall-container");
+
+if (waterfalls && waterfalls.length > 0) {
+  waterfalls.forEach((waterfall, index) => {
+    let cls = "waterfall-container-" + index;
+    waterfall.classList.add(cls);
+    initWaterfall(cls, waterfall);
+  });
+}
+
+function initWaterfall(selector, el) {
+  const options = {};
+  if (Object.keys(el.dataset).length > 0) {
+    for (let k in el.dataset) {
+      options[k] = el.dataset[k];
+    }
+  }
+  waterfall(`.${selector}`, options);
+}
+</script>
+<!-- waterfall 瀑布流 end -->
+
+
+  <!-- zoom start -->
+  
+<script src="/lib/zoom.min.js"></script>
+
+  <script type="text/javascript">
+    document.querySelector(".article-content") && zoom(".article-content");
+  </script>
+  <!-- zoom end -->
+  
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+<script src="/js/script.js"></script>
+
+  
+  <!-- 尾部用户自定义相关内容 -->
+
+</body>
+</html>

@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  
+    <meta name="description" content="fighting">
+  
+
+  
+    <meta name="keywords" content="best">
+  
+
+  
+    <meta name="author" content="zhaodan">
+  
+
+  
+    <meta name="copyright" content="zhaodan">
+  
+
+  
+
+  <title>supervisor总结 | Hexo</title>
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+    <link href="https://cdn.bootcss.com/highlight.js/9.15.6/styles/monokai.min.css" rel="stylesheet">
+  
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+  <div class="root-container">
+    <!-- navbar -->
+<nav class="navbar">
+  <div class="navbar-content">
+    <!-- logo -->
+    <div class="navbar-logo">
+      <a href="/">
+        
+          Hexo
+        
+      </a>
+    </div>
+    <!-- link -->
+    <div class="navbar-link">
+      <div class="navbar-btn">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <ul class="navbar-list">
+        
+          <li class="navbar-list-item"><a href="/">HOME</a></li>
+        
+          <li class="navbar-list-item"><a href="/about">ABOUT</a></li>
+        
+          <li class="navbar-list-item"><a href="/tags">TAGS</a></li>
+        
+          <li class="navbar-list-item"><a href="/categories">CATEGORIES</a></li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    
+<!-- header container -->
+<header class="header-container post">
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+    <div class="header-content">
+      <div class="post-image" style="background-image: url(https://qiniu.miiiku.xyz/src/images/banner.jpg)"></div>
+      <div class="post-text">
+        <div class="type-wrap">
+          
+        </div>
+        <h1 class="title-wrap">supervisor总结</h1>
+        <h2 class="title-sub-wrap">
+          <strong>zhaodan</strong>
+          <span>发布于</span>
+          
+  <a href="javascript:;" class="article-date">
+    <time datetime="2019-06-02T16:00:00.000Z" itemprop="datePublished">2019-06-03</time>
+  </a>
+
+        </h2>
+      </div>
+    </div>
+  
+
+  
+  
+
+  </header>
+
+    <!-- 文章 -->
+
+<!-- 文章内容 -->
+
+<div class="body-container">
+  <article class="content-container article-container">
+    <div class="article-content">
+      
+      
+
+      <section class="article-entry">
+        <p>官方文档 <a href="http://supervisord.org/installing.html" target="_blank" rel="noopener">http://supervisord.org/installing.html</a></p>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><ul>
+<li><strong>Env：</strong><blockquote>
+<ul>
+<li>OS: <code>CentOS Linux release 7.4.1708 (Core)</code></li>
+<li>Python: <code>Python 2.7.5</code></li>
+<li>Pip: <code>pip 8.1.2 from /usr/lib/python2.7/site-packages (python 2.7)</code></li>
+</ul>
+</blockquote>
+</li>
+<li><strong>Install supervisor with pip</strong><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash">yum install python-pip <span class="hljs-comment">#8.1.2-6.el7</span><br>pip install supervisor <span class="hljs-comment">#meld3-1.0.2 supervisor-3.3.4</span><br>supervisord -v<br><span class="hljs-comment">#Install supervisor</span><br>mkdir /etc/supervisor<br>echo_supervisord_conf  &gt; /etc/supervisor/supervisord.conf<br>cat /etc/supervisor/supervisord.conf |egrep -v <span class="hljs-string">"^$|^;"</span><br><span class="hljs-comment">#Create supervisor config file</span><br></code></pre></td></tr></table></figure></li>
+<li><strong>Support systemd</strong><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs bash">systemctl --version <span class="hljs-comment">#systemd 219</span><br><span class="hljs-comment">#Support systemd</span><br>wget https://raw.githubusercontent.com/zokeber/supervisor-systemd/master/etc/systemd/system/supervisord.service -O /etc/systemd/system/supervisord.service<br><span class="hljs-comment">#Download systemd config for supervisor.</span><br><span class="hljs-comment">#https://github.com/Supervisor/initscripts</span><br>systemctl status supervisord<br><span class="hljs-comment">#Now can use systemctl command to manage supervisor service</span><br>systemctl start supervisord <span class="hljs-comment">#&#123;start|stop|restart|reload&#125;</span><br><span class="hljs-comment">#Start service</span><br>systemctl list-unit-files | grep supervisor<br><span class="hljs-comment">#检查所有服务开机启动状态并过滤指定服务</span><br>systemctl <span class="hljs-built_in">enable</span> supervisord<br><span class="hljs-comment">#添加服务到开机自启动</span><br>systemctl is-enabled supervisord<br><span class="hljs-comment">#查询指定服务开机启动状态</span><br></code></pre></td></tr></table></figure></li>
+<li><strong>Tip:</strong> <code>supervisord.service</code>文件如下<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-section">[Unit]</span><br><span class="hljs-attr">Description</span>=Supervisor process control system for UNIX<br><span class="hljs-attr">Documentation</span>=http://supervisord.org<br><span class="hljs-attr">After</span>=network.target<br><span class="hljs-section">[Service]</span><br><span class="hljs-attr">ExecStart</span>=/usr/bin/supervisord -n -c /etc/supervisor/supervisord.conf<br><span class="hljs-attr">ExecStop</span>=/usr/bin/supervisorctl <span class="hljs-variable">$OPTIONS</span> shutdown<br><span class="hljs-attr">ExecReload</span>=/usr/bin/supervisorctl <span class="hljs-variable">$OPTIONS</span> reload<br><span class="hljs-attr">KillMode</span>=process<br><span class="hljs-attr">Restart</span>=<span class="hljs-literal">on</span>-failure<br><span class="hljs-attr">RestartSec</span>=<span class="hljs-number">50</span>s<br><span class="hljs-section">[Install]</span><br><span class="hljs-attr">WantedBy</span>=multi-user.target<br></code></pre></td></tr></table></figure></li>
+<li><strong>Tip：</strong> 主配置<code>/etc/supervisor/supervisord.conf</code>示例(参考Flowsnow的博客及官方文档)<a href="https://github.com/Gourds/daily-scripts/blob/master/ansible-playbook/roles/supervisor/templates/supervisord.conf.j2" target="_blank" rel="noopener">【附:我的配置】</a><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-section">[unix_http_server]</span><br><span class="hljs-attr">file</span> = /tmp/supervisor.sock <span class="hljs-comment">;socket文件路径</span><br><span class="hljs-comment">;chmod=0700                 ; socket 文件 模式 (默认 0700)</span><br><span class="hljs-comment">;chown=nobody:nogroup       ; socket file uid:gid owner</span><br><span class="hljs-comment">;username=user              ; 使用supervisorctl连接的用户,默认没有用户</span><br><span class="hljs-comment">;password=123               ; 使用supervisorctl连接的用户密码,默认没有密码</span><br><span class="hljs-comment">;</span><br><span class="hljs-section">[inet_http_server]</span><br><span class="hljs-attr">port</span> = <span class="hljs-number">172.21</span>.<span class="hljs-number">0.4</span>:<span class="hljs-number">9001</span> <span class="hljs-comment">;Web Server和远程的supervisorctl配置，默认关闭</span><br><span class="hljs-attr">username</span> = user123 <span class="hljs-comment">;登录用户，默认没有</span><br><span class="hljs-attr">password</span> = password123 <span class="hljs-comment">;用于登录密码，默认没有</span><br><span class="hljs-comment">;</span><br><span class="hljs-section">[supervisord]</span><br><span class="hljs-attr">logfile</span> = /tmp/supervisord.log <span class="hljs-comment">;supervisord进程的日志路径</span><br><span class="hljs-attr">logfile_maxbytes</span> = <span class="hljs-number">100</span>MB <span class="hljs-comment">;supervisor单个日志的大小，默认为50M</span><br><span class="hljs-attr">logfile_backups</span> = <span class="hljs-number">20</span> <span class="hljs-comment">;日志文件的个数，默认为10个</span><br><span class="hljs-attr">loglevel</span> = info <span class="hljs-comment">;日志级别，默认info &#123;trace|info|warn|debug&#125;</span><br><span class="hljs-attr">pidfile</span> = /tmp/supervisord.pid <span class="hljs-comment">;supervisor的pid文件路径</span><br><span class="hljs-attr">nodaemon</span> = <span class="hljs-literal">false</span> <span class="hljs-comment">;默认为false在后台运行，改为true即在前台运行</span><br><span class="hljs-attr">minfds</span> = <span class="hljs-number">20000</span> <span class="hljs-comment">;系统最少有的空闲文件描述符，低于这个值supervisor不会启动，另外跟最大文件句柄数相关</span><br><span class="hljs-attr">minprocs</span> = <span class="hljs-number">200</span> <span class="hljs-comment">;最小可用的进程描述符，低于这个值supervisor将不会正常启动</span><br><span class="hljs-comment">;</span><br><span class="hljs-section">[rpcinterface:supervisor]</span><br><span class="hljs-comment">;supervisor.rpcinterface_factory = supervisor.rpcinterface:make_main_rpcinterface</span><br><span class="hljs-comment">;给XML_RPC用的，要使用supervisord或者web server必须要开启</span><br><span class="hljs-section">[supervisorctl]</span><br><span class="hljs-attr">serverurl</span> = unix:///tmp/supervisor.sock <span class="hljs-comment">;supervisorctl本地连接supervisord，使用本地UNIX socke</span><br><span class="hljs-comment">;</span><br><span class="hljs-section">[program:theprogramname]</span>      <span class="hljs-comment">; 指定管理服务的名称</span><br><span class="hljs-attr">command</span>=/bin/tail -f  /etc/fstab            <span class="hljs-comment">; 要执行的进程，可以带参数，不能是守护进程</span><br><span class="hljs-comment">;process_name=%(program_name)s ; numprocs参数为1时，就不用管这个参数 默认值%(program_name)s也就是上面的那个program冒号后面的名字</span><br><span class="hljs-comment">;numprocs=1                    ; 启动进程的数目。当不为1时，就是进程池的概念，默认为1</span><br><span class="hljs-attr">directory</span>=/tmp                <span class="hljs-comment">; 进程运行前，会前切换到这个目录</span><br><span class="hljs-attr">autostart</span>=<span class="hljs-literal">true</span>                <span class="hljs-comment">; 设置为true 子进程将在supervisord启动后被自动启动，默认为true</span><br><span class="hljs-attr">startretries</span>=<span class="hljs-number">3</span>                <span class="hljs-comment">; 进程启动失败后，最大尝试启动的次数 当超过3次后，supervisor将把此进程的状态置为FAIL</span><br><span class="hljs-attr">autorestart</span>=unexpected        <span class="hljs-comment">; 设置子进程挂掉后自动重启的情况，有三个选项，false,unexpected和true。默认为unexpected</span><br><span class="hljs-attr">exitcodes</span>=<span class="hljs-number">0</span>,<span class="hljs-number">2</span>                 <span class="hljs-comment">; 注意和上面的的autorestart=unexpected对应 exitcodes里面的定义的退出码是expected的。</span><br><span class="hljs-attr">stopsignal</span>=QUIT               <span class="hljs-comment">; 进程停止信号，可以为TERM, HUP, INT, QUIT, KILL, USR1, or USR2等信号 默认为TERM 当用设定的信号去杀掉进程，退出码会被认为是expected</span><br><span class="hljs-attr">stopwaitsecs</span>=<span class="hljs-number">10</span>               <span class="hljs-comment">; 这个是当我们向子进程发送stopsignal信号后，到系统返回信息给supervisord，所等待的最大时间。 超过这个时间，supervisord会向该子进程发送一个强制kill的信号(默认10秒)</span><br><span class="hljs-comment">;stopasgroup=false             ; 这个东西主要用于，supervisord管理的子进程，这个子进程本身还有子进程 那么我们如果仅仅干掉supervisord的子进程的话，子进程的子进程有可能会变成孤儿进程 所以咱们可以设置这个选项，把整个该子进程的整个进程组都干掉  设置为true的话，一般killasgroup也会被设置为true 该选项发送的是stop信号(def false)</span><br><span class="hljs-comment">;killasgroup=false             ; 这个和上面的stopasgroup类似，不过发送的是kill信号(def false)</span><br><span class="hljs-attr">user</span>=chrism                   <span class="hljs-comment">; 如果supervisord是root启动，我们在这里设置这个非root用户，可以用来管理该program 默认不设置</span><br><span class="hljs-comment">;redirect_stderr=true          ; 为true，则stderr的日志会被写入stdout日志文件中 (default false)</span><br><span class="hljs-attr">stdout_logfile</span>=/a/path        <span class="hljs-comment">; 子进程的stdout的日志路径，可以指定路径，AUTO，none等三个选项 设置为none的话，将没有日志产生。设置为AUTO的话，将随机找一个地方成日志文件，而且当supervisord重新启动的时候，以前的日志文件会被清空。当 redirect_stderr=true的时候，sterr也会写进这个日志文件</span><br><span class="hljs-attr">stdout_logfile_maxbytes</span>=<span class="hljs-number">100</span>MB   <span class="hljs-comment">; 日志文件最大大小，和[supervisord]中定义的一样 (default 50MB)</span><br><span class="hljs-comment">;stdout_logfile_backups=10     ; 和[supervisord]定义的一样 (0 means none, default 10)</span><br><span class="hljs-comment">;stdout_capture_maxbytes=1MB   ; 这个东西是设定capture管道的大小，当值不为0的时候，子进程可以从stdout发送信息，而supervisor可以根据信息，发送相应的event  (default 0)</span><br><span class="hljs-comment">;stdout_events_enabled=false   ; 为ture的时候，当子进程由stdout向文件描述符中写日志的时候，将触发supervisord发送PROCESS_LOG_STDOUT类型的event(default false)</span><br><span class="hljs-attr">stderr_logfile</span>=/a/path        <span class="hljs-comment">; 设置stderr写的日志路径，当redirect_stderr=true。这个就不用设置了，设置了也是白搭。因为它会被写入stdout_logfile的同一个文件中 default AUTO(随便找个地存，supervisord重启被清空)</span><br><span class="hljs-attr">stderr_logfile_maxbytes</span>=<span class="hljs-number">1</span>MB   <span class="hljs-comment">; max # logfile bytes b4 rotation (default 50MB)</span><br><span class="hljs-attr">stderr_logfile_backups</span>=<span class="hljs-number">10</span>     <span class="hljs-comment">; # of stderr logfile backups (default 10)</span><br><span class="hljs-comment">;stderr_capture_maxbytes=1MB   ; number of bytes in 'capturemode' (default 0)</span><br><span class="hljs-comment">;stderr_events_enabled=false   ; emit events on stderr writes (default false)</span><br><span class="hljs-comment">;environment=A="1",B="2"       ; 这个是该子进程的环境变量，和别的子进程是不共享的</span><br><span class="hljs-comment">;serverurl=AUTO                ; override serverurl computation (childutils)</span><br><span class="hljs-comment">;</span><br><span class="hljs-comment">;[group:thegroupname]          ; 给programs分组，划分到组里面的program。我们就不用一个一个去操作了 我们可以对组名进行统一的操作。 注意：program被划分到组里面之后，就相当于原来的配置从supervisor的配置文件里消失了supervisor只会对组进行管理，而不再会对组里面的单个program进行管理了</span><br><span class="hljs-comment">;programs=progname1,progname2  ; 组成员，用逗号分开</span><br><span class="hljs-comment">;priority=999                  ; 优先级，相对于组和组之间 (default 999)</span><br><span class="hljs-section">[include]</span><br><span class="hljs-attr">files</span> = /etc/supervisord/conf.d/*.conf <span class="hljs-comment">;包含其他的程序配置文件</span><br></code></pre></td></tr></table></figure></li>
+<li><strong>Tip：</strong> 子服务配置<code>/etc/supervisor/conf.d/example1.conf</code>示例(即上面的program配置项可以提取到单独文件)<a href="https://github.com/Gourds/daily-scripts/blob/master/ansible-playbook/roles/supervisor/templates/program_example.j2" target="_blank" rel="noopener">【<strong>附：</strong> 我的配置】</a><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-section">[program:example1]</span><br><span class="hljs-attr">command</span>=/bin/tail -f <span class="hljs-number">121</span><br><span class="hljs-attr">directory</span>=/tmp<br><span class="hljs-attr">user</span>=arvon<br><span class="hljs-attr">stdout_logfile</span>=/tmp/example1.log<br><span class="hljs-attr">stdout_logfile_maxbytes</span>=<span class="hljs-number">100</span>MB<br><span class="hljs-attr">stdout_logfile_backups</span>=<span class="hljs-number">10</span><br><span class="hljs-attr">redirect_stderr</span>=<span class="hljs-literal">true</span><br><span class="hljs-attr">autostart</span>=<span class="hljs-literal">true</span><br><span class="hljs-attr">autorestart</span>=unexpected<br><span class="hljs-attr">exitcodes</span>=<span class="hljs-number">0</span>,<span class="hljs-number">2</span><br><span class="hljs-attr">stopsignal</span>=QUIT<br><span class="hljs-attr">stopwaitsecs</span>=<span class="hljs-number">20</span><br></code></pre></td></tr></table></figure></li>
+<li><strong>注意点（踩坑）</strong><blockquote>
+<ul>
+<li>supervisord中参数minfds和minprocs决定了supervisord进程及其守护的子进程的Max Processes及Max open files，并且这个limit限制不受系统ulimit所影响</li>
+<li>supervisord守护的子进程无法在supervisord配置文件中单独修改minfds和minprocs这两个参数。下面红色部分的配置是无效的</li>
+</ul>
+<p><strong>以上截取自旺仔牛奶Blog的结论</strong></p>
+</blockquote>
+<h3 id="附：CentOS7与CentOS6对比"><a href="#附：CentOS7与CentOS6对比" class="headerlink" title="附：CentOS7与CentOS6对比"></a>附：CentOS7与CentOS6对比</h3>CentOS7并没有在生产环境大量使用，刚好可以利用这次线上测试的机会稍微总结下</li>
+</ul>
+<p><strong>主要区别大致包含以下几个方面：</strong></p>
+<ul>
+<li>基础命令</li>
+<li>内核版本（2.x和3.x）</li>
+<li>文件系统（ext4和xfs）</li>
+<li>安全系统（防火墙）</li>
+<li>服务管理（service和systemctl）<blockquote>
+<p><strong>建议</strong></p>
+<ul>
+<li>使用Docker建议使用系统版本&gt;=7.4，7.2印象中之前测试有关于cgroup的坑，另外啰嗦一个下Docker对内核版本的要求是至少3.8;目前官方推荐大于3.10<a href="https://docs.docker.com/engine/docker-overview/#the-underlying-technology" target="_blank" rel="noopener">【官网地址】</a></li>
+<li>看到<a href="https://blog.csdn.net/xu_Melon/article/details/79043898" target="_blank" rel="noopener">【CSDN上的一篇Blog】</a>里面介绍了一些命令的不同，我也懒得总结了</li>
+</ul>
+</blockquote>
+<h3 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h3><a href="http://supervisord.org/installing.html" target="_blank" rel="noopener">【Supervisor官方文档】</a><br><a href="http://flowsnow.net/2017/09/25/%E8%AF%A6%E8%A7%A3supervisor%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" target="_blank" rel="noopener">【Flowsnow的Blog】</a><br><a href="http://www.madown.com/2017/05/25/supervisor%E4%B8%AD%E7%9A%84minfds%E5%8F%8Aminprocs%E5%8F%82%E6%95%B0%E7%94%A8%E9%80%94/" target="_blank" rel="noopener">【旺仔牛奶的Blog】</a></li>
+</ul>
+
+      </section>
+
+      <section class="article-footer">
+        
+      </section>
+
+      <section class="article-navs">
+        
+<nav class="card-container card-article-nav">
+  <div class="card-wrap">
+    
+      <div id="article-nav-newer" class="card-item">
+        <article>
+          
+          <a class="card-link article-nav-link" href="/2019/06/10/52_jenins%E6%8F%92%E4%BB%B6%E9%97%AE%E9%A2%98/"></a>
+          <strong class="article-nav-caption">Newer</strong>
+          <p class="article-nav-title">
+            
+              记一次jenkins插件升级问题
+            
+          </p>
+        </article>
+      </div>
+    
+    
+      <div id="article-nav-older" class="card-item">
+        <article>
+          
+          <a class="card-link article-nav-link" href="/2019/05/23/50_%E5%88%A0%E9%99%A4S3%E8%BF%87%E6%9C%9F%E5%AE%89%E8%A3%85%E5%8C%85/"></a>
+          <strong class="article-nav-caption">Older</strong>
+          <p class="article-nav-title">
+            
+              「Python3」删除S3上过期的zip安装包
+            
+          </p>
+        </article>
+      </div>
+    
+  </div>
+</nav>
+
+      </section>
+    </div>
+  </article>
+</div>
+
+    <!-- footer container -->
+<footer id="footer" class="footer">
+  <div class="footer-container">
+     
+    <p>&copy; 2020 <a href="/" target="_blank">zhaodan</a></p>
+
+    
+      <p id="hitokoto"></p>
+      <script src="https://v1.hitokoto.cn/?c=a&amp;encode=js&select=%23hitokoto" defer></script>
+    
+
+    
+
+    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> Theme - <a href="https://github.com/miiiku/flex-block" target="_blank">flex-block</a></p>
+  </div>
+</footer>
+  </div>
+
+  <div class="back-to-top-fixed">
+    <svg class="icon icon-back-to-top" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M725.333333 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8l-213.333333-213.333333c-17.066667-17.066667-17.066667-42.666667 0-59.733333s42.666667-17.066667 59.733333 0l213.333333 213.333333c17.066667 17.066667 17.066667 42.666667 0 59.733333C746.666667 422.4 738.133333 426.666667 725.333333 426.666667z"></path>
+  <path d="M298.666667 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8-17.066667-17.066667-17.066667-42.666667 0-59.733333l213.333333-213.333333c17.066667-17.066667 42.666667-17.066667 59.733333 0s17.066667 42.666667 0 59.733333l-213.333333 213.333333C320 422.4 311.466667 426.666667 298.666667 426.666667z"></path>
+  <path d="M512 896c-25.6 0-42.666667-17.066667-42.666667-42.666667L469.333333 170.666667c0-25.6 17.066667-42.666667 42.666667-42.666667s42.666667 17.066667 42.666667 42.666667l0 682.666667C554.666667 878.933333 537.6 896 512 896z"></path>
+</svg> 
+  </div>
+
+  
+  
+
+
+  <!-- aplayer 音频 start -->
+  
+<link rel="stylesheet" href="/lib/APlayer.min.css">
+
+  
+<script src="/lib/APlayer.min.js"></script>
+
+  <script type="text/javascript">
+    const aplayer = document.querySelectorAll(".aplayer");
+    aplayer && initaplayer(aplayer);
+    function initaplayer(els) {
+      let elsArr = Array.from(els);
+      elsArr.forEach(el => {
+        new APlayer({
+          container: el,
+          audio: { ...el.dataset },
+          theme: "#b7daff",
+          lrcType: 3,
+          autoplay: false,
+          loop: false,
+          mutex: true,
+        });
+      });
+    }
+  </script>
+  <!-- aplayer 音频 end -->
+  
+
+<!-- dplayer 视频 start -->
+
+<link rel="stylesheet" href="/lib/DPlayer.min.css">
+
+
+<script src="/lib/DPlayer.min.js"></script>
+
+<script type="text/javascript">
+  const dplayer = document.querySelectorAll(".dplayer");
+  dplayer && initDPlayer(dplayer);
+  function initDPlayer(els) {
+    let elsArr = Array.from(els);
+    elsArr.forEach(el => {
+      let url = el.dataset.url;
+      let cover = el.dataset.cover;
+      new DPlayer({
+        container: el,
+        video: { url: url, pic: cover },
+        theme: "#b7daff",
+        autoplay: false,
+        loop: false,
+        mutex: true,
+      });
+    });
+  }
+</script>
+<!-- dplayer 视频 end -->
+
+
+<!-- waterfall 瀑布流 start -->
+
+<script src="/lib/waterfall.min.js"></script>
+
+<script type="text/javascript">
+
+const waterfalls = document.querySelectorAll(".waterfall-container");
+
+if (waterfalls && waterfalls.length > 0) {
+  waterfalls.forEach((waterfall, index) => {
+    let cls = "waterfall-container-" + index;
+    waterfall.classList.add(cls);
+    initWaterfall(cls, waterfall);
+  });
+}
+
+function initWaterfall(selector, el) {
+  const options = {};
+  if (Object.keys(el.dataset).length > 0) {
+    for (let k in el.dataset) {
+      options[k] = el.dataset[k];
+    }
+  }
+  waterfall(`.${selector}`, options);
+}
+</script>
+<!-- waterfall 瀑布流 end -->
+
+
+  <!-- zoom start -->
+  
+<script src="/lib/zoom.min.js"></script>
+
+  <script type="text/javascript">
+    document.querySelector(".article-content") && zoom(".article-content");
+  </script>
+  <!-- zoom end -->
+  
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+<script src="/js/script.js"></script>
+
+  
+  <!-- 尾部用户自定义相关内容 -->
+
+</body>
+</html>

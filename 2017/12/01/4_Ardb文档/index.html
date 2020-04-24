@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  
+    <meta name="description" content="fighting">
+  
+
+  
+    <meta name="keywords" content="best">
+  
+
+  
+    <meta name="author" content="zhaodan">
+  
+
+  
+    <meta name="copyright" content="zhaodan">
+  
+
+  
+
+  <title>ardb | Hexo</title>
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+    <link href="https://cdn.bootcss.com/highlight.js/9.15.6/styles/monokai.min.css" rel="stylesheet">
+  
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+  <div class="root-container">
+    <!-- navbar -->
+<nav class="navbar">
+  <div class="navbar-content">
+    <!-- logo -->
+    <div class="navbar-logo">
+      <a href="/">
+        
+          Hexo
+        
+      </a>
+    </div>
+    <!-- link -->
+    <div class="navbar-link">
+      <div class="navbar-btn">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <ul class="navbar-list">
+        
+          <li class="navbar-list-item"><a href="/">HOME</a></li>
+        
+          <li class="navbar-list-item"><a href="/about">ABOUT</a></li>
+        
+          <li class="navbar-list-item"><a href="/tags">TAGS</a></li>
+        
+          <li class="navbar-list-item"><a href="/categories">CATEGORIES</a></li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    
+<!-- header container -->
+<header class="header-container post">
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+    <div class="header-content">
+      <div class="post-image" style="background-image: url(https://qiniu.miiiku.xyz/src/images/banner.jpg)"></div>
+      <div class="post-text">
+        <div class="type-wrap">
+          
+        </div>
+        <h1 class="title-wrap">ardb</h1>
+        <h2 class="title-sub-wrap">
+          <strong>zhaodan</strong>
+          <span>发布于</span>
+          
+  <a href="javascript:;" class="article-date">
+    <time datetime="2017-11-30T16:00:00.000Z" itemprop="datePublished">2017-12-01</time>
+  </a>
+
+        </h2>
+      </div>
+    </div>
+  
+
+  
+  
+
+  </header>
+
+    <!-- 文章 -->
+
+<!-- 文章内容 -->
+
+<div class="body-container">
+  <article class="content-container article-container">
+    <div class="article-content">
+      
+      
+
+      <section class="article-entry">
+        <p>##关于ardb使用中的一些参考说明</p>
+<p>#####ardb 近期大规模使用之后，发现一些比较尴尬的问题</p>
+<p>ardb 底层使用的是rocksdb， 每次写操作，都会先写入<em>rocksdb</em>的<em>write ahead log</em>（WAL默认情况下<em>rocksdb</em>的WAL文件大小为   </p>
+<p>write_buffer_size = 4MB , max_write_buffer_number = 2 , max_total_wal_size = 0 , #of column families = 1500</p>
+<p>write_buffer_size* max_write_buffer_number * of column families   </p>
+<p>在线上使用的时候，发现实际数据50-70G，在<em>ardb</em>中会产生大概200G的<em>wal</em>文件，如果此时<em>ardb</em>数据库挂掉，会产生一个非常严重的问题，就是启动的时候，需要加载<em>wal</em>文件，加载200G的<em>wal</em>文件，你猜猜时间需要多久？我很傻比的在线上出现过这样的问题，因为启动加载需要大量读取<em>wal文件</em>，此时对于磁盘压力很大，我使用的机器是 <em>aws m4.4xlarge</em>，1.5Tssd , iops  4500 , 此时加载的速度为 163M/s  , 加载完这些数据 需要大概2-3个小时，这个时间段内数据库无法访问，程序无法运行，很尴尬啊    </p>
+<p>后续一直在想办法优化这个问题，也提问过ardb作者 <em><a href="https://github.com/yinqiwen/ardb/issues/385" target="_blank" rel="noopener">https://github.com/yinqiwen/ardb/issues/385</a></em>，给了一些解决思路，仅供参考，其中发现几个比较有用的设置或者是概念吧</p>
+<p><em>compactall</em> 我实际使用中的理解为，加载一遍<em>wal<em>文件，此时</em>wal<em>文件都会变成</em>sst<em>文件，为</em>ardb<em>可读取的，耗时特别长，实际使用中出现过1-2小时，不太可取，因为</em>compact*的时候需要将数据读取出来再重新写入到磁盘<br>*bgsave</em> 实际使用中数据库崩溃，不敢使用了，说实话这个崩溃到现在也没有找到问题，系统log，ardb log 都没有找到  </p>
+<p><em>rocksdb.compaction to OptimizeUniversalStyleCompaction  rocksdb<em>的一种</em>compact*的设置，但是实际测试中没有多大效果<br>*Column-Families#implementation   max_manifest_file_size=2G <a href="http://udn.yyuap.com/forum.php?mod=viewthread&amp;tid=39837" target="_blank" rel="noopener">http://udn.yyuap.com/forum.php?mod=viewthread&amp;tid=39837</a></em>  设置后，没有效果<br><em>max_total_wal_size</em>最大的<em>wal</em>文件大小，我们线上数据库不设置的话大概是200G的wal文件，我首先设置为100G，实际中<em>wal</em>文件会在大量写入的时候，超过几个g之后然后变小，这个过程中数据库后台有数据文件<em>level</em>的改变，关于<em>level</em>请查看<em>rocksdb</em>原理，会逐渐减小到100G以下</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs bash">ardb设置为  <br><br><span class="hljs-comment">#max_total_wal_size</span><br>rocksdb.compaction           OptimizeLevelStyleCompaction<br><br><span class="hljs-comment"># Enable this to indicate that hsca/sscan/zscan command use total order mode for rocksdb engine</span><br><span class="hljs-comment"># Disable RocksDB WAL may improve the write performance but</span><br><span class="hljs-comment"># data in the un-flushed memtables might be lost in case of a RocksDB shutdown.</span><br><span class="hljs-comment"># Disabling WAL provides similar guarantees as Redis.</span><br>rocksdb.disableWAL            <span class="hljs-literal">true</span><br><br><span class="hljs-comment">#rocksdb's options</span><br>rocksdb.options              write_buffer_size=2048M;max_write_buffer_number=5;min_write_buffer_number_to_merge=2;compression=kSnappyCompression;\<br>                              bloom_locality=1;memtable_prefix_bloom_size_ratio=0.1;\<br>                              block_based_table_factory=&#123;block_cache=512M;filter_policy=bloomfilter:10:<span class="hljs-literal">true</span>&#125;;\<br>                              create_if_missing=<span class="hljs-literal">true</span>;max_open_files=60000;rate_limiter_bytes_per_sec=200M;max_total_wal_size=51200M<br></code></pre></td></tr></table></figure>
+<p><strong>如图所示：</strong><br><img src="./941E7F2C2DEE6B876E48FC9508042E37.jpg" alt="941E7F2C2DEE6B876E48FC9508042E37.jpg"><br><strong>图中标注的红色方框的位置为<em>ardb WAL*文件超过设置的100G之后，触发的 *auto compact</em></strong></p>
+<p>每次写操作<em>rocksdb<em>会先写</em>write ahead log<em>然后才会写</em>db</em></p>
+<p><em><a href="https://github.com/facebook/rocksdb/issues/662" target="_blank" rel="noopener">https://github.com/facebook/rocksdb/issues/662</a><br><a href="https://github.com/facebook/rocksdb/wiki/Column-Families" target="_blank" rel="noopener">https://github.com/facebook/rocksdb/wiki/Column-Families</a></em></p>
+<hr>
+<p>####rocksdb是在leveldb的基础上优化而得，解决了leveldb的一些问题。<br>主要的优化点</p>
+<ol>
+<li>增加了<em>column family</em>，这样有利于多个不相关的数据集存储在同一个db中，因为不同<em>column family</em>的数据是存储在不同的<em>sst</em>和<em>memtable</em>中，所以一定程度上起到了隔离的作用。</li>
+<li>采用了多线程同时进行<em>compaction</em>的方法，优化了<em>compact</em>的速度。</li>
+<li>增加了<em>merge operator</em>，优化了<em>modify</em>的效率</li>
+<li>将<em>flush</em>和<em>compaction</em>分开不同的线程池，能有效的加快<em>flush</em>，防止<em>stall</em>。</li>
+<li>增加了对write ahead log(WAL)的特殊管理机制，这样就能方便管理WAL文件，因为WAL是binlog文件。</li>
+</ol>
+<p>#####下面从几个小点来一窥rocksdb的微妙之处。<br>#####<em>rocksdb</em> 的 <em>column family</em></p>
+<p><em>column family</em> 的具体使用场景，官方并没有给出非常好的说明，<em>rocksdb</em>支持跨<em>column family</em>的原子写操作，说明官方认为<em>column family</em>的数据之间还是有一定的关系的，而<em>column family</em>的数据文件是分割开的，包括<em>sst</em>文件和<em>memtable</em>都是不会共用的，所以官方还是希望不同<em>column family</em>的数据进行隔离。所以我觉着一个应用场景就是不同的数据混跑在同一个db上，这个仅是个人感觉，欢迎大家讨论。那么不同<em>column family</em>之间会怎样互相干涉呢？</p>
+<hr>
+<p>Q:多column family的flush是怎么进行线程分布的？<br>A:可以共用一个线程池，所以写的多的会多占用线程。也可以分开配置线程池（指定不同的env），这样就会不互相干扰。<br>Q:多column family的内存是怎么分配的？```<br>A:内存主要有两方面，第一方面是write buffer，第二方面是block cache。</p>
+<hr>
+<p>write buffer是每个column family单独享有的，block cache可以配置成column family级别，也可以配置成整个db的column family共享一个block cache，也可以配置成多个db共享一个block cache。</p>
+<p>#####rocksdb的文件类型</p>
+<p>主要有以下几种类型sst文件，CURRENT文件，manifest文件，log文件，LOG文件和LOCK文件<br>sst文件存储的是落地的数据，CURRENT文件存储的是当前最新的是哪个manifest文件，manifest文件存储的是Version的变化，log文件是rocksdb的write ahead log，就是在写db之前写的数据日志文件，LOG文件是一些日志信息，是供调试用的，LOCK是打开db锁，只允许同时有一个进程打开db。</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs angelscript">*ColumnFamilyOptions*<br>　　这些option都是column family相关的，可以对不同的column family赋不同的值。<br>　　inplace_update_support: 字面含义是是否支持在原位置更新，如果支持的话，那么原来的数据就被擦除了，所以snapshot和iterator保留当时的数据的逻辑就没法实现了<br>　　num_levels: 记录的是version的level的数目，默认是<span class="hljs-number">7</span>，即<span class="hljs-number">0</span>~<span class="hljs-number">6</span><br>　　target_file_size_base: level1的sst文件的大小，默认为<span class="hljs-number">2</span>MB<br>　　target_file_size_multiplier: level1以上的sst文件大小，乘数因子默认是<span class="hljs-number">1</span>，即所有level的文件大小都是<span class="hljs-number">2</span>MB<br>　　level0的文件大小是由write_buffer_size决定的，level1的文件大小是由target_file_size_base决定的，level2及以上，size = target_file_size_base * （target_file_size_multiplier ^ (L - <span class="hljs-number">1</span>)）<br>　　max_bytes_for_level_base: level1的sst总的文件总和大小，默认是<span class="hljs-number">10</span>MB<br>　　max_bytes_for_level_multiplier: level2及以上的level的sst文件总和大小的乘数因子，默认是<span class="hljs-number">10</span>,<br>　　　　level0的sst文件总和大小是level0_stop_writes_trigger * write_buffer_size，因为level0的文件数目达到level0_stop_writes_trigger时候就会停止write。<br>　　　　level1及以上的文件总和大小是max_bytes_for_level_base * (max_bytes_for_level_multiplier ^ (L - <span class="hljs-number">1</span>))，默认的level0是<span class="hljs-number">4</span>MB * <span class="hljs-number">24</span> = <span class="hljs-number">96</span>MB，level1是<span class="hljs-number">10</span>MB，level2是<span class="hljs-number">100</span>MB，level3是<span class="hljs-number">1</span>G，level4是<span class="hljs-number">10</span>G。。。<br></code></pre></td></tr></table></figure>
+
+<p>#####rocksdb原子操作的实现</p>
+<p>　　rocksdb的一个WriteBatch是原子操作，要么全部成功，要么全部失败，具体的实现原理是在整个log的写的过程中只会调用Write操作，最后会调用一次flush，所以如果中间发生机器crash，所有的都会失败，否则所有的都会成功。</p>
+<p>######rocksdb写和读放大<br>　　rocksdb的写会写WAL（Write Ahead Log），如果sync的话，会写一次磁盘，然后会写memtable。写rocksdb的时候有可能会卡住，详见下面的rocksdb的写stall。<br>　　rocksdb的读，会首先读memtable，如果memtable没有找到的话，会读下面level的数据，由于level0的多个sst会有交叠，所以每个sst都会通过filemeta判断在不在最小和最大的范围内，如果在就需要读这个sst的文件内容，来查看，其他level的sst文件不会有数据交叠的情况，所以只会有一个文件可能含有这个数据。可以看出来读放大还是比较严重的。rocksdb为了减少读放大，增加了cache.<br>######读cache<br>　　rocksdb的读cache分为两部分：table cache和block cache。这两个都是LRUCache，block cache存储的block，包括index block和filter block（通过options可以配置）<br>　　table cache存储的是table，是整个文件的meta信息和Foot信息。table_cache_size的消耗内存的大小是有Options里面的max_open_files决定的。<br>######bloomfilter:<br>　　bloomfilter的增加并不能减少写放大，因为bloomfilter是table范围的或者block范围的，而且bloomfilter是存储在文件中的，那么必须把这些从文件里面读出来后才能起到作用。</p>
+<p>#####rocksdb的版本管理</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">rocksdb的版本相关的数据结构有<span class="hljs-keyword">Version</span>、VersionStorageInfo、VersionBuilder、VersionEdit、SuperVersion和VersionSet。<br>VersionEdit描述的是版本的变更，其主要操作为AddFile和DeleteFile，分别表示，在某个<span class="hljs-keyword">level</span>上增加文件和删除文件，都是版本变更的操作。<br>VersionBuilder是生成<span class="hljs-keyword">Version</span>的工具，所以其有两个主要函数：<br><span class="hljs-type">void</span> Apply(VersionEdit* edit);<br><span class="hljs-type">void</span> SaveTo(VersionStorageInfo* vstorage);<br><br>分别是应用某个VersionEdit和将现在的版本Saveto某个VersionStorageInfo<br>VersionStorageInfo是<span class="hljs-keyword">Version</span>的信息的存储结构，每一个<span class="hljs-keyword">Version</span>的sst文件信息都保存在VersionStorageInfo。<br><span class="hljs-keyword">Version</span>是一个完整的版本。sst文件信息存储在VersionStorageInfo。可以在这个版本上<span class="hljs-keyword">Get</span>数据。<br>SuperVersion是db的一个完整的版本包含的所有信息，包含当前的Memtable，imm和一个<span class="hljs-keyword">Version</span>。也就是<span class="hljs-keyword">Version</span>包含的是sst数据信息，SuperVersion包含的是<span class="hljs-keyword">Version</span>的数据和memtable中的数据。<br>VersionSet是整个db的版本管理，并维护着manifest文件。每个<span class="hljs-keyword">column</span> <span class="hljs-keyword">family</span>的版本单独管理，在ColumnFamilyData这个数据结构里面有<span class="hljs-keyword">current</span> <span class="hljs-keyword">Version</span>。<br></code></pre></td></tr></table></figure>
+<p>#####rocksdb的Flush</p>
+<p>Flush是指将memtable的数据导入到sst中，变成持久化存储，就不怕数据丢失了。</p>
+<ol>
+<li>首先在memtable的add的时候，会检测是否memtable的大小达到了max write buffer，如果是就将should_flush_置为true，并会在WriteBatch的Handler里面调用CheckMemtableFull，将当前column family加入flush_scheduler。</li>
+<li>在Write的时候，调用ScheduleFlushes，将需要flush的column family的memtable切换一个新的，同时将原来的memtable加入cfd的imm中，如果这个column family data的imm数量大于min_write_buffer_number_to_merge，并启动一个新的线程调用BGWorkFlush<br>由于真正的Flush过程是在另一个线程完成的，所以这个地方并不会block写过程。</li>
+<li>另外，如果total_log_size大于max_wal_log_size并且不是只有一个column family，也会触发flush，因为flush能将memtable持久化到磁盘上，同时对应的wal就可以删除了</li>
+</ol>
+<p>#####rocksdb的compaction</p>
+<p><em>rocksdb</em> 的 <em>compaction</em> 的触发条件有两类：<br>######第一类是某一个level的数据太多<br>VersionStorageInfo的compaction_score_的计算方法是level0的是当前文件数目/level0_file_num_compaction_trigger，其他层是该层当前文件大小总和/该层的配置的允许文件总和最大值<br>基于level的存储的compaction总的来说，就是一次挑选某一个level的一个文件，然后将该文件和高level的多个相交文件merge，最后生成多个高level的文件。具体的细节是：每次会挑选compaction score最高的一个level，并在这个level中找到一个文件大小最大，并且上一个level的相交文件没有在compaction的一个文件<br>######第二类是seek太多</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs angelscript">疑问：<br>如果option里面soft_rate_limit设置的为<span class="hljs-number">0.0</span>和<span class="hljs-number">1</span>之间，compaction并不会触发，但是会触发write delay，这是为什么？<br>rocksdb的写stall<br></code></pre></td></tr></table></figure>
+<p>在DBImpl也就是db的实例里面有一个WriteController，同时在ColumnFamilySet里面也有这个WriteController的指针，这个数据结构会控制db的写stall行为。<br>在ColumnFamily进行SuperVersion变更的时候（增加新memtable，flush增加sst，compaction）都会查看需不需要stall Write，stall的条件是：<br>(1) imm的数量大于等于option允许的最大数目<br>(2) level0的文件的数量大于option允许的数目<br>如果没有满足上面两项，但是compaction score比较大会delay写</p>
+<p>rocksdb的write ahead log（WAL）<br>每次写操作，rocksdb会先写write ahead log，然后才会写db<br>write ahead log可以配置到单独的空间，并且可以配置WAL文件的单独的删除机制。这种原因是为了保存WAL文件，达到特殊的目的，比如，其他sst文件放在不可靠存储里面，而WAL放到可靠存储里面。</p>
+<p>rocksdb的缺点<br>1.column family之间的隔离做的不是非常好，因为一个db只有一个WriteController，那么一旦一个db中的一个column family发生了阻塞，比如写太快，那么就会阻塞其他的column family的写。<br>2.多进程compaction和flush的效果我持怀疑态度，因为这两个主要是磁盘操作，多进程并不会有很好的效果。</p>
+
+      </section>
+
+      <section class="article-footer">
+        
+      </section>
+
+      <section class="article-navs">
+        
+<nav class="card-container card-article-nav">
+  <div class="card-wrap">
+    
+      <div id="article-nav-newer" class="card-item">
+        <article>
+          
+          <a class="card-link article-nav-link" href="/2017/12/01/5_%E6%9E%81%E6%97%A0%E5%8F%8C%E6%8E%92%E9%94%99%E6%96%87%E6%A1%A3/"></a>
+          <strong class="article-nav-caption">Newer</strong>
+          <p class="article-nav-title">
+            
+              游戏排错总结
+            
+          </p>
+        </article>
+      </div>
+    
+    
+      <div id="article-nav-older" class="card-item">
+        <article>
+          
+          <a class="card-link article-nav-link" href="/2017/12/01/3_ansible/"></a>
+          <strong class="article-nav-caption">Older</strong>
+          <p class="article-nav-title">
+            
+              ansible
+            
+          </p>
+        </article>
+      </div>
+    
+  </div>
+</nav>
+
+      </section>
+    </div>
+  </article>
+</div>
+
+    <!-- footer container -->
+<footer id="footer" class="footer">
+  <div class="footer-container">
+     
+    <p>&copy; 2020 <a href="/" target="_blank">zhaodan</a></p>
+
+    
+      <p id="hitokoto"></p>
+      <script src="https://v1.hitokoto.cn/?c=a&amp;encode=js&select=%23hitokoto" defer></script>
+    
+
+    
+
+    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> Theme - <a href="https://github.com/miiiku/flex-block" target="_blank">flex-block</a></p>
+  </div>
+</footer>
+  </div>
+
+  <div class="back-to-top-fixed">
+    <svg class="icon icon-back-to-top" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M725.333333 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8l-213.333333-213.333333c-17.066667-17.066667-17.066667-42.666667 0-59.733333s42.666667-17.066667 59.733333 0l213.333333 213.333333c17.066667 17.066667 17.066667 42.666667 0 59.733333C746.666667 422.4 738.133333 426.666667 725.333333 426.666667z"></path>
+  <path d="M298.666667 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8-17.066667-17.066667-17.066667-42.666667 0-59.733333l213.333333-213.333333c17.066667-17.066667 42.666667-17.066667 59.733333 0s17.066667 42.666667 0 59.733333l-213.333333 213.333333C320 422.4 311.466667 426.666667 298.666667 426.666667z"></path>
+  <path d="M512 896c-25.6 0-42.666667-17.066667-42.666667-42.666667L469.333333 170.666667c0-25.6 17.066667-42.666667 42.666667-42.666667s42.666667 17.066667 42.666667 42.666667l0 682.666667C554.666667 878.933333 537.6 896 512 896z"></path>
+</svg> 
+  </div>
+
+  
+  
+
+
+  <!-- aplayer 音频 start -->
+  
+<link rel="stylesheet" href="/lib/APlayer.min.css">
+
+  
+<script src="/lib/APlayer.min.js"></script>
+
+  <script type="text/javascript">
+    const aplayer = document.querySelectorAll(".aplayer");
+    aplayer && initaplayer(aplayer);
+    function initaplayer(els) {
+      let elsArr = Array.from(els);
+      elsArr.forEach(el => {
+        new APlayer({
+          container: el,
+          audio: { ...el.dataset },
+          theme: "#b7daff",
+          lrcType: 3,
+          autoplay: false,
+          loop: false,
+          mutex: true,
+        });
+      });
+    }
+  </script>
+  <!-- aplayer 音频 end -->
+  
+
+<!-- dplayer 视频 start -->
+
+<link rel="stylesheet" href="/lib/DPlayer.min.css">
+
+
+<script src="/lib/DPlayer.min.js"></script>
+
+<script type="text/javascript">
+  const dplayer = document.querySelectorAll(".dplayer");
+  dplayer && initDPlayer(dplayer);
+  function initDPlayer(els) {
+    let elsArr = Array.from(els);
+    elsArr.forEach(el => {
+      let url = el.dataset.url;
+      let cover = el.dataset.cover;
+      new DPlayer({
+        container: el,
+        video: { url: url, pic: cover },
+        theme: "#b7daff",
+        autoplay: false,
+        loop: false,
+        mutex: true,
+      });
+    });
+  }
+</script>
+<!-- dplayer 视频 end -->
+
+
+<!-- waterfall 瀑布流 start -->
+
+<script src="/lib/waterfall.min.js"></script>
+
+<script type="text/javascript">
+
+const waterfalls = document.querySelectorAll(".waterfall-container");
+
+if (waterfalls && waterfalls.length > 0) {
+  waterfalls.forEach((waterfall, index) => {
+    let cls = "waterfall-container-" + index;
+    waterfall.classList.add(cls);
+    initWaterfall(cls, waterfall);
+  });
+}
+
+function initWaterfall(selector, el) {
+  const options = {};
+  if (Object.keys(el.dataset).length > 0) {
+    for (let k in el.dataset) {
+      options[k] = el.dataset[k];
+    }
+  }
+  waterfall(`.${selector}`, options);
+}
+</script>
+<!-- waterfall 瀑布流 end -->
+
+
+  <!-- zoom start -->
+  
+<script src="/lib/zoom.min.js"></script>
+
+  <script type="text/javascript">
+    document.querySelector(".article-content") && zoom(".article-content");
+  </script>
+  <!-- zoom end -->
+  
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+<script src="/js/script.js"></script>
+
+  
+  <!-- 尾部用户自定义相关内容 -->
+
+</body>
+</html>

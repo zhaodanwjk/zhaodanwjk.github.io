@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  
+    <meta name="description" content="fighting">
+  
+
+  
+    <meta name="keywords" content="best">
+  
+
+  
+    <meta name="author" content="zhaodan">
+  
+
+  
+    <meta name="copyright" content="zhaodan">
+  
+
+  
+
+  <title>harborV1.10.1 共享存储库预演测试 | Hexo</title>
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+    <link href="https://cdn.bootcss.com/highlight.js/9.15.6/styles/monokai.min.css" rel="stylesheet">
+  
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+  <div class="root-container">
+    <!-- navbar -->
+<nav class="navbar">
+  <div class="navbar-content">
+    <!-- logo -->
+    <div class="navbar-logo">
+      <a href="/">
+        
+          Hexo
+        
+      </a>
+    </div>
+    <!-- link -->
+    <div class="navbar-link">
+      <div class="navbar-btn">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <ul class="navbar-list">
+        
+          <li class="navbar-list-item"><a href="/">HOME</a></li>
+        
+          <li class="navbar-list-item"><a href="/about">ABOUT</a></li>
+        
+          <li class="navbar-list-item"><a href="/tags">TAGS</a></li>
+        
+          <li class="navbar-list-item"><a href="/categories">CATEGORIES</a></li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    
+<!-- header container -->
+<header class="header-container post">
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+    <div class="header-content">
+      <div class="post-image" style="background-image: url(https://qiniu.miiiku.xyz/src/images/banner.jpg)"></div>
+      <div class="post-text">
+        <div class="type-wrap">
+          
+        </div>
+        <h1 class="title-wrap">harborV1.10.1 共享存储库预演测试</h1>
+        <h2 class="title-sub-wrap">
+          <strong>zhaodan</strong>
+          <span>发布于</span>
+          
+  <a href="javascript:;" class="article-date">
+    <time datetime="2020-03-04T16:00:00.000Z" itemprop="datePublished">2020-03-05</time>
+  </a>
+
+        </h2>
+      </div>
+    </div>
+  
+
+  
+  
+
+  </header>
+
+    <!-- 文章 -->
+
+<!-- 文章内容 -->
+
+<div class="body-container">
+  <article class="content-container article-container">
+    <div class="article-content">
+      
+      
+
+      <section class="article-entry">
+        <p>测试环境说明：<br>harbor1<br>IP：10.XX.XX.X1<br>role：harbor、redis、mysql、postgreSQL<br>harbor2<br>IP：10.XX.XX.X2<br>role：harbor、nginx、nfs<br>功能<br>redis： harbor_session<br>mysql： harbor_db<br>posrgreSQL：clair_db<br>nfs： 共享存储盘（测试使用）<br>——————————————<br>环境需求与文档：<br><a href="https://docs.docker.com/install/linux/docker-ce/centos/" target="_blank" rel="noopener">https://docs.docker.com/install/linux/docker-ce/centos/</a><br>[harbor ~]# docker –version<br>Docker version 19.03.6, build 369ce74a3c</p>
+<p>python –version<br>Python 2.7.5</p>
+<p>安装docker-compose<br><a href="https://github.com/docker/compose/releases" target="_blank" rel="noopener">https://github.com/docker/compose/releases</a><br>docker-compose version 1.25.4, build 8d51620a</p>
+<p>离线安装包<br><a href="https://github.com/goharbor/harbor/releases/download/v1.10.1/harbor-offline-installer-v1.10.1.tgz" target="_blank" rel="noopener">https://github.com/goharbor/harbor/releases/download/v1.10.1/harbor-offline-installer-v1.10.1.tgz</a><br>harbor-offline-installer-v1.10.1.tgz</p>
+<p>v1.10.1初始化postgresql<br><a href="https://github.com/goharbor/harbor/blob/v1.10.1/make/photon/db/initial-registry.sql" target="_blank" rel="noopener">https://github.com/goharbor/harbor/blob/v1.10.1/make/photon/db/initial-registry.sql</a></p>
+<p>安装redis<br><a href="https://redis.io/download" target="_blank" rel="noopener">https://redis.io/download</a></p>
+<p>注意事项：<br>docker默认使用https，需要有证书进行配置</p>
+<p>这是一个主从复制的案例：<br><a href="https://www.jianshu.com/p/7374f7481d18" target="_blank" rel="noopener">https://www.jianshu.com/p/7374f7481d18</a><br>这个一个k8s集成文档<br><a href="https://my.oschina.net/u/2306127/blog/1819645" target="_blank" rel="noopener">https://my.oschina.net/u/2306127/blog/1819645</a><br>参考文档<br>环境准备：<a href="https://www.cnblogs.com/breezey/p/9444231.html" target="_blank" rel="noopener">https://www.cnblogs.com/breezey/p/9444231.html</a></p>
+<p>selinux防火墙关闭<br>host主机解析<br>搭建nfs<br>部署外部redis、mysql<br>环境：</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs cs">[<span class="hljs-meta">harbor</span>]<span class="hljs-meta"># getenforce</span><br>Permissive<br>[<span class="hljs-meta">harbor ~ </span>]<span class="hljs-meta"># vim /etc/sysconfig/selinux</span><br>[<span class="hljs-meta">harbor</span>]<span class="hljs-meta">#  systemctl status firewalld</span><br>● firewalld.service - firewalld - <span class="hljs-keyword">dynamic</span> firewall daemon<br>   Loaded: loaded (/usr/lib/systemd/system/firewalld.service; disabled; vendor preset: enabled)<br>   Active: inactive (dead)<br>     Docs: man:firewalld(<span class="hljs-number">1</span>)<br>[<span class="hljs-meta">harbor ~ </span>]<span class="hljs-meta"># firewall-cmd --state</span><br>not running<br>[<span class="hljs-meta">harbor ~ </span>]<span class="hljs-meta"># python --version</span><br>Python <span class="hljs-number">2.7</span><span class="hljs-number">.5</span><br>[<span class="hljs-meta">harbor ~ </span>]<span class="hljs-meta"># docker --version</span><br>Docker version <span class="hljs-number">19.03</span><span class="hljs-number">.3</span>, build a872fc2f86<br></code></pre></td></tr></table></figure>
+<p>安装nfs</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs routeros">[harbor2 ~]# yum -y install nfs-utils<br>[harbor2 ~]# mkdir /data/images<br>[harbor2 ~]# vim /etc/exports<br>[harbor2 ~]# cat /etc/exports<br>/data/images 10.XX.XX.X2/24(rw,no_root_squash)<br>[harbor2]# systemctl start nfs<br>[harbor2]# systemctl status nfs<br>● nfs-server.service - NFS<span class="hljs-built_in"> server </span><span class="hljs-keyword">and</span> services<br>   Loaded: loaded (/usr/lib/systemd/system/nfs-server.service; disabled; vendor preset: disabled)<br>   Active: active (exited) since 二 2020-02-18 16:33:33 CST; 3s ago<br>  Process: 6650 <span class="hljs-attribute">ExecStartPost</span>=/bin/sh -c <span class="hljs-keyword">if</span> systemctl -q is-active gssproxy; then systemctl reload gssproxy ; fi (<span class="hljs-attribute">code</span>=exited, <span class="hljs-attribute">status</span>=0/SUCCESS)<br>  Process: 6633 <span class="hljs-attribute">ExecStart</span>=/usr/sbin/rpc.nfsd <span class="hljs-variable">$RPCNFSDARGS</span> (<span class="hljs-attribute">code</span>=exited, <span class="hljs-attribute">status</span>=0/SUCCESS)<br>  Process: 6631 <span class="hljs-attribute">ExecStartPre</span>=/usr/sbin/exportfs -r (<span class="hljs-attribute">code</span>=exited, <span class="hljs-attribute">status</span>=0/SUCCESS)<br> Main PID: 6633 (<span class="hljs-attribute">code</span>=exited, <span class="hljs-attribute">status</span>=0/SUCCESS)<br>    Tasks: 0<br>   Memory: 0B<br>   CGroup: /system.slice/nfs-server.service<br><br>2月 18 16:33:33 master3 systemd[1]: Starting NFS<span class="hljs-built_in"> server </span><span class="hljs-keyword">and</span> services<span class="hljs-built_in">..</span>.<br>2月 18 16:33:33 master3 systemd[1]: Started NFS<span class="hljs-built_in"> server </span><span class="hljs-keyword">and</span> services.<br></code></pre></td></tr></table></figure>
+<p>挂载nfs</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs haskell">[harbor1 ~]# yum -y install nfs-utils<br>[harbor1 ~]# mkdir /<span class="hljs-class"><span class="hljs-keyword">data</span>/images</span><br>[harbor1 ~]# mount <span class="hljs-number">10.</span><span class="hljs-type">XX</span>.<span class="hljs-type">XX</span>.<span class="hljs-type">X2</span>:/<span class="hljs-class"><span class="hljs-keyword">data</span>/images /<span class="hljs-keyword">data</span>/images</span><br>[root@master2 ~]# df -<span class="hljs-type">Th</span> |grep /<span class="hljs-class"><span class="hljs-keyword">data</span>/images</span><br><span class="hljs-number">10.</span><span class="hljs-type">XX</span>.<span class="hljs-type">XX</span>.<span class="hljs-type">X2</span>:/myimages nfs4      <span class="hljs-number">148</span>G   <span class="hljs-number">15</span>G  <span class="hljs-number">128</span>G   <span class="hljs-number">10</span>% /<span class="hljs-class"><span class="hljs-keyword">data</span>/myimages</span><br></code></pre></td></tr></table></figure>
+<p>安装mysql客户端</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sql">yum -y <span class="hljs-keyword">install</span> mysql<br>[harbor]<span class="hljs-comment"># which mysql</span><br>/usr/<span class="hljs-keyword">bin</span>/mysql<br></code></pre></td></tr></table></figure>
+<p>docker-compose启动redis和mysql</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><code class="hljs routeros">[harbor ~]# cat docker-compose.yml<br>version: <span class="hljs-string">'3'</span><br>services:<br><span class="hljs-comment">#  mysql-server:</span><br><span class="hljs-comment">#    hostname: mysql-server</span><br><span class="hljs-comment">#    restart: always</span><br><span class="hljs-comment">#    container_name: mysql-server</span><br><span class="hljs-comment">#    image: mysql:5.7</span><br><span class="hljs-comment">#    volumes:</span><br><span class="hljs-comment">#      - /database/mysql:/var/lib/mysql</span><br><span class="hljs-comment">#    command: --character-set-server=utf8</span><br><span class="hljs-comment">#    ports:</span><br><span class="hljs-comment">#      - '3306:3306'</span><br><span class="hljs-comment">#    environment:</span><br><span class="hljs-comment">#      MYSQL_ROOT_PASSWORD: your_passwd</span><br>  redis:<br>    hostname: redis-server<br>    container_name: redis-server<br>    command: redis-server --requirepass your_passwd(reids一定要加密码，不然就会被挖矿)<br>    restart: always<br>    image: redis:3<br>    volumes:<br>      - /database/redis:/data<br>    ports:<br>      - <span class="hljs-string">'6379:6379'</span><br>  postgres:<br>    hostname: postgres<br>    restart: always<br>    container_name: postgres-server<br>    image: postgres<br>    volumes:<br>      - /database/postgres:/data<br>    ports:<br>      - <span class="hljs-string">'5432:5432'</span><br>    environment:<br>      POSTGRES_PASSWORD: your_passwd<br><br>[root@master2 ~]# docker-compose up -d<br>Creating<span class="hljs-built_in"> network </span><span class="hljs-string">"root_default"</span> with the<span class="hljs-built_in"> default </span>driver<br>Creating redis-server    <span class="hljs-built_in">..</span>. done<br>Creating postgres-server <span class="hljs-built_in">..</span>. done<br>Creating mysql-server    <span class="hljs-built_in">..</span>. done<br>[root@master2 ~]# docker-compose ps<br>     Name                    Command               State                 Ports<br>--------------------------------------------------------------------------------------------<br>mysql-server      docker-entrypoint.sh --cha <span class="hljs-built_in">..</span>.   Up      0.0.0.0:3306-&gt;3306/tcp, 33060/tcp<br>postgres-server   docker-entrypoint.sh postgres    Up      0.0.0.0:5432-&gt;5432/tcp<br>redis-server      docker-entrypoint.sh redis <span class="hljs-built_in">..</span>.   Up      0.0.0.0:6379-&gt;6379/tcp<br></code></pre></td></tr></table></figure>
+
+<p>Mysql导入表结构</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">[root@master2 ~]# mysql -h10.XX.XX.X1 -uroot -p<br>mysql&gt; <span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">DATABASE</span> registry <span class="hljs-keyword">DEFAULT</span> <span class="hljs-type">CHARACTER</span> <span class="hljs-keyword">SET</span> utf8 <span class="hljs-keyword">COLLATE</span> utf8_general_ci;<br>Query OK, <span class="hljs-number">1</span> <span class="hljs-keyword">row</span> affected (<span class="hljs-number">0.00</span> sec)<br>mysql&gt; use registry<br><span class="hljs-keyword">Database</span> changed<br>mysql&gt; <span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> schema_migrations(<span class="hljs-keyword">version</span> <span class="hljs-type">bigint</span> <span class="hljs-keyword">not</span> <span class="hljs-keyword">null</span> <span class="hljs-keyword">primary key</span>, dirty <span class="hljs-type">boolean</span> <span class="hljs-keyword">not</span> <span class="hljs-keyword">null</span>);<br>Query OK, <span class="hljs-number">0</span> <span class="hljs-keyword">rows</span> affected (<span class="hljs-number">0.05</span> sec)<br>mysql&gt; <span class="hljs-keyword">show</span> <span class="hljs-keyword">tables</span>;<br>+<span class="hljs-comment">--------------------+</span><br>| Tables_in_registry |<br>+<span class="hljs-comment">--------------------+</span><br>| schema_migrations  |<br>+<span class="hljs-comment">--------------------+</span><br><span class="hljs-number">1</span> <span class="hljs-keyword">row</span> <span class="hljs-keyword">in</span> <span class="hljs-keyword">set</span> (<span class="hljs-number">0.00</span> sec)<br></code></pre></td></tr></table></figure>
+
+<p>postgresql导入表结构</p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs lsl">yum install postgresql-server -y<br>[root@master2 ~]# psql -h <span class="hljs-number">10.</span>XX.XX.X1 -p <span class="hljs-number">5432</span>  -U postgres<br>用户 postgres 的口令： kY#<span class="hljs-number">82</span>oYVueDMDA<br>psql (<span class="hljs-number">9.2</span><span class="hljs-number">.24</span>, 服务器 <span class="hljs-number">12.2</span> (Debian <span class="hljs-number">12.2</span><span class="hljs-number">-1.</span>pgdg100+<span class="hljs-number">1</span>))<br>警告：psql 版本<span class="hljs-number">9.2</span>， 服务器版本<span class="hljs-number">12.0</span>.<br>一些psql功能可能无法工作.<br>输入 <span class="hljs-string">"help"</span> 来获取帮助信息.<br><br>postgres=# \i /root/initial-registry.sql<br>CREATE DATABASE<br>psql (<span class="hljs-number">9.2</span><span class="hljs-number">.24</span>, 服务器 <span class="hljs-number">12.2</span> (Debian <span class="hljs-number">12.2</span><span class="hljs-number">-1.</span>pgdg100+<span class="hljs-number">1</span>))<br>警告：psql 版本<span class="hljs-number">9.2</span>， 服务器版本<span class="hljs-number">12.0</span>.<br>一些psql功能可能无法工作.<br>您现在已经连线到数据库 <span class="hljs-string">"registry"</span>,用户 <span class="hljs-string">"postgres"</span>.<br>CREATE TABLE<br></code></pre></td></tr></table></figure>
+<p>设置http访问</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs routeros">[harbor1 ~]# <span class="hljs-builtin-name">find</span> / -name docker.service<br><span class="hljs-comment"># vim /etc/systemd/system/docker.service</span><br><span class="hljs-comment"># ExecStart=/usr/bin/dockerd \</span><br>          <span class="hljs-variable">$DOCKER_OPTS</span> \<br>          <span class="hljs-variable">$DOCKER_STORAGE_OPTIONS</span> \<br>          <span class="hljs-variable">$DOCKER_NETWORK_OPTIONS</span> \<br>          <span class="hljs-variable">$INSECURE_REGISTRY</span> --insecure-registry 10.XX.XX.X1<br><span class="hljs-comment"># systemctl daemon-reload</span><br><span class="hljs-comment"># systemctl restart docker</span><br></code></pre></td></tr></table></figure>
+<p>解压启动harbor</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs cs">[<span class="hljs-meta">harbor1 ~</span>]<span class="hljs-meta"># tar -zxvf harbor-offline-installer-v1.10.1.tgz</span><br>harbor/harbor.v1<span class="hljs-number">.10</span><span class="hljs-number">.1</span>.tar.gz<br><br>harbor/prepare<br>harbor/LICENSE<br>harbor/install.sh<br>harbor/common.sh<br>harbor/harbor.yml<br><br>[<span class="hljs-meta">harbor1 ~</span>]<span class="hljs-meta"># vim harbor.yml</span><br>修改hostname、数据库密码、使用了外置数据库打开外置数据库的注释修改IP和密码<br>[<span class="hljs-meta">harbor1 ~</span>]<span class="hljs-meta"># ./prepare</span><br>执行prepare检测启动环境<br>[<span class="hljs-meta">harbor1 ~</span>]<span class="hljs-meta"># ./install.sh</span><br>启动harbor<br></code></pre></td></tr></table></figure>
+
+<p>登录、拉取、上传测试：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-string">[root@master2</span> <span class="hljs-string">harbor]#</span> <span class="hljs-string">docker</span> <span class="hljs-string">login</span> <span class="hljs-number">10.</span><span class="hljs-string">XX.XX.X1</span><br><span class="hljs-attr">Username:</span> <span class="hljs-string">admin</span><br><span class="hljs-attr">Password:</span><br><span class="hljs-string">WARNING!</span> <span class="hljs-string">Your</span> <span class="hljs-string">password</span> <span class="hljs-string">will</span> <span class="hljs-string">be</span> <span class="hljs-string">stored</span> <span class="hljs-string">unencrypted</span> <span class="hljs-string">in</span> <span class="hljs-string">/root/.docker/config.json.</span><br><span class="hljs-string">Configure</span> <span class="hljs-string">a</span> <span class="hljs-string">credential</span> <span class="hljs-string">helper</span> <span class="hljs-string">to</span> <span class="hljs-string">remove</span> <span class="hljs-string">this</span> <span class="hljs-string">warning.</span> <span class="hljs-string">See</span><br><span class="hljs-string">https://docs.docker.com/engine/reference/commandline/login/#credentials-store</span><br><br><span class="hljs-string">Login</span> <span class="hljs-string">Succeeded</span><br><br><span class="hljs-string">[harbor1</span> <span class="hljs-string">harbor]#</span> <span class="hljs-string">docker</span> <span class="hljs-string">tag</span> <span class="hljs-string">admin/test:v1</span>  <span class="hljs-number">10.</span><span class="hljs-string">XX.XX.X1/library/admin/test</span><br><span class="hljs-string">[harbor1</span> <span class="hljs-string">harbor]#</span> <span class="hljs-string">docker</span> <span class="hljs-string">push</span> <span class="hljs-number">10.</span><span class="hljs-string">XX.XX.X1/library/admin/test</span><br><br><span class="hljs-string">[root@master2</span> <span class="hljs-string">~]#</span> <span class="hljs-string">docker</span> <span class="hljs-string">push</span> <span class="hljs-number">10.</span><span class="hljs-string">XX.XX.X1/library/postgres:v2</span><br><span class="hljs-string">The</span> <span class="hljs-string">push</span> <span class="hljs-string">refers</span> <span class="hljs-string">to</span> <span class="hljs-string">repository</span> <span class="hljs-string">[10.XX.XX.X1/library/postgres]</span><br><span class="hljs-attr">0f4c9531c043:</span> <span class="hljs-string">Pushed</span><br><span class="hljs-attr">f2296b808d85:</span> <span class="hljs-string">Pushed</span><br><span class="hljs-attr">428585e93601:</span> <span class="hljs-string">Pushed</span><br><span class="hljs-attr">0b14078a7e74:</span> <span class="hljs-string">Pushed</span><br><span class="hljs-attr">2eb0b93970c9:</span> <span class="hljs-string">Pushed</span><br><span class="hljs-attr">9b95b8eade9b:</span> <span class="hljs-string">Pushed</span><br><span class="hljs-attr">8abf7e1726c6:</span> <span class="hljs-string">Pushed</span><br><span class="hljs-attr">ad5d7aba6303:</span> <span class="hljs-string">Pushed</span><br><span class="hljs-attr">7a1725b13885:</span> <span class="hljs-string">Pushed</span><br><span class="hljs-attr">1bb65a17f346:</span> <span class="hljs-string">Pushed</span><br><span class="hljs-attr">a872403d70e5:</span> <span class="hljs-string">Pushed</span><br><span class="hljs-attr">9129eada97a4:</span> <span class="hljs-string">Pushed</span><br><span class="hljs-attr">efb2aa6f2c78:</span> <span class="hljs-string">Pushed</span><br><span class="hljs-attr">488dfecc21b1:</span> <span class="hljs-string">Pushed</span><br><span class="hljs-attr">v2: digest: sha256:40ebbae0ce4d29eacb5a0ad3ae450f31f089124acdc2cc68b177872f716d0454 size:</span> <span class="hljs-number">3245</span><br><br><br><span class="hljs-string">[harbor</span> <span class="hljs-string">harbor]#</span> <span class="hljs-string">docker</span> <span class="hljs-string">pull</span> <span class="hljs-number">10.</span><span class="hljs-string">XX.XX.X2/library/admin/test:v1</span><br><span class="hljs-attr">v1:</span> <span class="hljs-string">Pulling</span> <span class="hljs-string">from</span> <span class="hljs-string">library/admin/test</span><br><span class="hljs-attr">bc51dd8edc1b:</span> <span class="hljs-string">Pull</span> <span class="hljs-string">complete</span><br><span class="hljs-attr">d2b355dbb6c6:</span> <span class="hljs-string">Pull</span> <span class="hljs-string">complete</span><br><span class="hljs-attr">d237363a1a91:</span> <span class="hljs-string">Pull</span> <span class="hljs-string">complete</span><br><span class="hljs-attr">ff4b9d2fde66:</span> <span class="hljs-string">Pull</span> <span class="hljs-string">complete</span><br><span class="hljs-attr">646492d166e7:</span> <span class="hljs-string">Pull</span> <span class="hljs-string">complete</span><br><span class="hljs-attr">50eeac6fd5fb:</span> <span class="hljs-string">Pull</span> <span class="hljs-string">complete</span><br><span class="hljs-attr">502963de6da8:</span> <span class="hljs-string">Pull</span> <span class="hljs-string">complete</span><br><span class="hljs-attr">d7263f7627b9:</span> <span class="hljs-string">Pull</span> <span class="hljs-string">complete</span><br><span class="hljs-attr">d234d8f1a205:</span> <span class="hljs-string">Pull</span> <span class="hljs-string">complete</span><br><span class="hljs-attr">1b2c24e5275c:</span> <span class="hljs-string">Pull</span> <span class="hljs-string">complete</span><br><span class="hljs-attr">3f7c6dd9a7ae:</span> <span class="hljs-string">Pull</span> <span class="hljs-string">complete</span><br><span class="hljs-attr">d6d6977a74b3:</span> <span class="hljs-string">Pull</span> <span class="hljs-string">complete</span><br><span class="hljs-attr">acf1093f8b78:</span> <span class="hljs-string">Pull</span> <span class="hljs-string">complete</span><br><span class="hljs-attr">77e1ac8c247a:</span> <span class="hljs-string">Pull</span> <span class="hljs-string">complete</span><br><span class="hljs-attr">Digest:</span> <span class="hljs-string">sha256:40ebbae0ce4d29eacb5a0ad3ae450f31f089124acdc2cc68b177872f716d0454</span><br><span class="hljs-attr">Status:</span> <span class="hljs-string">Downloaded</span> <span class="hljs-string">newer</span> <span class="hljs-string">image</span> <span class="hljs-string">for</span> <span class="hljs-number">10.</span><span class="hljs-string">XX.XX.X2/library/admin/test:v1</span><br><span class="hljs-number">10.</span><span class="hljs-string">XX.XX.X2/library/admin/test:v1</span><br><span class="hljs-string">[harbor</span> <span class="hljs-string">harbor]#</span> <span class="hljs-string">docker</span> <span class="hljs-string">images</span> <span class="hljs-string">|grep</span> <span class="hljs-string">test</span><br><span class="hljs-number">10.</span><span class="hljs-string">XX.XX.X2/library/admin/test</span>   <span class="hljs-string">v1</span>                               <span class="hljs-string">0d2531ee3abd</span>        <span class="hljs-number">5</span> <span class="hljs-string">days</span> <span class="hljs-string">ago</span>          <span class="hljs-string">397MB</span><br><br><span class="hljs-string">[harbor</span> <span class="hljs-string">~]#</span> <span class="hljs-string">docker</span> <span class="hljs-string">tag</span> <span class="hljs-string">goharbor/prepare:v1.10.1</span> <span class="hljs-number">10.</span><span class="hljs-string">XX.XX.X2/library/admin/test:v2</span><br><span class="hljs-string">[harbor</span> <span class="hljs-string">~]#</span> <span class="hljs-string">docker</span> <span class="hljs-string">push</span> <span class="hljs-number">10.</span><span class="hljs-string">XX.XX.X2/library/admin/test:v2</span><br><span class="hljs-string">The</span> <span class="hljs-string">push</span> <span class="hljs-string">refers</span> <span class="hljs-string">to</span> <span class="hljs-string">repository</span> <span class="hljs-string">[10.XX.XX.X2/library/admin/test]</span><br><span class="hljs-attr">bf5ac9b9c61c:</span> <span class="hljs-string">Pushed</span><br><span class="hljs-attr">06e0f1585c01:</span> <span class="hljs-string">Pushed</span><br><span class="hljs-attr">3710d94e58dd:</span> <span class="hljs-string">Pushed</span><br><span class="hljs-attr">5c5501748347:</span> <span class="hljs-string">Pushed</span><br><span class="hljs-attr">f59c6315bf8a:</span> <span class="hljs-string">Pushed</span><br><span class="hljs-attr">fb3507ff707e:</span> <span class="hljs-string">Pushed</span><br><span class="hljs-attr">93e0577272a9:</span> <span class="hljs-string">Pushed</span><br><span class="hljs-attr">v2: digest: sha256:e025a09df19c99e0afb4b116cbd698d5de27fb39e26314934460c7bae7c21afc size:</span> <span class="hljs-number">1787</span><br></code></pre></td></tr></table></figure>
+
+
+<p>Harbor预演测试过程<br>目前测试进度：</p>
+<ol>
+<li>搭建 v1.10.1（harbor最新版本），单节点使用内置postgresql，和本地磁盘存储，测试成功</li>
+<li>搭建 v1.10.1 使用外置mysql、postgresql、redis（全部docker-compose启动）harbor服务启动后不能登录，发现该版本不支持外置mysql（查阅官方文档<a href="https://github.com/goharbor/harbor/blob/master/docs/1.10/install-config/configure-yml-file.md显示目前该版本外置数据库仅支持postgresql），服务启动后redis" target="_blank" rel="noopener">https://github.com/goharbor/harbor/blob/master/docs/1.10/install-config/configure-yml-file.md显示目前该版本外置数据库仅支持postgresql），服务启动后redis</a> auth认证有问题</li>
+<li>搭建 v1.10.1 更改外置数据库为postgresql，redis使用手动搭建方式进行单点测试，搭建、测试拉取、推送镜像成功</li>
+<li>版本 v1.10.0 和v1.8.0 经过查阅github文档、启动测试，该版本不支持外置mysql，目前仅支持postpresql  </li>
+<li>搭建 v1.10.1 外接数据库 postpres、redis ，2个harbor节点构成集群共享存储，搭建、测试拉取、推送镜像成功</li>
+</ol>
+<p>还需继续研究项：</p>
+<ol>
+<li>研究https认证</li>
+<li>研究nginx keeplive 分流</li>
+<li>版本 v1.5.4（发于2018.1.29版本）支持外置mysql，尝试搭建v1.5.4进行测试和调研</li>
+<li>继续研究最新版harbor集群postgresql容灾方式</li>
+</ol>
+<p>常用版本列举对比 <a href="https://github.com/goharbor/harbor/releases：" target="_blank" rel="noopener">https://github.com/goharbor/harbor/releases：</a><br>版本：v1.10<br>发版时间：2019.12.13<br>新功能对比：<br>外部数据库仅支持postgresql<br>支持第三方漏洞扫描程序<br>新增项目配置规则<br>管理员和用户增加功能，新增了“受限访客”用户<br>增强OIDC功能，复制功能增强<br>问题：<br>v1.10.0 job中有正在运行的任务，当redis重启后，任务被冻结，需点击重试恢复，后续补丁修复<br>v1.10.1 修复了1.9.3版本拉取镜像等<a href="https://github.com/goharbor/harbor/issues?q=is%3Aissue+label%3Atarget%2F1.10.1+is%3Aclosed" target="_blank" rel="noopener">https://github.com/goharbor/harbor/issues?q=is%3Aissue+label%3Atarget%2F1.10.1+is%3Aclosed</a><br>优缺点：<br>目前最新版，修复了旧版本的bug，增加了新的功能<br>统一了配置文件</p>
+<p>版本：v1.8<br>发版时间：2019.5.21<br>新功能对比：<br>外部数据库仅支持postgresql<br>支持OIDC，使用外部验证验证身份<br>扩展了镜像复制功能<br>新增机器人账户<br>新增非harbor存储库之间互相复制镜像<br>问题：<br>复制策略标签过滤器丢失<br>不支持清单<br>某些情况下redis持久化数据巨大问题<br>优缺点：<br>查看官方文档和网上博客反馈，存在一些bug<br>配置文件也是统一的修改配置文件启动方式简单</p>
+<p>版本：v1.5<br>发版时间：2018.10.26<br>新功能对比：<br>外部数据库支持mysql<br>升级Clair<br>NVD迁移至AWS<br>添加了镜像标签过滤器<br>添加LDAP组<br>用户可以为镜像添加标签<br>新增仓库只读模式<br>问题：<br>1.5.0  存在镜像标签问题，镜像复制签名问题<br>1.5.4 修复了前面几个版本的bug，不支持在线安装，支持离线安装<br><a href="https://github.com/goharbor/harbor/releases/tag/v1.5.4" target="_blank" rel="noopener">https://github.com/goharbor/harbor/releases/tag/v1.5.4</a><br>优缺点：<br>1.5.4支持外置mysql<br>1.5之后的版本，添加了新的功能，mysql换为postgresql，官方文档显示是将多个mysql迁移为统一的postgresql方便管理</p>
+
+      </section>
+
+      <section class="article-footer">
+        
+      </section>
+
+      <section class="article-navs">
+        
+<nav class="card-container card-article-nav">
+  <div class="card-wrap">
+    
+      <div id="article-nav-newer" class="card-item">
+        <article>
+          
+          <a class="card-link article-nav-link" href="/2020/03/06/65_harbor3/"></a>
+          <strong class="article-nav-caption">Newer</strong>
+          <p class="article-nav-title">
+            
+              harborV1.10.1 基于复制策略同步测试
+            
+          </p>
+        </article>
+      </div>
+    
+    
+      <div id="article-nav-older" class="card-item">
+        <article>
+          
+          <a class="card-link article-nav-link" href="/2020/03/02/63_harbor1/"></a>
+          <strong class="article-nav-caption">Older</strong>
+          <p class="article-nav-title">
+            
+              harbor调研
+            
+          </p>
+        </article>
+      </div>
+    
+  </div>
+</nav>
+
+      </section>
+    </div>
+  </article>
+</div>
+
+    <!-- footer container -->
+<footer id="footer" class="footer">
+  <div class="footer-container">
+     
+    <p>&copy; 2020 <a href="/" target="_blank">zhaodan</a></p>
+
+    
+      <p id="hitokoto"></p>
+      <script src="https://v1.hitokoto.cn/?c=a&amp;encode=js&select=%23hitokoto" defer></script>
+    
+
+    
+
+    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> Theme - <a href="https://github.com/miiiku/flex-block" target="_blank">flex-block</a></p>
+  </div>
+</footer>
+  </div>
+
+  <div class="back-to-top-fixed">
+    <svg class="icon icon-back-to-top" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M725.333333 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8l-213.333333-213.333333c-17.066667-17.066667-17.066667-42.666667 0-59.733333s42.666667-17.066667 59.733333 0l213.333333 213.333333c17.066667 17.066667 17.066667 42.666667 0 59.733333C746.666667 422.4 738.133333 426.666667 725.333333 426.666667z"></path>
+  <path d="M298.666667 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8-17.066667-17.066667-17.066667-42.666667 0-59.733333l213.333333-213.333333c17.066667-17.066667 42.666667-17.066667 59.733333 0s17.066667 42.666667 0 59.733333l-213.333333 213.333333C320 422.4 311.466667 426.666667 298.666667 426.666667z"></path>
+  <path d="M512 896c-25.6 0-42.666667-17.066667-42.666667-42.666667L469.333333 170.666667c0-25.6 17.066667-42.666667 42.666667-42.666667s42.666667 17.066667 42.666667 42.666667l0 682.666667C554.666667 878.933333 537.6 896 512 896z"></path>
+</svg> 
+  </div>
+
+  
+  
+
+
+  <!-- aplayer 音频 start -->
+  
+<link rel="stylesheet" href="/lib/APlayer.min.css">
+
+  
+<script src="/lib/APlayer.min.js"></script>
+
+  <script type="text/javascript">
+    const aplayer = document.querySelectorAll(".aplayer");
+    aplayer && initaplayer(aplayer);
+    function initaplayer(els) {
+      let elsArr = Array.from(els);
+      elsArr.forEach(el => {
+        new APlayer({
+          container: el,
+          audio: { ...el.dataset },
+          theme: "#b7daff",
+          lrcType: 3,
+          autoplay: false,
+          loop: false,
+          mutex: true,
+        });
+      });
+    }
+  </script>
+  <!-- aplayer 音频 end -->
+  
+
+<!-- dplayer 视频 start -->
+
+<link rel="stylesheet" href="/lib/DPlayer.min.css">
+
+
+<script src="/lib/DPlayer.min.js"></script>
+
+<script type="text/javascript">
+  const dplayer = document.querySelectorAll(".dplayer");
+  dplayer && initDPlayer(dplayer);
+  function initDPlayer(els) {
+    let elsArr = Array.from(els);
+    elsArr.forEach(el => {
+      let url = el.dataset.url;
+      let cover = el.dataset.cover;
+      new DPlayer({
+        container: el,
+        video: { url: url, pic: cover },
+        theme: "#b7daff",
+        autoplay: false,
+        loop: false,
+        mutex: true,
+      });
+    });
+  }
+</script>
+<!-- dplayer 视频 end -->
+
+
+<!-- waterfall 瀑布流 start -->
+
+<script src="/lib/waterfall.min.js"></script>
+
+<script type="text/javascript">
+
+const waterfalls = document.querySelectorAll(".waterfall-container");
+
+if (waterfalls && waterfalls.length > 0) {
+  waterfalls.forEach((waterfall, index) => {
+    let cls = "waterfall-container-" + index;
+    waterfall.classList.add(cls);
+    initWaterfall(cls, waterfall);
+  });
+}
+
+function initWaterfall(selector, el) {
+  const options = {};
+  if (Object.keys(el.dataset).length > 0) {
+    for (let k in el.dataset) {
+      options[k] = el.dataset[k];
+    }
+  }
+  waterfall(`.${selector}`, options);
+}
+</script>
+<!-- waterfall 瀑布流 end -->
+
+
+  <!-- zoom start -->
+  
+<script src="/lib/zoom.min.js"></script>
+
+  <script type="text/javascript">
+    document.querySelector(".article-content") && zoom(".article-content");
+  </script>
+  <!-- zoom end -->
+  
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+<script src="/js/script.js"></script>
+
+  
+  <!-- 尾部用户自定义相关内容 -->
+
+</body>
+</html>

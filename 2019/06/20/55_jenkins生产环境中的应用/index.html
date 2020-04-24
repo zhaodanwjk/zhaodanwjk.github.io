@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  
+    <meta name="description" content="fighting">
+  
+
+  
+    <meta name="keywords" content="best">
+  
+
+  
+    <meta name="author" content="zhaodan">
+  
+
+  
+    <meta name="copyright" content="zhaodan">
+  
+
+  
+
+  <title>jenkins在生产环境中的应用部署 | Hexo</title>
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+    <link href="https://cdn.bootcss.com/highlight.js/9.15.6/styles/monokai.min.css" rel="stylesheet">
+  
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+  <div class="root-container">
+    <!-- navbar -->
+<nav class="navbar">
+  <div class="navbar-content">
+    <!-- logo -->
+    <div class="navbar-logo">
+      <a href="/">
+        
+          Hexo
+        
+      </a>
+    </div>
+    <!-- link -->
+    <div class="navbar-link">
+      <div class="navbar-btn">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <ul class="navbar-list">
+        
+          <li class="navbar-list-item"><a href="/">HOME</a></li>
+        
+          <li class="navbar-list-item"><a href="/about">ABOUT</a></li>
+        
+          <li class="navbar-list-item"><a href="/tags">TAGS</a></li>
+        
+          <li class="navbar-list-item"><a href="/categories">CATEGORIES</a></li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    
+<!-- header container -->
+<header class="header-container post">
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+    <div class="header-content">
+      <div class="post-image" style="background-image: url(https://qiniu.miiiku.xyz/src/images/banner.jpg)"></div>
+      <div class="post-text">
+        <div class="type-wrap">
+          
+        </div>
+        <h1 class="title-wrap">jenkins在生产环境中的应用部署</h1>
+        <h2 class="title-sub-wrap">
+          <strong>zhaodan</strong>
+          <span>发布于</span>
+          
+  <a href="javascript:;" class="article-date">
+    <time datetime="2019-06-19T16:00:00.000Z" itemprop="datePublished">2019-06-20</time>
+  </a>
+
+        </h2>
+      </div>
+    </div>
+  
+
+  
+  
+
+  </header>
+
+    <!-- 文章 -->
+
+<!-- 文章内容 -->
+
+<div class="body-container">
+  <article class="content-container article-container">
+    <div class="article-content">
+      
+      
+
+      <section class="article-entry">
+        <p>官方文档：<a href="https://jenkins.io/zh/doc/" target="_blank" rel="noopener">https://jenkins.io/zh/doc/</a><br>1.搭建安装</p>
+<blockquote>
+<p>最低环境要求：<br>            Java8<br>            256M可用内存<br>            1GB磁盘<br>生产中使用配置:<br>            java8<br>            m4.xlarge(4核16G)<br>            200GB磁盘</p>
+</blockquote>
+<p><em>jenins分2个版本，LTS和WEEK也就是稳定版和每周更新版，生产环境中使用稳定版。官方版本信息：<a href="https://jenkins.io/zh/download/" target="_blank" rel="noopener">https://jenkins.io/zh/download/</a></em></p>
+<figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs vala"><span class="hljs-meta"># wget https://pkg.jenkins.io/redhat-stable/jenkins-2.138.3-1.1.noarch.rpm</span><br><span class="hljs-meta"># rpm -ivh jenkins-2.138.3-1.1.noarch.rpm</span><br><span class="hljs-meta"># /etc/init.d/jenkins start</span><br></code></pre></td></tr></table></figure>
+<p>生产环境中使用了nginx反向代理，jenkins启动后访问web，从jenkins log中获取认证秘钥进行下一步</p>
+<hr>
+<p>2.插件<br>输入秘钥后会提示安装插件（默认建议安装的先进行安装），下面列出的是线上所使用到的主要关键插件及版本信息<br>name|version|function<br>—–|—–|—–<br>Active Choices Plug-in|2.1|构建选项列表，我们的生产环境中是用来选择部署zip包<br>Ansible plugin|1.0|运行ansible playbook<br>Build Timeout|1.19|任务构建超时自动终止<br>Credentials|2.1.18|存储秘钥凭据<br>SSH Credentials|1.14|存储ssh凭据<br>Email Extension Template Plugin|1.1|邮件扩展模板<br>Job DSL|1.70|脚本<br>Role-based Authorization Strategy|2.9.0|基于role的权限控制<br>Script Security|1.49|我们此处使用这个插件获取代码的附加路径</p>
+<hr>
+<p>3.秘钥key<br>安装好Credentials插件后会有凭据的图标显示，进入里面进行配置，我们的生产环境中一共使用4个秘钥</p>
+<blockquote>
+<ol>
+<li>Git秘钥<br><a href="https://postimg.cc/Bt036Xg5" target="_blank" rel="noopener"><img src="https://i.postimg.cc/XNZYs5BP/jenkins-dev1.png" alt="jenkins-dev1.png"></a></li>
+<li>ssh秘钥<br><a href="https://postimg.cc/D8C3B5K5" target="_blank" rel="noopener"><img src="https://i.postimg.cc/W1VppfYR/jenkins-dev2.png" alt="jenkins-dev2.png"></a></li>
+<li>dynamodb key id<br><a href="https://postimg.cc/30BnrLZq" target="_blank" rel="noopener"><img src="https://i.postimg.cc/pyN7Z45P/jenkins-dev3.png" alt="jenkins-dev3.png"></a></li>
+<li>dynamodb key sec<br><a href="https://postimg.cc/tnyBj0FP" target="_blank" rel="noopener"><img src="https://i.postimg.cc/6q4gCt3H/jenkins-dev4.png" alt="jenkins-dev4.png"></a></li>
+</ol>
+</blockquote>
+<hr>
+<p>4.初始化一个groovy任务(git+ansible)<br><a href="https://postimg.cc/QHNrQwvH" target="_blank" rel="noopener"><img src="https://i.postimg.cc/hPTPBqrb/jenkins-dev5.png" alt="jenkins-dev5.png"></a><br><a href="https://postimg.cc/Mnv24R6w" target="_blank" rel="noopener"><img src="https://i.postimg.cc/y8T1DX2D/jenkins-dev6.png" alt="jenkins-dev6.png"></a></p>
+<hr>
+<p>5.创建线上部署任务<br>执行创建好的groovy任务，创建线上部署任务<br><a href="https://postimg.cc/t7NjVpSK" target="_blank" rel="noopener"><img src="https://i.postimg.cc/wxSTZBhj/jenkins-dev7.png" alt="jenkins-dev7.png"></a><br><a href="https://postimg.cc/bZWcjJrt" target="_blank" rel="noopener"><img src="https://i.postimg.cc/d0tqrZK4/jenkins-dev8.png" alt="jenkins-dev8.png"></a><br><a href="https://postimg.cc/Q9gR5JbQ" target="_blank" rel="noopener"><img src="https://i.postimg.cc/DZRF9C4M/jenkins-dev9.png" alt="jenkins-dev9.png"></a></p>
+<hr>
+<p>6.邮件报警<br>在全局配置中设置邮件服务器信息，在部署任务中使用邮件扩展插件进行添加邮件报警<br><a href="https://postimg.cc/TLvzp4r2" target="_blank" rel="noopener"><img src="https://i.postimg.cc/gJxmB9jh/jenkins-dev10.png" alt="jenkins-dev10.png"></a><br><a href="https://postimg.cc/f3d4WNSg" target="_blank" rel="noopener"><img src="https://i.postimg.cc/MGPzDZ6x/jenkins-dev11.png" alt="jenkins-dev11.png"></a></p>
+
+      </section>
+
+      <section class="article-footer">
+        
+      </section>
+
+      <section class="article-navs">
+        
+<nav class="card-container card-article-nav">
+  <div class="card-wrap">
+    
+      <div id="article-nav-newer" class="card-item">
+        <article>
+          
+          <a class="card-link article-nav-link" href="/2019/12/18/59_CDH/"></a>
+          <strong class="article-nav-caption">Newer</strong>
+          <p class="article-nav-title">
+            
+              搭建德国CDH(踩坑无数后整理版)
+            
+          </p>
+        </article>
+      </div>
+    
+    
+      <div id="article-nav-older" class="card-item">
+        <article>
+          
+          <a class="card-link article-nav-link" href="/2019/06/14/54_TC/"></a>
+          <strong class="article-nav-caption">Older</strong>
+          <p class="article-nav-title">
+            
+              TeamCity还原备份数据及升级文档
+            
+          </p>
+        </article>
+      </div>
+    
+  </div>
+</nav>
+
+      </section>
+    </div>
+  </article>
+</div>
+
+    <!-- footer container -->
+<footer id="footer" class="footer">
+  <div class="footer-container">
+     
+    <p>&copy; 2020 <a href="/" target="_blank">zhaodan</a></p>
+
+    
+      <p id="hitokoto"></p>
+      <script src="https://v1.hitokoto.cn/?c=a&amp;encode=js&select=%23hitokoto" defer></script>
+    
+
+    
+
+    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> Theme - <a href="https://github.com/miiiku/flex-block" target="_blank">flex-block</a></p>
+  </div>
+</footer>
+  </div>
+
+  <div class="back-to-top-fixed">
+    <svg class="icon icon-back-to-top" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M725.333333 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8l-213.333333-213.333333c-17.066667-17.066667-17.066667-42.666667 0-59.733333s42.666667-17.066667 59.733333 0l213.333333 213.333333c17.066667 17.066667 17.066667 42.666667 0 59.733333C746.666667 422.4 738.133333 426.666667 725.333333 426.666667z"></path>
+  <path d="M298.666667 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8-17.066667-17.066667-17.066667-42.666667 0-59.733333l213.333333-213.333333c17.066667-17.066667 42.666667-17.066667 59.733333 0s17.066667 42.666667 0 59.733333l-213.333333 213.333333C320 422.4 311.466667 426.666667 298.666667 426.666667z"></path>
+  <path d="M512 896c-25.6 0-42.666667-17.066667-42.666667-42.666667L469.333333 170.666667c0-25.6 17.066667-42.666667 42.666667-42.666667s42.666667 17.066667 42.666667 42.666667l0 682.666667C554.666667 878.933333 537.6 896 512 896z"></path>
+</svg> 
+  </div>
+
+  
+  
+
+
+  <!-- aplayer 音频 start -->
+  
+<link rel="stylesheet" href="/lib/APlayer.min.css">
+
+  
+<script src="/lib/APlayer.min.js"></script>
+
+  <script type="text/javascript">
+    const aplayer = document.querySelectorAll(".aplayer");
+    aplayer && initaplayer(aplayer);
+    function initaplayer(els) {
+      let elsArr = Array.from(els);
+      elsArr.forEach(el => {
+        new APlayer({
+          container: el,
+          audio: { ...el.dataset },
+          theme: "#b7daff",
+          lrcType: 3,
+          autoplay: false,
+          loop: false,
+          mutex: true,
+        });
+      });
+    }
+  </script>
+  <!-- aplayer 音频 end -->
+  
+
+<!-- dplayer 视频 start -->
+
+<link rel="stylesheet" href="/lib/DPlayer.min.css">
+
+
+<script src="/lib/DPlayer.min.js"></script>
+
+<script type="text/javascript">
+  const dplayer = document.querySelectorAll(".dplayer");
+  dplayer && initDPlayer(dplayer);
+  function initDPlayer(els) {
+    let elsArr = Array.from(els);
+    elsArr.forEach(el => {
+      let url = el.dataset.url;
+      let cover = el.dataset.cover;
+      new DPlayer({
+        container: el,
+        video: { url: url, pic: cover },
+        theme: "#b7daff",
+        autoplay: false,
+        loop: false,
+        mutex: true,
+      });
+    });
+  }
+</script>
+<!-- dplayer 视频 end -->
+
+
+<!-- waterfall 瀑布流 start -->
+
+<script src="/lib/waterfall.min.js"></script>
+
+<script type="text/javascript">
+
+const waterfalls = document.querySelectorAll(".waterfall-container");
+
+if (waterfalls && waterfalls.length > 0) {
+  waterfalls.forEach((waterfall, index) => {
+    let cls = "waterfall-container-" + index;
+    waterfall.classList.add(cls);
+    initWaterfall(cls, waterfall);
+  });
+}
+
+function initWaterfall(selector, el) {
+  const options = {};
+  if (Object.keys(el.dataset).length > 0) {
+    for (let k in el.dataset) {
+      options[k] = el.dataset[k];
+    }
+  }
+  waterfall(`.${selector}`, options);
+}
+</script>
+<!-- waterfall 瀑布流 end -->
+
+
+  <!-- zoom start -->
+  
+<script src="/lib/zoom.min.js"></script>
+
+  <script type="text/javascript">
+    document.querySelector(".article-content") && zoom(".article-content");
+  </script>
+  <!-- zoom end -->
+  
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+<script src="/js/script.js"></script>
+
+  
+  <!-- 尾部用户自定义相关内容 -->
+
+</body>
+</html>

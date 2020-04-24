@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  
+    <meta name="description" content="fighting">
+  
+
+  
+    <meta name="keywords" content="best">
+  
+
+  
+    <meta name="author" content="zhaodan">
+  
+
+  
+    <meta name="copyright" content="zhaodan">
+  
+
+  
+
+  <title>Fluentd | Hexo</title>
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+    <link href="https://cdn.bootcss.com/highlight.js/9.15.6/styles/monokai.min.css" rel="stylesheet">
+  
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+  <div class="root-container">
+    <!-- navbar -->
+<nav class="navbar">
+  <div class="navbar-content">
+    <!-- logo -->
+    <div class="navbar-logo">
+      <a href="/">
+        
+          Hexo
+        
+      </a>
+    </div>
+    <!-- link -->
+    <div class="navbar-link">
+      <div class="navbar-btn">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <ul class="navbar-list">
+        
+          <li class="navbar-list-item"><a href="/">HOME</a></li>
+        
+          <li class="navbar-list-item"><a href="/about">ABOUT</a></li>
+        
+          <li class="navbar-list-item"><a href="/tags">TAGS</a></li>
+        
+          <li class="navbar-list-item"><a href="/categories">CATEGORIES</a></li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    
+<!-- header container -->
+<header class="header-container post">
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+    <div class="header-content">
+      <div class="post-image" style="background-image: url(https://qiniu.miiiku.xyz/src/images/banner.jpg)"></div>
+      <div class="post-text">
+        <div class="type-wrap">
+          
+        </div>
+        <h1 class="title-wrap">Fluentd</h1>
+        <h2 class="title-sub-wrap">
+          <strong>zhaodan</strong>
+          <span>发布于</span>
+          
+  <a href="javascript:;" class="article-date">
+    <time datetime="2018-06-18T16:00:00.000Z" itemprop="datePublished">2018-06-19</time>
+  </a>
+
+        </h2>
+      </div>
+    </div>
+  
+
+  
+  
+
+  </header>
+
+    <!-- 文章 -->
+
+<!-- 文章内容 -->
+
+<div class="body-container">
+  <article class="content-container article-container">
+    <div class="article-content">
+      
+      
+
+      <section class="article-entry">
+        <p>Fluentd 是由Ruby和C编写的，需要ruby进行，然而安装td-agent 是fluentd 的易安装版本，不用考虑太多的依赖关系。</p>
+<p>编辑配置文件/etc/td-agent/td-agent.conf 中的source来设置日志来源</p>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs dts"><span class="hljs-params">&lt;source&gt;</span><br><br> type tail  <br><br> format apache  <br><br> path <span class="hljs-meta-keyword">/var/</span>log<span class="hljs-meta-keyword">/apache2/</span>access_log  <br><br> pos_file <span class="hljs-meta-keyword">/var/</span>log<span class="hljs-meta-keyword">/apache2/</span>access_log.pos  <br><br> tag mongo.apache  <br><br><span class="hljs-params">&lt;/source&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>type tail: tail方式是 Fluentd 内置的输入方式，其原理是不停地从源文件中获取增量日志，与linx命令tail相似，也可以使用其他输入方式如http、forward等输入，也可以使用输入插件，将 tail 改为相应的插件名称 如： type tail_ex  ，注意tail_ex为下划线</p>
+<ol>
+<li>使用中转方式</li>
+</ol>
+<p>先发送给中转站，中转再发送至elatsearch</p>
+<p>在本机修改tdagent配置</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><code class="hljs vim"><br># <span class="hljs-keyword">vim</span> /etc/td-agent/<span class="hljs-keyword">conf</span>.d/td-agent.<span class="hljs-keyword">conf</span><br><br><span class="hljs-symbol">&lt;source&gt;</span><br><br>  <span class="hljs-built_in">type</span> tail<br><br>  format json<br><br>  time_key time<br><br>  time_format %<span class="hljs-keyword">N</span><br><br>  pos_file /var/<span class="hljs-built_in">log</span>/td-agent/<span class="hljs-keyword">x</span>.<span class="hljs-built_in">log</span>.pos<br><br>  path /<span class="hljs-built_in">log</span>/<span class="hljs-keyword">x</span>.%d.%<span class="hljs-keyword">m</span>.%Y.<span class="hljs-built_in">log</span><br><br>  <span class="hljs-keyword">tag</span>  <span class="hljs-built_in">log</span>.<span class="hljs-keyword">x</span><br><br>&lt;/<span class="hljs-keyword">source</span>&gt;<br><br>&lt;<span class="hljs-keyword">match</span> <span class="hljs-built_in">log</span>.**&gt;<br><br>   <span class="hljs-built_in">type</span> forward # forward模式，转发给其他服务器处理<br><br>   send_timeout <span class="hljs-number">60</span>s<br><br>   recover_wait <span class="hljs-number">10</span>s<br><br>   heartbeat_interval <span class="hljs-number">1</span>s<br><br>   phi_threshold <span class="hljs-number">16</span><br><br>   hard_timeout <span class="hljs-number">60</span>s<br><br>   heartbeat_type tcp<br><br>   <span class="hljs-symbol">&lt;server&gt;</span>  <br><br>      name auth.shard<br><br>      host td-agent<br><br>      port <span class="hljs-number">24</span><br><br>      weight <span class="hljs-number">1</span><br><br>  &lt;/server&gt;<br><br>  <span class="hljs-symbol">&lt;secondary&gt;</span><br><br>      <span class="hljs-built_in">type</span> <span class="hljs-keyword">file</span><br><br>      path /var/<span class="hljs-built_in">log</span>/td-agent/<span class="hljs-built_in">log</span>-forward-failed<br><br>&lt;/secondary&gt;<br><br>&lt;/<span class="hljs-keyword">match</span>&gt;<br></code></pre></td></tr></table></figure>
+
+<p> 在中转修改tdagent配置</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><code class="hljs vim"><br> #  <span class="hljs-keyword">vim</span> /etc/td-agent/<span class="hljs-keyword">conf</span>.d/td-agent-<span class="hljs-built_in">log</span>.<span class="hljs-keyword">conf</span><br><br> <span class="hljs-symbol">&lt;source&gt;</span><br><br> <span class="hljs-built_in">type</span> forward<br><br> &lt;/<span class="hljs-keyword">source</span>&gt;<br><br>&lt;<span class="hljs-keyword">match</span> <span class="hljs-built_in">log</span>.**&gt;<br><br>   <span class="hljs-built_in">type</span> forest<br><br>   subtype <span class="hljs-keyword">copy</span><br><br>   <span class="hljs-symbol">&lt;template&gt;</span>  <br><br>          <span class="hljs-symbol">&lt;store&gt;</span>      <br><br>          @type elasticsearch<br><br>           host elasticsearch<br><br>          port <span class="hljs-number">92</span><br><br>          ssl_verify false<br><br>          logstash_format true<br><br>          logstash_prefix bilogs<br><br>          logstash_dateformat <span class="hljs-built_in">log</span>.%<span class="hljs-keyword">m</span>.%d.%Y<br><br>          time_key time<br><br>          flush_interval <span class="hljs-number">10</span>s<br><br>          request_timeout <span class="hljs-number">15</span>s<br><br>          reload_on_failure true<br><br>          reconnect_on_error true<br><br>        &lt;/store&gt;<br><br>    &lt;/template&gt;<br><br>&lt;/<span class="hljs-keyword">match</span>&gt;<br><br>kibana上添加<span class="hljs-built_in">index</span>  <span class="hljs-built_in">log</span><br><br># <span class="hljs-keyword">cat</span> /<span class="hljs-keyword">opt</span>/supervisor/<span class="hljs-built_in">log</span>/<span class="hljs-number">12.12</span>.<span class="hljs-number">2017</span>.<span class="hljs-built_in">log</span> |/<span class="hljs-keyword">opt</span>/td-agent/embedded/bin/fluent-<span class="hljs-keyword">cat</span> <span class="hljs-built_in">log</span>.<span class="hljs-keyword">x</span> （非中转方式）<br></code></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>不使用中转方式</li>
+</ol>
+<p>直接发送给elatsearch</p>
+<p>在所要添加的服务本机</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><code class="hljs properties"><br><span class="hljs-comment"># vim /etc/td-agent/conf.d/td-agent.conf</span><br><br><span class="hljs-meta">&lt;match</span> <span class="hljs-string">bilog.**&gt;</span><br><br>  <span class="hljs-attr">type</span> <span class="hljs-string">forest</span><br><br>  <span class="hljs-attr">subtype</span> <span class="hljs-string">copy</span><br><br>  <span class="hljs-attr">&lt;template&gt;</span><br><br>      <span class="hljs-attr">&lt;store&gt;</span><br><br>          <span class="hljs-meta">@type</span> <span class="hljs-string">elasticsearch</span><br><br><span class="hljs-comment">          #type_name multiplayer.shard</span><br><br>          <span class="hljs-attr">host</span> <span class="hljs-string">elasticsearch</span><br><br>          <span class="hljs-attr">port</span> <span class="hljs-string">92 </span><br><br>          <span class="hljs-attr">ssl_verify</span> <span class="hljs-string">false</span><br><br>          <span class="hljs-attr">logstash_format</span> <span class="hljs-string">true</span><br><br>          <span class="hljs-attr">logstash_prefix</span> <span class="hljs-string">bilogs</span><br><br>          <span class="hljs-attr">logstash_dateformat</span> <span class="hljs-string">bilog%m.%d.%Y</span><br><br>          <span class="hljs-attr">time_key</span> <span class="hljs-string">time</span><br><br>          <span class="hljs-attr">flush_interval</span> <span class="hljs-string">10s</span><br><br>          <span class="hljs-attr">request_timeout</span> <span class="hljs-string">15s</span><br><br>          <span class="hljs-attr">reload_on_failure</span> <span class="hljs-string">true</span><br><br>          <span class="hljs-attr">reconnect_on_error</span> <span class="hljs-string">true</span><br><br>            <span class="hljs-attr">&lt;/store&gt;</span><br><br>        <span class="hljs-attr">&lt;/template&gt;</span><br><br><span class="hljs-attr">&lt;/match&gt;</span><br><br><span class="hljs-comment"># cat *json* | /opt/td-agent/embedded/bin/fluent-cat bilog** (fluent-cat 直接发kibana bilog是tag)</span><br></code></pre></td></tr></table></figure>
+      </section>
+
+      <section class="article-footer">
+        
+      </section>
+
+      <section class="article-navs">
+        
+<nav class="card-container card-article-nav">
+  <div class="card-wrap">
+    
+      <div id="article-nav-newer" class="card-item">
+        <article>
+          
+          <a class="card-link article-nav-link" href="/2018/06/21/56_sed/"></a>
+          <strong class="article-nav-caption">Newer</strong>
+          <p class="article-nav-title">
+            
+              sed &amp; 记一次线上log遇到的问题
+            
+          </p>
+        </article>
+      </div>
+    
+    
+      <div id="article-nav-older" class="card-item">
+        <article>
+          
+          <a class="card-link article-nav-link" href="/2018/06/19/39_%E5%86%85%E5%AD%98CPU/"></a>
+          <strong class="article-nav-caption">Older</strong>
+          <p class="article-nav-title">
+            
+              内存CPU
+            
+          </p>
+        </article>
+      </div>
+    
+  </div>
+</nav>
+
+      </section>
+    </div>
+  </article>
+</div>
+
+    <!-- footer container -->
+<footer id="footer" class="footer">
+  <div class="footer-container">
+     
+    <p>&copy; 2020 <a href="/" target="_blank">zhaodan</a></p>
+
+    
+      <p id="hitokoto"></p>
+      <script src="https://v1.hitokoto.cn/?c=a&amp;encode=js&select=%23hitokoto" defer></script>
+    
+
+    
+
+    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> Theme - <a href="https://github.com/miiiku/flex-block" target="_blank">flex-block</a></p>
+  </div>
+</footer>
+  </div>
+
+  <div class="back-to-top-fixed">
+    <svg class="icon icon-back-to-top" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M725.333333 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8l-213.333333-213.333333c-17.066667-17.066667-17.066667-42.666667 0-59.733333s42.666667-17.066667 59.733333 0l213.333333 213.333333c17.066667 17.066667 17.066667 42.666667 0 59.733333C746.666667 422.4 738.133333 426.666667 725.333333 426.666667z"></path>
+  <path d="M298.666667 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8-17.066667-17.066667-17.066667-42.666667 0-59.733333l213.333333-213.333333c17.066667-17.066667 42.666667-17.066667 59.733333 0s17.066667 42.666667 0 59.733333l-213.333333 213.333333C320 422.4 311.466667 426.666667 298.666667 426.666667z"></path>
+  <path d="M512 896c-25.6 0-42.666667-17.066667-42.666667-42.666667L469.333333 170.666667c0-25.6 17.066667-42.666667 42.666667-42.666667s42.666667 17.066667 42.666667 42.666667l0 682.666667C554.666667 878.933333 537.6 896 512 896z"></path>
+</svg> 
+  </div>
+
+  
+  
+
+
+  <!-- aplayer 音频 start -->
+  
+<link rel="stylesheet" href="/lib/APlayer.min.css">
+
+  
+<script src="/lib/APlayer.min.js"></script>
+
+  <script type="text/javascript">
+    const aplayer = document.querySelectorAll(".aplayer");
+    aplayer && initaplayer(aplayer);
+    function initaplayer(els) {
+      let elsArr = Array.from(els);
+      elsArr.forEach(el => {
+        new APlayer({
+          container: el,
+          audio: { ...el.dataset },
+          theme: "#b7daff",
+          lrcType: 3,
+          autoplay: false,
+          loop: false,
+          mutex: true,
+        });
+      });
+    }
+  </script>
+  <!-- aplayer 音频 end -->
+  
+
+<!-- dplayer 视频 start -->
+
+<link rel="stylesheet" href="/lib/DPlayer.min.css">
+
+
+<script src="/lib/DPlayer.min.js"></script>
+
+<script type="text/javascript">
+  const dplayer = document.querySelectorAll(".dplayer");
+  dplayer && initDPlayer(dplayer);
+  function initDPlayer(els) {
+    let elsArr = Array.from(els);
+    elsArr.forEach(el => {
+      let url = el.dataset.url;
+      let cover = el.dataset.cover;
+      new DPlayer({
+        container: el,
+        video: { url: url, pic: cover },
+        theme: "#b7daff",
+        autoplay: false,
+        loop: false,
+        mutex: true,
+      });
+    });
+  }
+</script>
+<!-- dplayer 视频 end -->
+
+
+<!-- waterfall 瀑布流 start -->
+
+<script src="/lib/waterfall.min.js"></script>
+
+<script type="text/javascript">
+
+const waterfalls = document.querySelectorAll(".waterfall-container");
+
+if (waterfalls && waterfalls.length > 0) {
+  waterfalls.forEach((waterfall, index) => {
+    let cls = "waterfall-container-" + index;
+    waterfall.classList.add(cls);
+    initWaterfall(cls, waterfall);
+  });
+}
+
+function initWaterfall(selector, el) {
+  const options = {};
+  if (Object.keys(el.dataset).length > 0) {
+    for (let k in el.dataset) {
+      options[k] = el.dataset[k];
+    }
+  }
+  waterfall(`.${selector}`, options);
+}
+</script>
+<!-- waterfall 瀑布流 end -->
+
+
+  <!-- zoom start -->
+  
+<script src="/lib/zoom.min.js"></script>
+
+  <script type="text/javascript">
+    document.querySelector(".article-content") && zoom(".article-content");
+  </script>
+  <!-- zoom end -->
+  
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+<script src="/js/script.js"></script>
+
+  
+  <!-- 尾部用户自定义相关内容 -->
+
+</body>
+</html>

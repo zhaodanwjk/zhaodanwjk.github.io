@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  
+    <meta name="description" content="fighting">
+  
+
+  
+    <meta name="keywords" content="best">
+  
+
+  
+    <meta name="author" content="zhaodan">
+  
+
+  
+    <meta name="copyright" content="zhaodan">
+  
+
+  
+
+  <title>Docker | Hexo</title>
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+    <link href="https://cdn.bootcss.com/highlight.js/9.15.6/styles/monokai.min.css" rel="stylesheet">
+  
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+  <div class="root-container">
+    <!-- navbar -->
+<nav class="navbar">
+  <div class="navbar-content">
+    <!-- logo -->
+    <div class="navbar-logo">
+      <a href="/">
+        
+          Hexo
+        
+      </a>
+    </div>
+    <!-- link -->
+    <div class="navbar-link">
+      <div class="navbar-btn">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <ul class="navbar-list">
+        
+          <li class="navbar-list-item"><a href="/">HOME</a></li>
+        
+          <li class="navbar-list-item"><a href="/about">ABOUT</a></li>
+        
+          <li class="navbar-list-item"><a href="/tags">TAGS</a></li>
+        
+          <li class="navbar-list-item"><a href="/categories">CATEGORIES</a></li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    
+<!-- header container -->
+<header class="header-container post">
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+    <div class="header-content">
+      <div class="post-image" style="background-image: url(https://qiniu.miiiku.xyz/src/images/banner.jpg)"></div>
+      <div class="post-text">
+        <div class="type-wrap">
+          
+        </div>
+        <h1 class="title-wrap">Docker</h1>
+        <h2 class="title-sub-wrap">
+          <strong>zhaodan</strong>
+          <span>发布于</span>
+          
+  <a href="javascript:;" class="article-date">
+    <time datetime="2018-09-11T16:00:00.000Z" itemprop="datePublished">2018-09-12</time>
+  </a>
+
+        </h2>
+      </div>
+    </div>
+  
+
+  
+  
+
+  </header>
+
+    <!-- 文章 -->
+
+<!-- 文章内容 -->
+
+<div class="body-container">
+  <article class="content-container article-container">
+    <div class="article-content">
+      
+      
+
+      <section class="article-entry">
+        <p>Docker官网：<a href="https://www.docker.com/" target="_blank" rel="noopener">https://www.docker.com/</a></p>
+<ol>
+<li><p>什么是docker?<br><mark>docker是将应用程序自动部署到容器的技术</p>
+</li>
+<li><p>什么是容器?<br><mark>容器是一种虚拟化的方案，与虚拟机不同，虚拟机是通过中间层将一台或多台虚拟系统独立运行在硬件之上，而容器是运行在操作系统的内核之上的，可以称为操作系统虚拟化。只能运行相同或相似的内核操作系统，依赖于linux内核特性:Namespace和Cgroups，所以docker上只能运行linux操作系统</p>
+</li>
+<li><p>优点:<br>快    运行时的性能可以获取极大提升(经典的案例是提升97%)<br> 管理操作(启动，停止，开始，重启等等) 都是以秒或毫秒为单位的。<br>敏捷    像虚拟机一样敏捷，而且会更便宜，在bare metal(裸机)上布署像点个按钮一样简单。<br>灵活    将应用和系统“容器化”，不添加额外的操作系统，<br>轻量    你会拥有足够的“操作系统”，仅需添加或减小镜像即可。在一台服务器上可以布署100~1000个Containers容器。<br>便宜    开源的，免费的，低成本的。由现代Linux内核支持并驱动。轻量的Container必定可以在一个物理机上开启更多“容器”，注定比VMs要便宜。<br>生态系统    正在越来越受欢迎，只需要看一看Google的趋势就知道了， docker or LXC. 还有不计其数的社区和第三方应用。<br>云支持    不计其数的云服务提供创建和管理Linux容器框架。<br> 有关Docker性能方面的优势，还可参考此IBM工程师对性能提升的评测，从各个方面比VMs(OS系统级别虚拟化)都有非常大的提升</p>
+</li>
+<li><p>有争论的地方:<br>能否彻底隔离<br>　　在超复杂的业务系统中，单OS到底能不能实现彻底隔离，一个程序的崩溃/内存溢出/高CPU占用到底 会不会影响到其他容器或者整个系统?很多人对Docker能否在实际的多主机的生产环境中支持关键任务系统还有所怀疑。就像有人质疑Node.JS单线程快而不稳，无法在复杂场景中应用一样。<br>　　不过可喜的是，目前Linux内核已经针对Container做了很多改进，以支持更好的隔离。<br>GO语言还没有完全成熟<br>　　Docker由Go语言开发，但GO语言对大多数开发者来说比较陌生，而且还在不断改进，距离成熟还有一段时间。此半git、半包管理的方式让一些人产生不适。<br>被私有公司控制<br> Docker是一家叫Dotcloud的私有公司设计的，公司都是以营利为目的，比如你没有办法使用源代码编绎Docker项目，只能使用黑匣子编出的 Docker二进制发行包，未来可能不是完全免费的。 目前Docker已经推出面向公司的企业级服务(咨询、支持和培训)。</p>
+</li>
+<li><p>Doker目标:</p>
+</li>
+<li><p>提供简单轻量的建模方式(同一台宿主机可以运行多个容器)</p>
+</li>
+<li><p>职责的逻辑分离，加强开发人员的开发环境与生产部署的环境的一致性</p>
+</li>
+<li><p>快速高效的开发的生命周期，缩短从开发到生产的周期，使开发、测试、生产环境相一致，并且都以容器的方式进行交付，避免了额外调试部署的时间开销</p>
+</li>
+<li><p>鼓励使用面向服务的架构，鼓励单个容器之运行单一服务，这就形成了一种分布式模型，避免服务之间的互相应影响，在定位出现的问题时，也变得简单直接</p>
+</li>
+<li><p>Docker的使用场景:</p>
+</li>
+<li><p>使用docker容器开发,测试,部署服务.</p>
+</li>
+<li><p>创建隔离的运行环境.</p>
+</li>
+<li><p>搭建测试环境</p>
+</li>
+<li><p>构建多用户的平台即服务(PaaS)基础设施</p>
+</li>
+<li><p>提供软件机服务(SaaS)应用程序 </p>
+</li>
+<li><p>高性能,超大规模的宿主机部署</p>
+</li>
+<li><p>Docker基本组成<br>Docker Client 客户端<br>Docker Daemon 守护进程<br>Docker Image 镜像<br>Docker Container 容器<br>Docker Registry 仓库<br>公有  Docker Hub  <a href="https://hub.docker.com/" target="_blank" rel="noopener">https://hub.docker.com/</a><br>私有</p>
+</li>
+<li><p>Docker容器的能力<br>文件系统隔离：每个容器有自己的root文件系统<br>进程隔离：每个容器都运行在自己的进程环境中<br>网络隔离：容器间的虚拟网络接口和IP地址都是分开的<br>资源隔离和分组：使用cgroups将cpu和内存之类的资源独立分配给每个Docker容器</p>
+</li>
+</ol>
+
+      </section>
+
+      <section class="article-footer">
+        
+      </section>
+
+      <section class="article-navs">
+        
+<nav class="card-container card-article-nav">
+  <div class="card-wrap">
+    
+      <div id="article-nav-newer" class="card-item">
+        <article>
+          
+          <a class="card-link article-nav-link" href="/2018/09/12/26_mac%E5%AE%89%E8%A3%85cherrytree/"></a>
+          <strong class="article-nav-caption">Newer</strong>
+          <p class="article-nav-title">
+            
+              mac下安装cherrytree
+            
+          </p>
+        </article>
+      </div>
+    
+    
+      <div id="article-nav-older" class="card-item">
+        <article>
+          
+          <a class="card-link article-nav-link" href="/2018/09/04/25_etcd%E6%90%AD%E5%BB%BA%E5%8F%8A%E5%A4%87%E4%BB%BD/"></a>
+          <strong class="article-nav-caption">Older</strong>
+          <p class="article-nav-title">
+            
+              etcd搭建和备份
+            
+          </p>
+        </article>
+      </div>
+    
+  </div>
+</nav>
+
+      </section>
+    </div>
+  </article>
+</div>
+
+    <!-- footer container -->
+<footer id="footer" class="footer">
+  <div class="footer-container">
+     
+    <p>&copy; 2020 <a href="/" target="_blank">zhaodan</a></p>
+
+    
+      <p id="hitokoto"></p>
+      <script src="https://v1.hitokoto.cn/?c=a&amp;encode=js&select=%23hitokoto" defer></script>
+    
+
+    
+
+    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> Theme - <a href="https://github.com/miiiku/flex-block" target="_blank">flex-block</a></p>
+  </div>
+</footer>
+  </div>
+
+  <div class="back-to-top-fixed">
+    <svg class="icon icon-back-to-top" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M725.333333 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8l-213.333333-213.333333c-17.066667-17.066667-17.066667-42.666667 0-59.733333s42.666667-17.066667 59.733333 0l213.333333 213.333333c17.066667 17.066667 17.066667 42.666667 0 59.733333C746.666667 422.4 738.133333 426.666667 725.333333 426.666667z"></path>
+  <path d="M298.666667 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8-17.066667-17.066667-17.066667-42.666667 0-59.733333l213.333333-213.333333c17.066667-17.066667 42.666667-17.066667 59.733333 0s17.066667 42.666667 0 59.733333l-213.333333 213.333333C320 422.4 311.466667 426.666667 298.666667 426.666667z"></path>
+  <path d="M512 896c-25.6 0-42.666667-17.066667-42.666667-42.666667L469.333333 170.666667c0-25.6 17.066667-42.666667 42.666667-42.666667s42.666667 17.066667 42.666667 42.666667l0 682.666667C554.666667 878.933333 537.6 896 512 896z"></path>
+</svg> 
+  </div>
+
+  
+  
+
+
+  <!-- aplayer 音频 start -->
+  
+<link rel="stylesheet" href="/lib/APlayer.min.css">
+
+  
+<script src="/lib/APlayer.min.js"></script>
+
+  <script type="text/javascript">
+    const aplayer = document.querySelectorAll(".aplayer");
+    aplayer && initaplayer(aplayer);
+    function initaplayer(els) {
+      let elsArr = Array.from(els);
+      elsArr.forEach(el => {
+        new APlayer({
+          container: el,
+          audio: { ...el.dataset },
+          theme: "#b7daff",
+          lrcType: 3,
+          autoplay: false,
+          loop: false,
+          mutex: true,
+        });
+      });
+    }
+  </script>
+  <!-- aplayer 音频 end -->
+  
+
+<!-- dplayer 视频 start -->
+
+<link rel="stylesheet" href="/lib/DPlayer.min.css">
+
+
+<script src="/lib/DPlayer.min.js"></script>
+
+<script type="text/javascript">
+  const dplayer = document.querySelectorAll(".dplayer");
+  dplayer && initDPlayer(dplayer);
+  function initDPlayer(els) {
+    let elsArr = Array.from(els);
+    elsArr.forEach(el => {
+      let url = el.dataset.url;
+      let cover = el.dataset.cover;
+      new DPlayer({
+        container: el,
+        video: { url: url, pic: cover },
+        theme: "#b7daff",
+        autoplay: false,
+        loop: false,
+        mutex: true,
+      });
+    });
+  }
+</script>
+<!-- dplayer 视频 end -->
+
+
+<!-- waterfall 瀑布流 start -->
+
+<script src="/lib/waterfall.min.js"></script>
+
+<script type="text/javascript">
+
+const waterfalls = document.querySelectorAll(".waterfall-container");
+
+if (waterfalls && waterfalls.length > 0) {
+  waterfalls.forEach((waterfall, index) => {
+    let cls = "waterfall-container-" + index;
+    waterfall.classList.add(cls);
+    initWaterfall(cls, waterfall);
+  });
+}
+
+function initWaterfall(selector, el) {
+  const options = {};
+  if (Object.keys(el.dataset).length > 0) {
+    for (let k in el.dataset) {
+      options[k] = el.dataset[k];
+    }
+  }
+  waterfall(`.${selector}`, options);
+}
+</script>
+<!-- waterfall 瀑布流 end -->
+
+
+  <!-- zoom start -->
+  
+<script src="/lib/zoom.min.js"></script>
+
+  <script type="text/javascript">
+    document.querySelector(".article-content") && zoom(".article-content");
+  </script>
+  <!-- zoom end -->
+  
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+<script src="/js/script.js"></script>
+
+  
+  <!-- 尾部用户自定义相关内容 -->
+
+</body>
+</html>
