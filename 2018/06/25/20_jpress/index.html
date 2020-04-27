@@ -1,130 +1,34 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>
+        
+    </title>
+    
+<link rel="stylesheet" href="/libs/highlight/styles/monokai-sublime.css">
 
-  
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
 
-  
-
-  
-    <meta name="author" content="zhaodan">
-  
-
-  
-    <meta name="copyright" content="zhaodan">
-  
-
-  
-
-  <title>基于docker搭建个人博客jpress | </title>
-
-  
-
-  
-    <link rel="icon" href="/favicon.ico">
-  
-
-  
-    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
-    <link href="https://cdn.bootcss.com/highlight.js/9.15.6/styles/monokai.min.css" rel="stylesheet">
-  
-
-  
+    
 <link rel="stylesheet" href="/css/style.css">
 
 <meta name="generator" content="Hexo 4.2.0"></head>
-<body>
-  <div class="root-container">
-    <!-- navbar -->
-<nav class="navbar">
-  <div class="navbar-content">
-    <!-- logo -->
-    <div class="navbar-logo">
-      <a href="/">
-        
-          
-        
-      </a>
+
+<body id="bodyx">
+    <div class="hd posts">
+    <a href="/index.html"><i class="fa fa-reply replay-btn" aria-hidden="true"></i></a>
+    <div class="post-title">
+        <p>
+            基于docker搭建个人博客jpress
+        </p>
+        <hr>
     </div>
-    <!-- link -->
-    <div class="navbar-link">
-      <div class="navbar-btn">
-        <div></div>
-        <div></div>
-        <div></div>
-      </div>
-      <ul class="navbar-list">
-        
-          <li class="navbar-list-item"><a href="/">主页</a></li>
-        
-          <li class="navbar-list-item"><a href="/about">关于</a></li>
-        
-          <li class="navbar-list-item"><a href="/archives">归档</a></li>
-        
-          <li class="navbar-list-item"><a href="/messages">留言板</a></li>
-        
-      </ul>
-    </div>
-  </div>
-</nav>
-
-    
-<!-- header container -->
-<header class="header-container post">
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-    <div class="header-content">
-      <div class="post-image" style="background-image: url(https://i.postimg.cc/kXYG7QKj/dengdeng.jpg)"></div>
-      <div class="post-text">
-        <div class="type-wrap">
-          
-        </div>
-        <h1 class="title-wrap">基于docker搭建个人博客jpress</h1>
-        <h2 class="title-sub-wrap">
-          <strong>zhaodan</strong>
-          <span>发布于</span>
-          
-  <a href="javascript:;" class="article-date">
-    <time datetime="2018-06-24T16:00:00.000Z" itemprop="datePublished">2018-06-25</time>
-  </a>
-
-        </h2>
-      </div>
-    </div>
-  
-
-  
-  
-
-  </header>
-
-    <!-- 文章 -->
-
-<!-- 文章内容 -->
-
-<div class="body-container">
-  <article class="content-container article-container">
-    <div class="article-content">
-      
-      
-
-      <section class="article-entry">
+    <div class="post-content">
         <p>####准备docker环境</p>
 <figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br></pre></td><td class="code"><pre><code class="hljs angelscript">[<span class="hljs-symbol">root@</span>VM_0_45_centos ~]# yum install -y docker<br>[<span class="hljs-symbol">root@</span>VM_0_45_centos ~]# docker version<br>Client:<br> Version:         <span class="hljs-number">1.13</span><span class="hljs-number">.1</span><br> API version:     <span class="hljs-number">1.26</span><br> Package version:<br>Cannot connect to the Docker daemon at unix:<span class="hljs-comment">///var/run/docker.sock. Is the docker daemon running?</span><br><br>[<span class="hljs-symbol">root@</span>VM_0_45_centos ~]# service docker start<br>Redirecting to /bin/systemctl start  docker.service<br>[<span class="hljs-symbol">root@</span>VM_0_45_centos ~]# docker version<br>Client:<br> Version:         <span class="hljs-number">1.13</span><span class="hljs-number">.1</span><br> API version:     <span class="hljs-number">1.26</span><br> Package version: docker<span class="hljs-number">-1.13</span><span class="hljs-number">.1</span><span class="hljs-number">-63.</span>git94f4240.el7.centos.x86_64<br> Go version:      go1<span class="hljs-number">.9</span><span class="hljs-number">.4</span><br> Git commit:      <span class="hljs-number">94f</span>4240/<span class="hljs-number">1.13</span><span class="hljs-number">.1</span><br> Built:           Fri May <span class="hljs-number">18</span> <span class="hljs-number">15</span>:<span class="hljs-number">44</span>:<span class="hljs-number">33</span> <span class="hljs-number">2018</span><br> OS/Arch:         linux/amd64<br><br>Server:<br> Version:         <span class="hljs-number">1.13</span><span class="hljs-number">.1</span><br> API version:     <span class="hljs-number">1.26</span> (minimum version <span class="hljs-number">1.12</span>)<br> Package version: docker<span class="hljs-number">-1.13</span><span class="hljs-number">.1</span><span class="hljs-number">-63.</span>git94f4240.el7.centos.x86_64<br> Go version:      go1<span class="hljs-number">.9</span><span class="hljs-number">.4</span><br> Git commit:      <span class="hljs-number">94f</span>4240/<span class="hljs-number">1.13</span><span class="hljs-number">.1</span><br> Built:           Fri May <span class="hljs-number">18</span> <span class="hljs-number">15</span>:<span class="hljs-number">44</span>:<span class="hljs-number">33</span> <span class="hljs-number">2018</span><br> OS/Arch:         linux/amd64<br> Experimental:    <span class="hljs-literal">false</span><br>可以看到docker的客户端和服务端都启动了<br><br>---------------------------------------<br>下载所需要的镜像  需要使用mysql和tomcat<br>[<span class="hljs-symbol">root@</span>VM_0_45_centos ~]# docker pull hub.c<span class="hljs-number">.163</span>.com/library/mysql:latest<br>Trying to pull repository hub.c<span class="hljs-number">.163</span>.com/library/mysql ...<br>latest: Pulling <span class="hljs-keyword">from</span> hub.c<span class="hljs-number">.163</span>.com/library/mysql<br><span class="hljs-number">42</span>cb69312da9: Pull complete<br>e2cf5467c4b5: Pull complete<br><span class="hljs-number">871</span>ec0232f66: Pull complete<br><span class="hljs-number">3</span>c0ae7ec690d: Pull complete<br>d39b43089b70: Pull complete<br>aa0e7cb4b67c: Pull complete<br><span class="hljs-number">738</span>db9902d06: Pull complete<br>ae333863ac05: Pull complete<br><span class="hljs-number">6</span>d014992204a: Pull complete<br><span class="hljs-number">09</span>aeca0c9a82: Pull complete<br><span class="hljs-number">0162083</span>b2de0: Pull complete<br>Digest: sha256:b2bce1a792237ac5df78877d583f34b09ab023a77130921a6bcce67ce2d24ff0<br>Status: Downloaded newer image <span class="hljs-keyword">for</span> hub.c<span class="hljs-number">.163</span>.com/library/mysql:latest<br><br>[<span class="hljs-symbol">root@</span>VM_0_45_centos ~]# docker pull hub.c<span class="hljs-number">.163</span>.com/library/tomcat:latest<br>Trying to pull repository hub.c<span class="hljs-number">.163</span>.com/library/tomcat ...<br>latest: Pulling <span class="hljs-keyword">from</span> hub.c<span class="hljs-number">.163</span>.com/library/tomcat<br><span class="hljs-number">9</span>af7279b9dbd: Pull complete<br><span class="hljs-number">31816</span>c948f2f: Pull complete<br>c59a1cdf83d3: Pull complete<br><span class="hljs-number">232</span>c7a75d568: Pull complete<br>de412d312979: Pull complete<br><span class="hljs-number">80315</span>ba34693: Pull complete<br><span class="hljs-number">5</span>d3f97bd90e8: Pull complete<br>dc8dc63f6baa: Pull complete<br>f6c6e2d67f03: Pull complete<br><span class="hljs-number">9123</span>b340aa92: Pull complete<br><span class="hljs-number">76</span>abaea2279d: Pull complete<br><span class="hljs-number">4476602e3346</span>: Pull complete<br><span class="hljs-number">12e1f</span>da011bd: Pull complete<br>Digest: sha256:db1a8ca2fe44449d265e5505f300be6f34fc63211a5506400a0a8c24653af91f<br>Status: Downloaded newer image <span class="hljs-keyword">for</span> hub.c<span class="hljs-number">.163</span>.com/library/tomcat:latest<br><br>查看已下载的镜像<br>[<span class="hljs-symbol">root@</span>VM_0_45_centos ~]# docker images<br>REPOSITORY                     TAG                 IMAGE ID            CREATED             SIZE<br>hub.c<span class="hljs-number">.163</span>.com/library/tomcat   latest              <span class="hljs-number">72</span>d2be374029        <span class="hljs-number">10</span> months ago       <span class="hljs-number">292</span> MB<br>hub.c<span class="hljs-number">.163</span>.com/library/mysql    latest              <span class="hljs-number">9e64176</span>cd8a2        <span class="hljs-number">14</span> months ago       <span class="hljs-number">407</span> MB<br><br>jpress是一个开源项目 下载jpress war包<br>[<span class="hljs-symbol">root@</span>VM_0_45_centos ~]# wget https:<span class="hljs-comment">//gitee.com/fuhai/jpress/raw/alpha/wars/jpress-web-newest.war</span><br>-<span class="hljs-number">-2018</span><span class="hljs-number">-06</span><span class="hljs-number">-30</span> <span class="hljs-number">08</span>:<span class="hljs-number">42</span>:<span class="hljs-number">00</span>--  https:<span class="hljs-comment">//gitee.com/fuhai/jpress/raw/alpha/wars/jpress-web-newest.war</span><br>Resolving gitee.com (gitee.com)... <span class="hljs-number">116.211</span><span class="hljs-number">.167</span><span class="hljs-number">.14</span><br>Connecting to gitee.com (gitee.com)|<span class="hljs-number">116.211</span><span class="hljs-number">.167</span><span class="hljs-number">.14</span>|:<span class="hljs-number">443.</span>.. connected.<br>HTTP request sent, awaiting response... <span class="hljs-number">200</span> OK<br>Length: unspecified [text/plain]<br>Saving to: ‘jpress-web-newest.war’<br><br>    [                                        &lt;=&gt;      ] <span class="hljs-number">20</span>,<span class="hljs-number">797</span>,<span class="hljs-number">013</span>  <span class="hljs-number">2.57</span>MB/s   <span class="hljs-keyword">in</span> <span class="hljs-number">8.2</span>s<br><br><span class="hljs-number">2018</span><span class="hljs-number">-06</span><span class="hljs-number">-30</span> <span class="hljs-number">08</span>:<span class="hljs-number">42</span>:<span class="hljs-number">09</span> (<span class="hljs-number">2.41</span> MB/s) - ‘jpress-web-newest.war’ saved [<span class="hljs-number">20797013</span>]<br>[<span class="hljs-symbol">root@</span>VM_0_45_centos ~]# ls<br>jpress-web-newest.war<br><br>----------------------------------------<br>制作docker镜像<br>[<span class="hljs-symbol">root@</span>VM_0_45_centos ~]# mkdir jpress<br>[<span class="hljs-symbol">root@</span>VM_0_45_centos ~]# cd jpress/<br>[<span class="hljs-symbol">root@</span>VM_0_45_centos jpress]# cp ../jpress-web-newest.war ./jpress.war<br>[<span class="hljs-symbol">root@</span>VM_0_45_centos jpress]# vim Dockerfile<br>[<span class="hljs-symbol">root@</span>VM_0_45_centos jpress]# cat Dockerfile<br>FROM hub.c<span class="hljs-number">.163</span>.com/library/tomcat<br><br>MAINTAINER zhaodan<br><br>COPY jpress.war /usr/local/tomcat/webapps/jpress.war<br>##########<br>FROM 表示：当前镜像依赖于tomcat镜像<br><br>MAINTAINER 表示：镜像创建者<br><br>COPY 表示：将jpress的war包复制到tomcat的webapps目录下<br><br>[<span class="hljs-symbol">root@</span>VM_0_37_centos study]# docker images<br><br>REPOSITORY                     TAG                 IMAGE ID            CREATED             SIZE<br><br>[hub.c<span class="hljs-number">.163</span>.com/library/tomcat](http:<span class="hljs-comment">//hub.c.163.com/library/tomcat)   latest              72d2be374029        10 months ago       292 MB</span><br><br>[hub.c<span class="hljs-number">.163</span>.com/library/mysql](http:<span class="hljs-comment">//hub.c.163.com/library/mysql)    latest              9e64176cd8a2        13 months ago       407 MB</span><br><br>构建jpress镜像 使用-t参数指定镜像名为my/jpress tag为latest<br><br>[<span class="hljs-symbol">root@</span>VM_0_45_centos jpress]# docker build -t my/jpress:latest .<br>Sending build context to Docker daemon  <span class="hljs-number">41.6</span> MB<br>Step <span class="hljs-number">1</span>/<span class="hljs-number">3</span> : FROM hub.c<span class="hljs-number">.163</span>.com/library/tomcat<br> ---&gt; <span class="hljs-number">72</span>d2be374029<br>Step <span class="hljs-number">2</span>/<span class="hljs-number">3</span> : MAINTAINER zhaodan<br> ---&gt; Running <span class="hljs-keyword">in</span> d21d9ca26eac<br> ---&gt; f3143419a182<br>Removing <span class="hljs-built_in">int</span>ermediate container d21d9ca26eac<br>Step <span class="hljs-number">3</span>/<span class="hljs-number">3</span> : COPY jpress.war /usr/local/tomcat/webapps/jpress.war<br> ---&gt; <span class="hljs-number">01</span>a57cf0c2e1<br>Removing <span class="hljs-built_in">int</span>ermediate container <span class="hljs-number">5</span>ed20c9d84e4<br>Successfully built <span class="hljs-number">01</span>a57cf0c2e1<br><br>[<span class="hljs-symbol">root@</span>VM_0_45_centos jpress]# docker images<br>REPOSITORY                     TAG                 IMAGE ID            CREATED              SIZE<br>my/jpress                      latest              <span class="hljs-number">01</span>a57cf0c2e1        About a minute ago   <span class="hljs-number">313</span> MB<br>hub.c<span class="hljs-number">.163</span>.com/library/tomcat   latest              <span class="hljs-number">72</span>d2be374029        <span class="hljs-number">10</span> months ago        <span class="hljs-number">292</span> MB<br>hub.c<span class="hljs-number">.163</span>.com/library/mysql    latest              <span class="hljs-number">9e64176</span>cd8a2        <span class="hljs-number">14</span> months ago        <span class="hljs-number">407</span> MB<br><br>启动docker镜像，先启动MySQL镜像，创建一个名为bolgdb的数据库，指定数据库用户以及登录密码，进行端口映射，启动数据库<br>[<span class="hljs-symbol">root@</span>VM_0_45_centos jpress]# docker run --name bolgmysql -d -p <span class="hljs-number">3306</span>:<span class="hljs-number">3306</span> -e MYSQL_ROOT_PASSWORD=<span class="hljs-number">123456</span> -e MYSQL_DATABASE=bolgdb hub.c<span class="hljs-number">.163</span>.com/library/mysql<br><span class="hljs-number">901</span>aa0b984ca137d04d5a90a9d08b133b38b4dd709e5dc08928b002222137b3f<br><br>查看正在运行的容器<br>[<span class="hljs-symbol">root@</span>VM_0_45_centos jpress]# docker ps<br>CONTAINER ID        IMAGE                         COMMAND                  CREATED             STATUS              PORTS                    NAMES<br><span class="hljs-number">901</span>aa0b984ca        hub.c<span class="hljs-number">.163</span>.com/library/mysql   <span class="hljs-string">"docker-entrypoint..."</span>   <span class="hljs-number">44</span> seconds ago      Up <span class="hljs-number">44</span> seconds       <span class="hljs-number">0.0</span><span class="hljs-number">.0</span><span class="hljs-number">.0</span>:<span class="hljs-number">3306</span>-&gt;<span class="hljs-number">3306</span>/tcp   bolgmysql<br><br>[<span class="hljs-symbol">root@</span>VM_0_45_centos jpress]# docker run --name bolgjpress -d -p <span class="hljs-number">8888</span>:<span class="hljs-number">8080</span> my/jpress<br>e8acfe19e3438f6a0b15ee25570c597cd901820ee916cb4310caa00b50bb1157<br><br>[<span class="hljs-symbol">root@</span>VM_0_45_centos jpress]# docker ps<br>CONTAINER ID        IMAGE                         COMMAND                  CREATED             STATUS              PORTS                    NAMES<br>e8acfe19e343        my/jpress                     <span class="hljs-string">"catalina.sh run"</span>        <span class="hljs-number">32</span> seconds ago      Up <span class="hljs-number">31</span> seconds       <span class="hljs-number">0.0</span><span class="hljs-number">.0</span><span class="hljs-number">.0</span>:<span class="hljs-number">8888</span>-&gt;<span class="hljs-number">8080</span>/tcp   bolgjpress<br><span class="hljs-number">901</span>aa0b984ca        hub.c<span class="hljs-number">.163</span>.com/library/mysql   <span class="hljs-string">"docker-entrypoint..."</span>   <span class="hljs-number">4</span> minutes ago       Up <span class="hljs-number">4</span> minutes        <span class="hljs-number">0.0</span><span class="hljs-number">.0</span><span class="hljs-number">.0</span>:<span class="hljs-number">3306</span>-&gt;<span class="hljs-number">3306</span>/tcp   bolgmysql<br></code></pre></td></tr></table></figure>
 
@@ -140,213 +44,63 @@
 <p><a href="https://postimg.cc/vgp2nGfd" target="_blank" rel="noopener"><img src="https://i.postimg.cc/C5K3W1Kd/jpress6.png" alt="jpress6.png"></a><br> 登录后台</p>
 <p><a href="https://postimg.cc/5X3rrddw" target="_blank" rel="noopener"><img src="https://i.postimg.cc/Gpw1HdXS/jpress7.png" alt="jpress7.png"></a><br><a href="https://postimg.cc/YvkV82Vr" target="_blank" rel="noopener"><img src="https://i.postimg.cc/cL8SxrBn/jpress8.png" alt="jpress8.png"></a></p>
 
-      </section>
-
-      <section class="article-footer">
-        
-      </section>
-
-      <section class="article-navs">
-        
-<nav class="card-container card-article-nav">
-  <div class="card-wrap">
-    
-      <div id="article-nav-newer" class="card-item">
-        <article>
-          
-          <a class="card-link article-nav-link" href="/2018/07/12/21_EFK/"></a>
-          <strong class="article-nav-caption">Newer</strong>
-          <p class="article-nav-title">
-            
-              EFK
-            
-          </p>
-        </article>
-      </div>
-    
-    
-      <div id="article-nav-older" class="card-item">
-        <article>
-          
-          <a class="card-link article-nav-link" href="/2018/06/22/18_%E5%8F%91%E4%BF%A1%E5%8F%B7/"></a>
-          <strong class="article-nav-caption">Older</strong>
-          <p class="article-nav-title">
-            
-              在线发信号
-            
-          </p>
-        </article>
-      </div>
-    
-  </div>
-</nav>
-
-      </section>
     </div>
-  </article>
+
+    
+        <hr class="fhr">
+        <div id="vcomments"></div>
+    
 </div>
+    <div class="footer" id="footer">
+    <p>Copyright © 2020 <a class="flink" href="https://hexo.io" target="_blank" rel="noopener">Hexo</a>-<a class="flink" href="https://github.com/sanjinhub/hexo-theme-geek" target="_blank" rel="noopener">Geek</a>.
+        <label class="el-switch el-switch-green el-switch-sm" style="vertical-align: sub;">
+            <input type="checkbox" name="switch" id="update_style">
+            <span class="el-switch-style"></span>
+        </label>
+<!--         <script type="text/javascript">
+        var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");
+        document.write(unescape("%3Cspan id='cnzz_stat_icon_1278548644'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/stat.php%3Fid%3D1278548644%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+        </script> -->
+    </p>
+</div>
+<input type="hidden" id="web_style" value="black">
+<input type="hidden" id="valine_appid" value="nmcd4VgylfORjevWz6UEoat3-9Nh9j0Va">
+<input type="hidden" id="valine_appKey" value="wyWWI1qMf6w1mv1KpT1D0HeC">
 
-    <!-- footer container -->
-<footer id="footer" class="footer">
-  <div class="footer-container">
-    
-    <!-- <p>&copy; 2020 <a href="/" target="_blank">zhaodan</a></p> -->
-
-    
-      <p id="hitokoto"></p>
-      <script src="https://v1.hitokoto.cn/?c=h&amp;encode=js&select=%23hitokoto" defer></script>
-    
-
-    
-
-    <p>&copy; 2019 | zhaodan | 加油</p>
-  </div>
-</footer>
-
-  </div>
-
-  <div class="back-to-top-fixed">
-    <svg class="icon icon-back-to-top" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
-  <path d="M725.333333 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8l-213.333333-213.333333c-17.066667-17.066667-17.066667-42.666667 0-59.733333s42.666667-17.066667 59.733333 0l213.333333 213.333333c17.066667 17.066667 17.066667 42.666667 0 59.733333C746.666667 422.4 738.133333 426.666667 725.333333 426.666667z"></path>
-  <path d="M298.666667 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8-17.066667-17.066667-17.066667-42.666667 0-59.733333l213.333333-213.333333c17.066667-17.066667 42.666667-17.066667 59.733333 0s17.066667 42.666667 0 59.733333l-213.333333 213.333333C320 422.4 311.466667 426.666667 298.666667 426.666667z"></path>
-  <path d="M512 896c-25.6 0-42.666667-17.066667-42.666667-42.666667L469.333333 170.666667c0-25.6 17.066667-42.666667 42.666667-42.666667s42.666667 17.066667 42.666667 42.666667l0 682.666667C554.666667 878.933333 537.6 896 512 896z"></path>
-</svg> 
-  </div>
-
-  
-  
-<!-- valine 评论 start -->
-<script type="text/javascript" src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-<script type="text/javascript" src='//unpkg.com/valine/dist/Valine.min.js'></script>
-<script type="text/javascript">
-  new Valine({
-    el: "#valine_thread",
-    appId: "nmcd4VgylfORjevWz6UEoat3-9Nh9j0Va",
-    appKey: "wyWWI1qMf6w1mv1KpT1D0HeC",
-    avatar: "mm",
-    placeholder: "随便说点什么叭～",
-    notify: true,
-    visitor: true,
-    pageSize: 10,
-  });
-</script>
-<!-- valine 评论 end -->
+<script src="/libs/jquery.min.js"></script>
 
 
+<script src="/libs/highlight/highlight.pack.js"></script>
 
-  <!-- aplayer 音频 start -->
-  
-<link rel="stylesheet" href="/lib/APlayer.min.css">
+<script src='//cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js'></script>
 
-  
-<script src="/lib/APlayer.min.js"></script>
+<script src="/js/js.js"></script>
 
-  <script type="text/javascript">
-    const aplayer = document.querySelectorAll(".aplayer");
-    aplayer && initaplayer(aplayer);
-    function initaplayer(els) {
-      let elsArr = Array.from(els);
-      elsArr.forEach(el => {
-        new APlayer({
-          container: el,
-          audio: { ...el.dataset },
-          theme: "#b7daff",
-          lrcType: 3,
-          autoplay: false,
-          loop: false,
-          mutex: true,
-        });
-      });
-    }
-  </script>
-  <!-- aplayer 音频 end -->
-  
-
-<!-- dplayer 视频 start -->
-
-<link rel="stylesheet" href="/lib/DPlayer.min.css">
-
-
-<script src="/lib/DPlayer.min.js"></script>
-
-<script type="text/javascript">
-  const dplayer = document.querySelectorAll(".dplayer");
-  dplayer && initDPlayer(dplayer);
-  function initDPlayer(els) {
-    let elsArr = Array.from(els);
-    elsArr.forEach(el => {
-      let url = el.dataset.url;
-      let cover = el.dataset.cover;
-      new DPlayer({
-        container: el,
-        video: { url: url, pic: cover },
-        theme: "#b7daff",
-        autoplay: false,
-        loop: false,
-        mutex: true,
-      });
-    });
-  }
-</script>
-<!-- dplayer 视频 end -->
-
-
-<!-- waterfall 瀑布流 start -->
-
-<script src="/lib/waterfall.min.js"></script>
-
-<script type="text/javascript">
-
-const waterfalls = document.querySelectorAll(".waterfall-container");
-
-if (waterfalls && waterfalls.length > 0) {
-  waterfalls.forEach((waterfall, index) => {
-    let cls = "waterfall-container-" + index;
-    waterfall.classList.add(cls);
-    initWaterfall(cls, waterfall);
-  });
+<style type="text/css">
+.v * {
+    color: #698fca;
 }
 
-function initWaterfall(selector, el) {
-  const options = {};
-  if (Object.keys(el.dataset).length > 0) {
-    for (let k in el.dataset) {
-      options[k] = el.dataset[k];
-    }
-  }
-  waterfall(`.${selector}`, options);
+.v .vlist .vcard .vhead .vsys {
+    color: #3a3e4a;
 }
-</script>
-<!-- waterfall 瀑布流 end -->
 
+.v .vlist .vcard .vh .vmeta .vat {
+    color: #638fd5;
+}
 
-  <!-- zoom start -->
-  
-<script src="/lib/zoom.min.js"></script>
+.v .vlist .vcard .vhead .vnick {
+    color: #6ba1ff;
+}
 
-  <script type="text/javascript">
-    document.querySelector(".article-content") && zoom(".article-content");
-  </script>
-  <!-- zoom end -->
-  
+.v a {
+    color: #8696b1;
+}
 
-
-
-  
-
-
-  
-
-
-  
-
-
-
-
-<script src="/js/script.js"></script>
-
-  
-  <!-- 尾部用户自定义相关内容 -->
-
+.v .vlist .vcard .vhead .vnick:hover {
+    color: #669bfc;
+}
+</style>
 </body>
+
 </html>
