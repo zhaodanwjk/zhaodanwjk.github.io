@@ -6,7 +6,7 @@
     <meta name="renderer" content="webkit">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>
-        
+        面对压迫、掠夺和孤单，我们的回答是生活
     </title>
     
 <link rel="stylesheet" href="/libs/highlight/styles/monokai-sublime.css">
@@ -30,13 +30,13 @@
     </div>
     <div class="post-content">
         <p>问题原因： 因为线上维护时jenkins压力过大部署延迟，维护结束后，顺手升级了jenkins的机器类型，升配后jenkins出现问题。。。。<br>总结：线上使用工具应追求稳定为主，不要轻易升级变动，如有需求也应在测试环境测试好后再同步到线上</p>
-<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs angelscript">没有发生问题之前的版本： 稳定版<span class="hljs-number">2.164</span><span class="hljs-number">.1</span><br>问题产生过程：将云主机stop  —— 升级实例配置  ——  start  ，启动jenkins进程，秘钥失效<br>解决过程中又制造问题：为了解决秘钥问题，升级了部分插件 credentials、ansible、ssh，无法完全还原到升级之前的状态<br></code></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">没有发生问题之前的版本： 稳定版2.164.1</span><br><span class="line">问题产生过程：将云主机stop  —— 升级实例配置  ——  start  ，启动jenkins进程，秘钥失效</span><br><span class="line">解决过程中又制造问题：为了解决秘钥问题，升级了部分插件 credentials、ansible、ssh，无法完全还原到升级之前的状态</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs angelscript">解决问题过程：<br><span class="hljs-number">1.</span> 将jenkins版本升级为<span class="hljs-number">2.168</span><span class="hljs-number">-1</span>，使用插件备份进行还原，git秘钥正常，执行任务无法连接远程主机<br><span class="hljs-number">2.</span> 将jenkins版本还原为<span class="hljs-number">2.164</span><span class="hljs-number">.1</span>，使用插件备份进行还原，git秘钥正常，执行任务无法连接远程主机<br><span class="hljs-number">3.</span> 将jenkins版本升级海外版本<span class="hljs-number">2.164</span><span class="hljs-number">.2</span>并使用海外版本的插件（全部拷贝），git秘钥正常，执行任务无法连接远程主机<br></code></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">解决问题过程：</span><br><span class="line">1. 将jenkins版本升级为2.168-1，使用插件备份进行还原，git秘钥正常，执行任务无法连接远程主机</span><br><span class="line">2. 将jenkins版本还原为2.164.1，使用插件备份进行还原，git秘钥正常，执行任务无法连接远程主机</span><br><span class="line">3. 将jenkins版本升级海外版本2.164.2并使用海外版本的插件（全部拷贝），git秘钥正常，执行任务无法连接远程主机</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs crystal">问题产生原因：怀疑是jenkins插件bug<br>解决问题： 原先的机器，删除了jenkins整个 /var/<span class="hljs-class"><span class="hljs-keyword">lib</span>/<span class="hljs-title">jenkins</span>/目录，重新安装王牌<span class="hljs-title">jenkins</span>版本2.138.3和插件，秘钥正常，执行远程任务正常</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">问题产生原因：怀疑是jenkins插件bug</span><br><span class="line">解决问题： 原先的机器，删除了jenkins整个 &#x2F;var&#x2F;lib&#x2F;jenkins&#x2F;目录，重新安装王牌jenkins版本2.138.3和插件，秘钥正常，执行远程任务正常</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs angelscript">尝试复现连接问题复现失败：<br><span class="hljs-number">1.</span> 新开一台实例，安装jenkins <span class="hljs-number">2.164</span><span class="hljs-number">.1</span>，拷贝当时问题备份插件启动jenkins，jenkins启动后秘钥失效，重新填写秘钥后正常，执行远程任务正常<br><span class="hljs-number">2.</span> 拷贝版本<span class="hljs-number">2.168</span>备份的插件替换重启jenkins，秘钥正常，执行远程任务正常<br><span class="hljs-number">3.</span> 拷贝海外<span class="hljs-number">2.164</span><span class="hljs-number">.2</span>版本的插件替换后重启jenkins，秘钥正常，执行远程任务正常<br><span class="hljs-number">4.</span> 将主机stop再start，启动jenkins，秘钥正常，执行远程任务正常<br></code></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">尝试复现连接问题复现失败：</span><br><span class="line">1. 新开一台实例，安装jenkins 2.164.1，拷贝当时问题备份插件启动jenkins，jenkins启动后秘钥失效，重新填写秘钥后正常，执行远程任务正常</span><br><span class="line">2. 拷贝版本2.168备份的插件替换重启jenkins，秘钥正常，执行远程任务正常</span><br><span class="line">3. 拷贝海外2.164.2版本的插件替换后重启jenkins，秘钥正常，执行远程任务正常</span><br><span class="line">4. 将主机stop再start，启动jenkins，秘钥正常，执行远程任务正常</span><br></pre></td></tr></table></figure>
 
     </div>
 

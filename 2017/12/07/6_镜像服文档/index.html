@@ -6,7 +6,7 @@
     <meta name="renderer" content="webkit">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>
-        
+        面对压迫、掠夺和孤单，我们的回答是生活
     </title>
     
 <link rel="stylesheet" href="/libs/highlight/styles/monokai-sublime.css">
@@ -31,7 +31,7 @@
     <div class="post-content">
         <p>#####【初始化环境】<br>     - redis<br>     - ardb<br>     - basics<br>     - mirrors<br>     - gamex-facts<br>     - kunik.system-limits<br>     - supervisor<br>     - gamex-dnsupdater<br>     - aws-public-key<br>     - mirrors-python<br>     - redis-slave<br>     - dnsupdater</p>
 <p>#####【准备镜像服】</p>
-<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs excel">根据QA与运营提供的区服，先确定区服信息<br>清理镜像服redis和ardb的旧数据<br>导目标数据库<span class="hljs-built_in">db</span>到镜像服<br>修改playbook中的etcd信息（包括gid，shardid，<span class="hljs-built_in">db</span>，port）并注册<br>修改groovy脚本，添加目标区服的部署配置并刷到Jenkins<br>注册sn码<br>配置目标区服的<span class="hljs-built_in">fact</span>并使之生效<br>jenkins上进行部署<br>查看gmtools配置并在gmtools上设置服务器上线<br></code></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">根据QA与运营提供的区服，先确定区服信息</span><br><span class="line">清理镜像服redis和ardb的旧数据</span><br><span class="line">导目标数据库db到镜像服</span><br><span class="line">修改playbook中的etcd信息（包括gid，shardid，db，port）并注册</span><br><span class="line">修改groovy脚本，添加目标区服的部署配置并刷到Jenkins</span><br><span class="line">注册sn码</span><br><span class="line">配置目标区服的fact并使之生效</span><br><span class="line">jenkins上进行部署</span><br><span class="line">查看gmtools配置并在gmtools上设置服务器上线</span><br></pre></td></tr></table></figure>
     </div>
 
     

@@ -6,7 +6,7 @@
     <meta name="renderer" content="webkit">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>
-        
+        面对压迫、掠夺和孤单，我们的回答是生活
     </title>
     
 <link rel="stylesheet" href="/libs/highlight/styles/monokai-sublime.css">
@@ -32,7 +32,7 @@
         <p>jumpserver之前搭建过好几遍了，每次创建用户时被同事一问总是感觉解释不清楚，明明上手一干就能做出来，就是说不清楚，我认为还是因为自己没有把概念记到脑子里，但上手能做出来估计是惯性。。。。毕竟好记性都不如实践出真知</p>
 <p>管理用户——&gt;创建时需填写登录服务器的用户密码——&gt;添加资产时要选择管理用户，和资产绑定<br>系统用户——&gt;自行随意起名——&gt;会推送到服务器创建该用户——&gt;创建资产授权时要选择系统用户，和资产授权绑定</p>
 <p>官方文档解释如下：</p>
-<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs less">管理用户是资产上的<span class="hljs-selector-tag">root</span>，或拥有 <span class="hljs-selector-tag">NOPASSWD</span>: <span class="hljs-keyword">ALL</span> <span class="hljs-selector-tag">sudo</span>权限的用户， <span class="hljs-selector-tag">JumpServer</span>使用该用户来推送系统用户、获取资产硬件信息 等。<span class="hljs-selector-tag">Windows</span> 请填写 <span class="hljs-selector-tag">administrators</span> 组里面的用户<br>系统用户是 <span class="hljs-selector-tag">JumpServer</span>跳转登录资产时使用的用户，可以理解为登录资产用户，如 <span class="hljs-selector-tag">web</span>, <span class="hljs-selector-tag">sa</span>, <span class="hljs-selector-tag">dba</span>(ssh web<span class="hljs-variable">@some-host</span>), 而不是使用某个用户的用户名跳转登录服务器(ssh xiaoming<span class="hljs-variable">@some-host</span>); 简单来说是 用户使用自己的用户名登录<span class="hljs-selector-tag">JumpServer</span>, <span class="hljs-selector-tag">JumpServer</span>使用系统用户登录资产。 系统用户创建时，如果选择了自动推送 <span class="hljs-selector-tag">JumpServer</span> 会使用 <span class="hljs-selector-tag">ansible</span> 自动推送系统用户到资产中，如果资产不支持<span class="hljs-selector-tag">ansible</span>, 请手动填写账号密码（域用户格式: <span class="hljs-selector-tag">user</span>@<span class="hljs-selector-tag">domain</span><span class="hljs-selector-class">.com</span>）。<br></code></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">管理用户是资产上的root，或拥有 NOPASSWD: ALL sudo权限的用户， JumpServer使用该用户来推送系统用户、获取资产硬件信息 等。Windows 请填写 administrators 组里面的用户</span><br><span class="line">系统用户是 JumpServer跳转登录资产时使用的用户，可以理解为登录资产用户，如 web, sa, dba(ssh web@some-host), 而不是使用某个用户的用户名跳转登录服务器(ssh xiaoming@some-host); 简单来说是 用户使用自己的用户名登录JumpServer, JumpServer使用系统用户登录资产。 系统用户创建时，如果选择了自动推送 JumpServer 会使用 ansible 自动推送系统用户到资产中，如果资产不支持ansible, 请手动填写账号密码（域用户格式: user@domain.com）。</span><br></pre></td></tr></table></figure>
 <p>(看了官方解释其实已经明白意思了，总结下作用~)</p>
 <p>个人总结：</p>
 <ol>

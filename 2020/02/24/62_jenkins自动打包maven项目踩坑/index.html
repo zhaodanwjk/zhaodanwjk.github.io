@@ -6,7 +6,7 @@
     <meta name="renderer" content="webkit">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>
-        
+        面对压迫、掠夺和孤单，我们的回答是生活
     </title>
     
 <link rel="stylesheet" href="/libs/highlight/styles/monokai-sublime.css">
@@ -30,7 +30,7 @@
     </div>
     <div class="post-content">
         <p>问题：ansible调用command远程启动服务，找不到JAVA_HOME。已经写在/etc/profile中并source生效，登录远端服务器echo $JAVA_HOME显示正常<br>原因：ansible里不加载profile的变量，找不到java路径，所以远程调用脚本需要重申变量。ansible远程执行的是non-login shell 并不会加载/etc/profile和<del>/.bash_profile下的环境变量，只加载</del>/.bashrc和/etc/bashrc</p>
-<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs routeros"><span class="hljs-comment"># cat /etc/bashrc</span><br><span class="hljs-builtin-name">export</span> <span class="hljs-attribute">JAVA_HOME</span>=/usr/lib/jvm/jdk1.8.0_181<br><span class="hljs-builtin-name">export</span> <span class="hljs-attribute">JRE_HOME</span>=<span class="hljs-variable">$&#123;JAVA_HOME&#125;</span>/jre<br><span class="hljs-builtin-name">export</span> <span class="hljs-attribute">CLASSPATH</span>=.:$&#123;JAVA_HOME&#125;/lib:<span class="hljs-variable">$&#123;JRE_HOME&#125;</span>/lib<br><span class="hljs-builtin-name">export</span>  <span class="hljs-attribute">PATH</span>=<span class="hljs-variable">$&#123;JAVA_HOME&#125;</span>/bin:$PATH<br><br><span class="hljs-comment"># cat ~/.bash_profile</span><br><span class="hljs-attribute">PATH</span>=<span class="hljs-variable">$PATH</span>:$HOME/bin<br><br><span class="hljs-builtin-name">export</span> PATH<br></code></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># cat &#x2F;etc&#x2F;bashrc</span><br><span class="line">export JAVA_HOME&#x3D;&#x2F;usr&#x2F;lib&#x2F;jvm&#x2F;jdk1.8.0_181</span><br><span class="line">export JRE_HOME&#x3D;$&#123;JAVA_HOME&#125;&#x2F;jre</span><br><span class="line">export CLASSPATH&#x3D;.:$&#123;JAVA_HOME&#125;&#x2F;lib:$&#123;JRE_HOME&#125;&#x2F;lib</span><br><span class="line">export  PATH&#x3D;$&#123;JAVA_HOME&#125;&#x2F;bin:$PATH</span><br><span class="line"></span><br><span class="line"># cat ~&#x2F;.bash_profile</span><br><span class="line">PATH&#x3D;$PATH:$HOME&#x2F;bin</span><br><span class="line"></span><br><span class="line">export PATH</span><br></pre></td></tr></table></figure>
 
     </div>
 

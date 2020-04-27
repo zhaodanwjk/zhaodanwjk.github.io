@@ -6,7 +6,7 @@
     <meta name="renderer" content="webkit">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>
-        
+        面对压迫、掠夺和孤单，我们的回答是生活
     </title>
     
 <link rel="stylesheet" href="/libs/highlight/styles/monokai-sublime.css">
@@ -34,7 +34,7 @@
 <p>最低环境要求：<br>            Java8<br>            256M可用内存<br>            1GB磁盘<br>生产中使用配置:<br>            java8<br>            m4.xlarge(4核16G)<br>            200GB磁盘</p>
 </blockquote>
 <p><em>jenins分2个版本，LTS和WEEK也就是稳定版和每周更新版，生产环境中使用稳定版。官方版本信息：<a href="https://jenkins.io/zh/download/" target="_blank" rel="noopener">https://jenkins.io/zh/download/</a></em></p>
-<figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs vala"><span class="hljs-meta"># wget https://pkg.jenkins.io/redhat-stable/jenkins-2.138.3-1.1.noarch.rpm</span><br><span class="hljs-meta"># rpm -ivh jenkins-2.138.3-1.1.noarch.rpm</span><br><span class="hljs-meta"># /etc/init.d/jenkins start</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># wget https:&#x2F;&#x2F;pkg.jenkins.io&#x2F;redhat-stable&#x2F;jenkins-2.138.3-1.1.noarch.rpm</span><br><span class="line"># rpm -ivh jenkins-2.138.3-1.1.noarch.rpm</span><br><span class="line"># &#x2F;etc&#x2F;init.d&#x2F;jenkins start</span><br></pre></td></tr></table></figure>
 <p>生产环境中使用了nginx反向代理，jenkins启动后访问web，从jenkins log中获取认证秘钥进行下一步</p>
 <hr>
 <p>2.插件<br>输入秘钥后会提示安装插件（默认建议安装的先进行安装），下面列出的是线上所使用到的主要关键插件及版本信息<br>name|version|function<br>—–|—–|—–<br>Active Choices Plug-in|2.1|构建选项列表，我们的生产环境中是用来选择部署zip包<br>Ansible plugin|1.0|运行ansible playbook<br>Build Timeout|1.19|任务构建超时自动终止<br>Credentials|2.1.18|存储秘钥凭据<br>SSH Credentials|1.14|存储ssh凭据<br>Email Extension Template Plugin|1.1|邮件扩展模板<br>Job DSL|1.70|脚本<br>Role-based Authorization Strategy|2.9.0|基于role的权限控制<br>Script Security|1.49|我们此处使用这个插件获取代码的附加路径</p>

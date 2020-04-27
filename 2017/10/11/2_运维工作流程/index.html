@@ -6,7 +6,7 @@
     <meta name="renderer" content="webkit">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>
-        
+        面对压迫、掠夺和孤单，我们的回答是生活
     </title>
     
 <link rel="stylesheet" href="/libs/highlight/styles/monokai-sublime.css">
@@ -157,9 +157,9 @@
 </li>
 </ul>
 <h4 id="上线故障排除"><a href="#上线故障排除" class="headerlink" title="上线故障排除"></a>上线故障排除</h4><ul>
-<li>1.）Jenkins部署未找到版本包<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#排错思路：查看确认内网Jenkins编译名称--&gt;Jenkins部署匹配名称是否一致--&gt;S3对应bucket是否存在该包</span><br><span class="hljs-comment">#一般解决：编辑对应jenkins任务配置选项，查看filename变量选项，如下行</span><br>s3://yingzhuo-gamex/gamexback/gmtools<span class="hljs-string">'.execute</span><br></code></pre></td></tr></table></figure></li>
-<li>2.）Jenkins部署变量报错<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#排错思路：是否存在新添加Etcd key值需提交--&gt; 是否注册etcd --&gt; 打包配置模板变量名称与注册etcd变量名称是否一致</span><br><span class="hljs-comment">#一般解决：重新注册etcd</span><br></code></pre></td></tr></table></figure></li>
-<li>3.）公告服务可用性快速验证<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">http://<span class="hljs-variable">$ip</span>:<span class="hljs-variable">$port</span>/notice/v1/getnotice?gid=<span class="hljs-variable">$gid</span>&amp;version=<span class="hljs-variable">$version</span><br><span class="hljs-comment"># a. 更改Notice的外网IP及端口，以及gid 和version信息，通过http方法进行访问，正常会返回公告信息</span><br><span class="hljs-comment"># b. 需注意现版本对外端口需要开放两个，port1 及 port2</span><br></code></pre></td></tr></table></figure></li>
+<li>1.）Jenkins部署未找到版本包<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#排错思路：查看确认内网Jenkins编译名称--&gt;Jenkins部署匹配名称是否一致--&gt;S3对应bucket是否存在该包</span></span><br><span class="line"><span class="comment">#一般解决：编辑对应jenkins任务配置选项，查看filename变量选项，如下行</span></span><br><span class="line">s3://yingzhuo-gamex/gamexback/gmtools<span class="string">'.execute</span></span><br></pre></td></tr></table></figure></li>
+<li>2.）Jenkins部署变量报错<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#排错思路：是否存在新添加Etcd key值需提交--&gt; 是否注册etcd --&gt; 打包配置模板变量名称与注册etcd变量名称是否一致</span></span><br><span class="line"><span class="comment">#一般解决：重新注册etcd</span></span><br></pre></td></tr></table></figure></li>
+<li>3.）公告服务可用性快速验证<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">http://<span class="variable">$ip</span>:<span class="variable">$port</span>/notice/v1/getnotice?gid=<span class="variable">$gid</span>&amp;version=<span class="variable">$version</span></span><br><span class="line"><span class="comment"># a. 更改Notice的外网IP及端口，以及gid 和version信息，通过http方法进行访问，正常会返回公告信息</span></span><br><span class="line"><span class="comment"># b. 需注意现版本对外端口需要开放两个，port1 及 port2</span></span><br></pre></td></tr></table></figure></li>
 </ul>
 
     </div>

@@ -6,7 +6,7 @@
     <meta name="renderer" content="webkit">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>
-        
+        面对压迫、掠夺和孤单，我们的回答是生活
     </title>
     
 <link rel="stylesheet" href="/libs/highlight/styles/monokai-sublime.css">
@@ -30,7 +30,7 @@
     </div>
     <div class="post-content">
         <p>服务器经常需要上传和下载一些不是很大的文件，这时服务器上有这么一个可以直接只是上传下载的工具会很方便</p>
-<figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs vala"><span class="hljs-meta"># wget http://ohse.de/uwe/releases/lrzsz-0.12.20.tar.gz  --no-check-certificate</span><br><span class="hljs-meta"># yum install gcc -y</span><br><span class="hljs-meta"># tar zxvf lrzsz-0.12.20.tar.gz &amp;&amp; cd lrzsz-0.12.20</span><br><span class="hljs-meta"># ./configure &amp;&amp; make &amp;&amp; make install</span><br><br>上面安装过程默认把lsz和lrz安装到了/usr/local/bin/目录下, 下面创建软链接, 并命名为rz/sz:<br><span class="hljs-meta"># cd /usr/bin</span><br><span class="hljs-meta"># cp /usr/local/bin/lsz   /usr/bin/sz</span><br><span class="hljs-meta"># cp /usr/local/bin/lrz  /usr/bin/rz</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># wget http:&#x2F;&#x2F;ohse.de&#x2F;uwe&#x2F;releases&#x2F;lrzsz-0.12.20.tar.gz  --no-check-certificate</span><br><span class="line"># yum install gcc -y</span><br><span class="line"># tar zxvf lrzsz-0.12.20.tar.gz &amp;&amp; cd lrzsz-0.12.20</span><br><span class="line"># .&#x2F;configure &amp;&amp; make &amp;&amp; make install</span><br><span class="line"></span><br><span class="line">上面安装过程默认把lsz和lrz安装到了&#x2F;usr&#x2F;local&#x2F;bin&#x2F;目录下, 下面创建软链接, 并命名为rz&#x2F;sz:</span><br><span class="line"># cd &#x2F;usr&#x2F;bin</span><br><span class="line"># cp &#x2F;usr&#x2F;local&#x2F;bin&#x2F;lsz   &#x2F;usr&#x2F;bin&#x2F;sz</span><br><span class="line"># cp &#x2F;usr&#x2F;local&#x2F;bin&#x2F;lrz  &#x2F;usr&#x2F;bin&#x2F;rz</span><br></pre></td></tr></table></figure>
     </div>
 
     

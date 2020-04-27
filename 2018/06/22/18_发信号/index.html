@@ -6,7 +6,7 @@
     <meta name="renderer" content="webkit">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>
-        
+        面对压迫、掠夺和孤单，我们的回答是生活
     </title>
     
 <link rel="stylesheet" href="/libs/highlight/styles/monokai-sublime.css">
@@ -30,7 +30,7 @@
     </div>
     <div class="post-content">
         <p>因为线上服务正在运行不能重启，但是程序需要更改log级别，这时需要发信号使之生效</p>
-<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs vim">在线发信号更改进程<span class="hljs-built_in">log</span>级别<br><br>SIGUSR2 进程 PID<br><br># kill -s SIGUSR2 <span class="hljs-number">25913</span><br><br>在线发信号杀掉进程<br><br># kill -s SIGINT <span class="hljs-number">24451</span><br><br><span class="hljs-keyword">ps</span> aux |<span class="hljs-keyword">grep</span> /<span class="hljs-keyword">opt</span>/supervisor/gamex |<span class="hljs-keyword">grep</span> -v <span class="hljs-keyword">grep</span> |awk <span class="hljs-string">'&#123;print $2&#125;'</span> |xargs sudo kill -s SIGINT<br></code></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">在线发信号更改进程log级别</span><br><span class="line"></span><br><span class="line">SIGUSR2 进程 PID</span><br><span class="line"></span><br><span class="line"># kill -s SIGUSR2 25913</span><br><span class="line"></span><br><span class="line">在线发信号杀掉进程</span><br><span class="line"></span><br><span class="line"># kill -s SIGINT 24451</span><br><span class="line"></span><br><span class="line">ps aux |grep &#x2F;opt&#x2F;supervisor&#x2F;gamex |grep -v grep |awk &#39;&#123;print $2&#125;&#39; |xargs sudo kill -s SIGINT</span><br></pre></td></tr></table></figure>
     </div>
 
     
