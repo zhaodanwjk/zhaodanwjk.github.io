@@ -6,11 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
   
-    <meta name="description" content="爱运维 | 爱程序 | 爱游戏 | 爱猫">
-  
 
-  
-    <meta name="keywords" content="best">
   
 
   
@@ -64,11 +60,11 @@
         
           <li class="navbar-list-item"><a href="/">主页</a></li>
         
-          <li class="navbar-list-item"><a href="/about">关于我</a></li>
+          <li class="navbar-list-item"><a href="/about">关于</a></li>
         
-          <li class="navbar-list-item"><a href="/tags">标签</a></li>
+          <li class="navbar-list-item"><a href="/photo">照片</a></li>
         
-          <li class="navbar-list-item"><a href="/categories">分类</a></li>
+          <li class="navbar-list-item"><a href="/archives">归档</a></li>
         
           <li class="navbar-list-item"><a href="/messages">留言板</a></li>
         
@@ -166,11 +162,11 @@
       <div id="article-nav-newer" class="card-item">
         <article>
           
-          <a class="card-link article-nav-link" href="/2018/06/21/56_sed/"></a>
+          <a class="card-link article-nav-link" href="/2018/06/19/39_%E5%86%85%E5%AD%98CPU/"></a>
           <strong class="article-nav-caption">Newer</strong>
           <p class="article-nav-title">
             
-              sed &amp; 记一次线上log遇到的问题
+              内存CPU
             
           </p>
         </article>
@@ -180,11 +176,11 @@
       <div id="article-nav-older" class="card-item">
         <article>
           
-          <a class="card-link article-nav-link" href="/2018/06/19/39_%E5%86%85%E5%AD%98CPU/"></a>
+          <a class="card-link article-nav-link" href="/2018/06/19/40_traceroute/"></a>
           <strong class="article-nav-caption">Older</strong>
           <p class="article-nav-title">
             
-              内存CPU
+              traceroute
             
           </p>
         </article>
@@ -245,6 +241,34 @@
 <!-- valine 评论 end -->
 
 
+  <!-- disqus 评论 start -->
+  <script type="text/javascript">
+    /*
+     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+     */
+    
+    /*
+      var disqus_config = function () {
+        this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+      };
+    */
+
+    (function() {
+      var d = document, s = d.createElement('script'), c = d.querySelector(".disqus-container");
+      if (!c) return;
+      s.src = 'https://http://zhaodan.online.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      s.onerror = () => {
+        let t = document.querySelector("#disqus_error");
+        t.style.display = "block";
+      }
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+  <!-- disqus 评论 end -->
+  
 
   <!-- aplayer 音频 start -->
   

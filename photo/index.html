@@ -6,11 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
   
-    <meta name="description" content="爱运维 | 爱程序 | 爱游戏 | 爱猫">
-  
 
-  
-    <meta name="keywords" content="best">
   
 
   
@@ -23,7 +19,7 @@
 
   
 
-  <title>categories | </title>
+  <title>photo | </title>
 
   
 
@@ -64,11 +60,11 @@
         
           <li class="navbar-list-item"><a href="/">主页</a></li>
         
-          <li class="navbar-list-item"><a href="/about">关于我</a></li>
+          <li class="navbar-list-item"><a href="/about">关于</a></li>
         
-          <li class="navbar-list-item"><a href="/tags">标签</a></li>
+          <li class="navbar-list-item"><a href="/photo">照片</a></li>
         
-          <li class="navbar-list-item"><a href="/categories">分类</a></li>
+          <li class="navbar-list-item"><a href="/archives">归档</a></li>
         
           <li class="navbar-list-item"><a href="/messages">留言板</a></li>
         
@@ -99,11 +95,9 @@
   
   
     <div class="header-content">
-      <div class="post-image" style="background-image: url(https://i.postimg.cc/kXYG7QKj/dengdeng.jpg)"></div>
+      <div class="post-image" style="background-image: url(https://i.postimg.cc/SsCq3cQT/karry3.jpg)"></div>
       <div class="post-text">
-        <h1 class="title-wrap">categories</h1>
-        
-        <h2 class="title-sub-wrap">分类</h2>
+        <h1 class="title-wrap">photo</h1>
         
       </div>
     </div>
@@ -117,6 +111,17 @@
 
 <div class="body-container">
   
+  
+  <article class="content-container article-container">
+    <div class="article-content">
+      <div class="article-entry"><div id="zoom">
+    <img src="https://i.postimg.cc/Ls76rHtX/karry1.jpg"> <img src="https://i.postimg.cc/tTxCbLkz/karry2.jpg"> <img src="https://i.postimg.cc/kGs46ZGS/lululu.jpg">
+</div>
+
+<script src="../dist/zoom.min.js"></script>
+</div>
+    </div>
+  </article>
   
 
   
@@ -162,7 +167,52 @@
 
   
   
+<!-- valine 评论 start -->
+<script type="text/javascript" src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script type="text/javascript" src='//unpkg.com/valine/dist/Valine.min.js'></script>
+<script type="text/javascript">
+  new Valine({
+    el: "#valine_thread",
+    appId: "nmcd4VgylfORjevWz6UEoat3-9Nh9j0Va",
+    appKey: "wyWWI1qMf6w1mv1KpT1D0HeC",
+    avatar: "mm",
+    placeholder: "随便说点什么叭～",
+    notify: true,
+    visitor: true,
+    pageSize: 10,
+  });
+</script>
+<!-- valine 评论 end -->
 
+
+  <!-- disqus 评论 start -->
+  <script type="text/javascript">
+    /*
+     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+     */
+    
+    /*
+      var disqus_config = function () {
+        this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+      };
+    */
+
+    (function() {
+      var d = document, s = d.createElement('script'), c = d.querySelector(".disqus-container");
+      if (!c) return;
+      s.src = 'https://http://zhaodan.online.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      s.onerror = () => {
+        let t = document.querySelector("#disqus_error");
+        t.style.display = "block";
+      }
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+  <!-- disqus 评论 end -->
+  
 
   <!-- aplayer 音频 start -->
   
