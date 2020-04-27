@@ -1,95 +1,341 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="renderer" content="webkit">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <title>
-        面对压迫、掠夺和孤单，我们的回答是生活
-    </title>
-    
-<link rel="stylesheet" href="/libs/highlight/styles/monokai-sublime.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    
-<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+  
 
-    
+  
+
+  
+    <meta name="author" content="zhaodan">
+  
+
+  
+    <meta name="copyright" content="zhaodan">
+  
+
+  
+
+  <title>python3 自动生成配置 | </title>
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+    <link href="https://cdn.bootcss.com/highlight.js/9.15.6/styles/monokai.min.css" rel="stylesheet">
+  
+
+  
 <link rel="stylesheet" href="/css/style.css">
 
 <meta name="generator" content="Hexo 4.2.0"></head>
-
-<body id="bodyx">
-    <div class="hd posts">
-    <a href="/index.html"><i class="fa fa-reply replay-btn" aria-hidden="true"></i></a>
-    <div class="post-title">
-        <p>
-            python3 自动生成配置
-        </p>
-        <hr>
+<body>
+  <div class="root-container">
+    <!-- navbar -->
+<nav class="navbar">
+  <div class="navbar-content">
+    <!-- logo -->
+    <div class="navbar-logo">
+      <a href="/">
+        
+          
+        
+      </a>
     </div>
-    <div class="post-content">
+    <!-- link -->
+    <div class="navbar-link">
+      <div class="navbar-btn">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <ul class="navbar-list">
+        
+          <li class="navbar-list-item"><a href="/">主页</a></li>
+        
+          <li class="navbar-list-item"><a href="/about">关于</a></li>
+        
+          <li class="navbar-list-item"><a href="/archives">归档</a></li>
+        
+          <li class="navbar-list-item"><a href="/messages">留言板</a></li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    
+<!-- header container -->
+<header class="header-container post">
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+    <div class="header-content">
+      <div class="post-image" style="background-image: url(https://i.postimg.cc/kXYG7QKj/dengdeng.jpg)"></div>
+      <div class="post-text">
+        <div class="type-wrap">
+          
+        </div>
+        <h1 class="title-wrap">python3 自动生成配置</h1>
+        <h2 class="title-sub-wrap">
+          <strong>zhaodan</strong>
+          <span>发布于</span>
+          
+  <a href="javascript:;" class="article-date">
+    <time datetime="2020-03-19T16:00:00.000Z" itemprop="datePublished">2020-03-20</time>
+  </a>
+
+        </h2>
+      </div>
+    </div>
+  
+
+  
+  
+
+  </header>
+
+    <!-- 文章 -->
+
+<!-- 文章内容 -->
+
+<div class="body-container">
+  <article class="content-container article-container">
+    <div class="article-content">
+      
+      
+
+      <section class="article-entry">
         <p>因为平时线上发版要提前整理一个操作时的文档出来，之前都是手动整理，手动做过3次就再也不想弄了，所以写这个脚本来代替之前手动的工作。。。。<br>男朋友半小时写完的脚本，我写了2天还被吐槽代码不够优雅，我好南(ಥ﹏ಥ)<br>又学到了一个新的用法，游标!</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line">#!&#x2F;usr&#x2F;bin&#x2F;env python</span><br><span class="line">#coding&#x3D;utf-8</span><br><span class="line">#by Dawn on 20200318</span><br><span class="line">&#39;&#39;&#39;</span><br><span class="line">此脚本的作用是读取server下各个模块信息，将要发版的模块生成如下配置，代替手动粘贴的过程</span><br><span class="line">sh remote_restart.sh 10.101.178.13 oauth2</span><br><span class="line">curl 10.101.178.13:8004&#x2F;check.do</span><br><span class="line">&#39;&#39;&#39;</span><br><span class="line">import os</span><br><span class="line">import toml</span><br><span class="line">import time</span><br><span class="line"></span><br><span class="line">now &#x3D; time.strftime(&quot;%Y%m%d%H%M&quot;, time.localtime())</span><br><span class="line">allpath&#x3D;[]</span><br><span class="line">allfile&#x3D;[]</span><br><span class="line">fileByModule&#x3D;&#123;&#125;</span><br><span class="line">def getallfileByModule(path):</span><br><span class="line">    allfilelist&#x3D;os.listdir(path)</span><br><span class="line">    for file in allfilelist:</span><br><span class="line">        filepath&#x3D;os.path.join(path,file)</span><br><span class="line">        if os.path.isdir(filepath):</span><br><span class="line">            getallfileByModule(filepath)</span><br><span class="line">        elif os.path.isfile(filepath):</span><br><span class="line">            module&#x3D;filepath.split(&quot;&#x2F;&quot;)[-2]</span><br><span class="line">            if module in fileByModule:</span><br><span class="line">                fileByModule[module].append(filepath)</span><br><span class="line">            else:</span><br><span class="line">                fileByModule[module]&#x3D;[filepath]</span><br><span class="line"></span><br><span class="line">def readallfile(file):</span><br><span class="line">    serverinfo&#x3D;toml.load(file)</span><br><span class="line">    modulename&#x3D;(serverinfo[&#39;server&#39;])</span><br><span class="line">    moduleip &#x3D; (serverinfo[&#39;addr&#39;])</span><br><span class="line">    moduleport &#x3D; (serverinfo[&#39;port&#39;])</span><br><span class="line">    return modulename,moduleip,moduleport</span><br><span class="line"></span><br><span class="line">def writeallfile(server,addr,port):</span><br><span class="line">    opremote&#x3D;open(remotepath,&quot;a+&quot;)</span><br><span class="line">    operatingfile&#x3D;opremote.write(&quot;sh remote_restart.sh &#123;&#125; &#123;&#125;\n&quot;.format(addr,server) )</span><br><span class="line">    opremote.close()</span><br><span class="line">    opcurl&#x3D;open(curlpath,&quot;a+&quot;)</span><br><span class="line">    checkfile&#x3D;opcurl.write(&quot;curl &#123;&#125;:&#123;&#125;&#x2F;check.do\n&quot;.format(addr,port))</span><br><span class="line">    opcurl.close()</span><br><span class="line"></span><br><span class="line">if __name__ &#x3D;&#x3D; &#39;__main__&#39;:</span><br><span class="line">    local&#x3D;&#39;kr&#39;#生成配置的地区#</span><br><span class="line">    dir_path &#x3D; &#39;&#x2F;Users&#x2F;zhaodan&#x2F;Downloads&#x2F;LumiWorking&#x2F;AIOT&#x2F;online-operating&#x2F;servers&#x2F;&#123;&#125;&#x2F;&#39;.format(local)# 模块配置路径#</span><br><span class="line">    modulefile &#x3D; &#39;.&#x2F;OpModules&#39;# 发版模块文件#</span><br><span class="line">    remotepath &#x3D; &#39;.&#x2F;&#123;&#125;_remotefile_&#123;&#125;&#39;.format(local,now)# 生成remote文件#</span><br><span class="line">    curlpath &#x3D; &#39;.&#x2F;&#123;&#125;_checkfile_&#123;&#125;&#39;.format(local,now)# 生成check文件#</span><br><span class="line">    moduleSet&#x3D;set()</span><br><span class="line">    with open(modulefile) as file:</span><br><span class="line">        for line in file:</span><br><span class="line">            moduleSet.add(line.strip(&#39;\n&#39;))</span><br><span class="line">    getallfileByModule(dir_path)</span><br><span class="line">    t&#x3D;0</span><br><span class="line">    while t!&#x3D;-1:</span><br><span class="line">        flag&#x3D;False</span><br><span class="line">        for module,pathList in fileByModule.items():</span><br><span class="line">            if len(pathList)&gt;t:</span><br><span class="line">                modulename, moduleip, moduleport&#x3D;readallfile(pathList[t])</span><br><span class="line">                if modulename in moduleSet:</span><br><span class="line">                    writeallfile(modulename, moduleip, moduleport)</span><br><span class="line">                flag&#x3D;True</span><br><span class="line">        if not flag:</span><br><span class="line">            break</span><br><span class="line">        else:</span><br><span class="line">            t+&#x3D;1</span><br><span class="line">            RemoteWrap&#x3D;open(remotepath,&quot;a+&quot;)</span><br><span class="line">            wrap1&#x3D;RemoteWrap.write(&quot;\n&quot;)</span><br><span class="line">            RemoteWrap.close()</span><br><span class="line">            CheckWrap&#x3D;open(curlpath,&quot;a+&quot;)</span><br><span class="line">            wrap2&#x3D;CheckWrap.write(&quot;\n&quot;)</span><br><span class="line">            CheckWrap.close()</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#!/usr/bin/env python</span><br><span class="hljs-comment">#coding=utf-8</span><br><span class="hljs-comment">#by Dawn on 20200318</span><br><span class="hljs-string">'''</span><br><span class="hljs-string">此脚本的作用是读取server下各个模块信息，将要发版的模块生成如下配置，代替手动粘贴的过程</span><br><span class="hljs-string">sh remote_restart.sh 10.101.178.13 oauth2</span><br><span class="hljs-string">curl 10.101.178.13:8004/check.do</span><br><span class="hljs-string">'''</span><br><span class="hljs-keyword">import</span> os<br><span class="hljs-keyword">import</span> toml<br><span class="hljs-keyword">import</span> time<br><br>now = time.strftime(<span class="hljs-string">"%Y%m%d%H%M"</span>, time.localtime())<br>allpath=[]<br>allfile=[]<br>fileByModule=&#123;&#125;<br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">getallfileByModule</span><span class="hljs-params">(path)</span>:</span><br>    allfilelist=os.listdir(path)<br>    <span class="hljs-keyword">for</span> file <span class="hljs-keyword">in</span> allfilelist:<br>        filepath=os.path.join(path,file)<br>        <span class="hljs-keyword">if</span> os.path.isdir(filepath):<br>            getallfileByModule(filepath)<br>        <span class="hljs-keyword">elif</span> os.path.isfile(filepath):<br>            module=filepath.split(<span class="hljs-string">"/"</span>)[<span class="hljs-number">-2</span>]<br>            <span class="hljs-keyword">if</span> module <span class="hljs-keyword">in</span> fileByModule:<br>                fileByModule[module].append(filepath)<br>            <span class="hljs-keyword">else</span>:<br>                fileByModule[module]=[filepath]<br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">readallfile</span><span class="hljs-params">(file)</span>:</span><br>    serverinfo=toml.load(file)<br>    modulename=(serverinfo[<span class="hljs-string">'server'</span>])<br>    moduleip = (serverinfo[<span class="hljs-string">'addr'</span>])<br>    moduleport = (serverinfo[<span class="hljs-string">'port'</span>])<br>    <span class="hljs-keyword">return</span> modulename,moduleip,moduleport<br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">writeallfile</span><span class="hljs-params">(server,addr,port)</span>:</span><br>    opremote=open(remotepath,<span class="hljs-string">"a+"</span>)<br>    operatingfile=opremote.write(<span class="hljs-string">"sh remote_restart.sh &#123;&#125; &#123;&#125;\n"</span>.format(addr,server) )<br>    opremote.close()<br>    opcurl=open(curlpath,<span class="hljs-string">"a+"</span>)<br>    checkfile=opcurl.write(<span class="hljs-string">"curl &#123;&#125;:&#123;&#125;/check.do\n"</span>.format(addr,port))<br>    opcurl.close()<br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">'__main__'</span>:<br>    local=<span class="hljs-string">'kr'</span><span class="hljs-comment">#生成配置的地区#</span><br>    dir_path = <span class="hljs-string">'/Users/zhaodan/Downloads/LumiWorking/AIOT/online-operating/servers/&#123;&#125;/'</span>.format(local)<span class="hljs-comment"># 模块配置路径#</span><br>    modulefile = <span class="hljs-string">'./OpModules'</span><span class="hljs-comment"># 发版模块文件#</span><br>    remotepath = <span class="hljs-string">'./&#123;&#125;_remotefile_&#123;&#125;'</span>.format(local,now)<span class="hljs-comment"># 生成remote文件#</span><br>    curlpath = <span class="hljs-string">'./&#123;&#125;_checkfile_&#123;&#125;'</span>.format(local,now)<span class="hljs-comment"># 生成check文件#</span><br>    moduleSet=set()<br>    <span class="hljs-keyword">with</span> open(modulefile) <span class="hljs-keyword">as</span> file:<br>        <span class="hljs-keyword">for</span> line <span class="hljs-keyword">in</span> file:<br>            moduleSet.add(line.strip(<span class="hljs-string">'\n'</span>))<br>    getallfileByModule(dir_path)<br>    t=<span class="hljs-number">0</span><br>    <span class="hljs-keyword">while</span> t!=<span class="hljs-number">-1</span>:<br>        flag=<span class="hljs-literal">False</span><br>        <span class="hljs-keyword">for</span> module,pathList <span class="hljs-keyword">in</span> fileByModule.items():<br>            <span class="hljs-keyword">if</span> len(pathList)&gt;t:<br>                modulename, moduleip, moduleport=readallfile(pathList[t])<br>                <span class="hljs-keyword">if</span> modulename <span class="hljs-keyword">in</span> moduleSet:<br>                    writeallfile(modulename, moduleip, moduleport)<br>                flag=<span class="hljs-literal">True</span><br>        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> flag:<br>            <span class="hljs-keyword">break</span><br>        <span class="hljs-keyword">else</span>:<br>            t+=<span class="hljs-number">1</span><br>            RemoteWrap=open(remotepath,<span class="hljs-string">"a+"</span>)<br>            wrap1=RemoteWrap.write(<span class="hljs-string">"\n"</span>)<br>            RemoteWrap.close()<br>            CheckWrap=open(curlpath,<span class="hljs-string">"a+"</span>)<br>            wrap2=CheckWrap.write(<span class="hljs-string">"\n"</span>)<br>            CheckWrap.close()<br></code></pre></td></tr></table></figure>
 <p>图为目录结构，脚本读取目录下的模块信息，生成指定格式的配置文件<br><a href="https://postimg.cc/v4w5sSVy" target="_blank" rel="noopener"><img src="https://i.postimg.cc/7Zf9SFP5/python3.png" alt="python3.png"></a></p>
 
+      </section>
+
+      <section class="article-footer">
+        
+      </section>
+
+      <section class="article-navs">
+        
+<nav class="card-container card-article-nav">
+  <div class="card-wrap">
+    
+      <div id="article-nav-newer" class="card-item">
+        <article>
+          
+          <a class="card-link article-nav-link" href="/2020/04/01/67_jumpserver_user/"></a>
+          <strong class="article-nav-caption">Newer</strong>
+          <p class="article-nav-title">
+            
+              jumpserver管理用户和系统用户的解释
+            
+          </p>
+        </article>
+      </div>
+    
+    
+      <div id="article-nav-older" class="card-item">
+        <article>
+          
+          <a class="card-link article-nav-link" href="/2020/03/06/65_harbor3/"></a>
+          <strong class="article-nav-caption">Older</strong>
+          <p class="article-nav-title">
+            
+              harborV1.10.1 基于复制策略同步测试
+            
+          </p>
+        </article>
+      </div>
+    
+  </div>
+</nav>
+
+      </section>
     </div>
+  </article>
+</div>
+
+    <!-- footer container -->
+<footer id="footer" class="footer">
+  <div class="footer-container">
+    
+    <!-- <p>&copy; 2020 <a href="/" target="_blank">zhaodan</a></p> -->
 
     
-        <hr class="fhr">
-        <div id="vcomments"></div>
+      <p id="hitokoto"></p>
+      <script src="https://v1.hitokoto.cn/?c=h&amp;encode=js&select=%23hitokoto" defer></script>
     
-</div>
-    <div class="footer" id="footer">
-    <p>Copyright © 2020 <a class="flink" href="https://hexo.io" target="_blank" rel="noopener">Hexo</a>-<a class="flink" href="https://github.com/sanjinhub/hexo-theme-geek" target="_blank" rel="noopener">Geek</a>.
-        <label class="el-switch el-switch-green el-switch-sm" style="vertical-align: sub;">
-            <input type="checkbox" name="switch" id="update_style">
-            <span class="el-switch-style"></span>
-        </label>
-<!--         <script type="text/javascript">
-        var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");
-        document.write(unescape("%3Cspan id='cnzz_stat_icon_1278548644'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/stat.php%3Fid%3D1278548644%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
-        </script> -->
-    </p>
-</div>
-<input type="hidden" id="web_style" value="black">
-<input type="hidden" id="valine_appid" value="nmcd4VgylfORjevWz6UEoat3-9Nh9j0Va">
-<input type="hidden" id="valine_appKey" value="wyWWI1qMf6w1mv1KpT1D0HeC">
 
-<script src="/libs/jquery.min.js"></script>
+    
+
+    <p>&copy; 2019 | zhaodan | 加油</p>
+  </div>
+</footer>
+
+  </div>
+
+  <div class="back-to-top-fixed">
+    <svg class="icon icon-back-to-top" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M725.333333 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8l-213.333333-213.333333c-17.066667-17.066667-17.066667-42.666667 0-59.733333s42.666667-17.066667 59.733333 0l213.333333 213.333333c17.066667 17.066667 17.066667 42.666667 0 59.733333C746.666667 422.4 738.133333 426.666667 725.333333 426.666667z"></path>
+  <path d="M298.666667 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8-17.066667-17.066667-17.066667-42.666667 0-59.733333l213.333333-213.333333c17.066667-17.066667 42.666667-17.066667 59.733333 0s17.066667 42.666667 0 59.733333l-213.333333 213.333333C320 422.4 311.466667 426.666667 298.666667 426.666667z"></path>
+  <path d="M512 896c-25.6 0-42.666667-17.066667-42.666667-42.666667L469.333333 170.666667c0-25.6 17.066667-42.666667 42.666667-42.666667s42.666667 17.066667 42.666667 42.666667l0 682.666667C554.666667 878.933333 537.6 896 512 896z"></path>
+</svg> 
+  </div>
+
+  
+  
+<!-- valine 评论 start -->
+<script type="text/javascript" src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script type="text/javascript" src='//unpkg.com/valine/dist/Valine.min.js'></script>
+<script type="text/javascript">
+  new Valine({
+    el: "#valine_thread",
+    appId: "nmcd4VgylfORjevWz6UEoat3-9Nh9j0Va",
+    appKey: "wyWWI1qMf6w1mv1KpT1D0HeC",
+    avatar: "mm",
+    placeholder: "随便说点什么叭～",
+    notify: true,
+    visitor: true,
+    pageSize: 10,
+  });
+</script>
+<!-- valine 评论 end -->
 
 
-<script src="/libs/highlight/highlight.pack.js"></script>
 
-<script src='//cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js'></script>
+  <!-- aplayer 音频 start -->
+  
+<link rel="stylesheet" href="/lib/APlayer.min.css">
 
-<script src="/js/js.js"></script>
+  
+<script src="/lib/APlayer.min.js"></script>
 
-<style type="text/css">
-.v * {
-    color: #698fca;
+  <script type="text/javascript">
+    const aplayer = document.querySelectorAll(".aplayer");
+    aplayer && initaplayer(aplayer);
+    function initaplayer(els) {
+      let elsArr = Array.from(els);
+      elsArr.forEach(el => {
+        new APlayer({
+          container: el,
+          audio: { ...el.dataset },
+          theme: "#b7daff",
+          lrcType: 3,
+          autoplay: false,
+          loop: false,
+          mutex: true,
+        });
+      });
+    }
+  </script>
+  <!-- aplayer 音频 end -->
+  
+
+<!-- dplayer 视频 start -->
+
+<link rel="stylesheet" href="/lib/DPlayer.min.css">
+
+
+<script src="/lib/DPlayer.min.js"></script>
+
+<script type="text/javascript">
+  const dplayer = document.querySelectorAll(".dplayer");
+  dplayer && initDPlayer(dplayer);
+  function initDPlayer(els) {
+    let elsArr = Array.from(els);
+    elsArr.forEach(el => {
+      let url = el.dataset.url;
+      let cover = el.dataset.cover;
+      new DPlayer({
+        container: el,
+        video: { url: url, pic: cover },
+        theme: "#b7daff",
+        autoplay: false,
+        loop: false,
+        mutex: true,
+      });
+    });
+  }
+</script>
+<!-- dplayer 视频 end -->
+
+
+<!-- waterfall 瀑布流 start -->
+
+<script src="/lib/waterfall.min.js"></script>
+
+<script type="text/javascript">
+
+const waterfalls = document.querySelectorAll(".waterfall-container");
+
+if (waterfalls && waterfalls.length > 0) {
+  waterfalls.forEach((waterfall, index) => {
+    let cls = "waterfall-container-" + index;
+    waterfall.classList.add(cls);
+    initWaterfall(cls, waterfall);
+  });
 }
 
-.v .vlist .vcard .vhead .vsys {
-    color: #3a3e4a;
+function initWaterfall(selector, el) {
+  const options = {};
+  if (Object.keys(el.dataset).length > 0) {
+    for (let k in el.dataset) {
+      options[k] = el.dataset[k];
+    }
+  }
+  waterfall(`.${selector}`, options);
 }
+</script>
+<!-- waterfall 瀑布流 end -->
 
-.v .vlist .vcard .vh .vmeta .vat {
-    color: #638fd5;
-}
 
-.v .vlist .vcard .vhead .vnick {
-    color: #6ba1ff;
-}
+  <!-- zoom start -->
+  
+<script src="/lib/zoom.min.js"></script>
 
-.v a {
-    color: #8696b1;
-}
+  <script type="text/javascript">
+    document.querySelector(".article-content") && zoom(".article-content");
+  </script>
+  <!-- zoom end -->
+  
 
-.v .vlist .vcard .vhead .vnick:hover {
-    color: #669bfc;
-}
-</style>
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+<script src="/js/script.js"></script>
+
+  
+  <!-- 尾部用户自定义相关内容 -->
+
 </body>
-
 </html>

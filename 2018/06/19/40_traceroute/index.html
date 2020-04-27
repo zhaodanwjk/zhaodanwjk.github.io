@@ -1,118 +1,364 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="renderer" content="webkit">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <title>
-        面对压迫、掠夺和孤单，我们的回答是生活
-    </title>
-    
-<link rel="stylesheet" href="/libs/highlight/styles/monokai-sublime.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    
-<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+  
 
-    
+  
+
+  
+    <meta name="author" content="zhaodan">
+  
+
+  
+    <meta name="copyright" content="zhaodan">
+  
+
+  
+
+  <title>traceroute | </title>
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+    <link href="https://cdn.bootcss.com/highlight.js/9.15.6/styles/monokai.min.css" rel="stylesheet">
+  
+
+  
 <link rel="stylesheet" href="/css/style.css">
 
 <meta name="generator" content="Hexo 4.2.0"></head>
-
-<body id="bodyx">
-    <div class="hd posts">
-    <a href="/index.html"><i class="fa fa-reply replay-btn" aria-hidden="true"></i></a>
-    <div class="post-title">
-        <p>
-            traceroute
-        </p>
-        <hr>
+<body>
+  <div class="root-container">
+    <!-- navbar -->
+<nav class="navbar">
+  <div class="navbar-content">
+    <!-- logo -->
+    <div class="navbar-logo">
+      <a href="/">
+        
+          
+        
+      </a>
     </div>
-    <div class="post-content">
+    <!-- link -->
+    <div class="navbar-link">
+      <div class="navbar-btn">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <ul class="navbar-list">
+        
+          <li class="navbar-list-item"><a href="/">主页</a></li>
+        
+          <li class="navbar-list-item"><a href="/about">关于</a></li>
+        
+          <li class="navbar-list-item"><a href="/archives">归档</a></li>
+        
+          <li class="navbar-list-item"><a href="/messages">留言板</a></li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    
+<!-- header container -->
+<header class="header-container post">
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+    <div class="header-content">
+      <div class="post-image" style="background-image: url(https://i.postimg.cc/kXYG7QKj/dengdeng.jpg)"></div>
+      <div class="post-text">
+        <div class="type-wrap">
+          
+        </div>
+        <h1 class="title-wrap">traceroute</h1>
+        <h2 class="title-sub-wrap">
+          <strong>zhaodan</strong>
+          <span>发布于</span>
+          
+  <a href="javascript:;" class="article-date">
+    <time datetime="2018-06-18T16:00:00.000Z" itemprop="datePublished">2018-06-19</time>
+  </a>
+
+        </h2>
+      </div>
+    </div>
+  
+
+  
+  
+
+  </header>
+
+    <!-- 文章 -->
+
+<!-- 文章内容 -->
+
+<div class="body-container">
+  <article class="content-container article-container">
+    <div class="article-content">
+      
+      
+
+      <section class="article-entry">
         <p>traceroute 是用来检测发出数据包的主机到目标主机之间所经过的网关数量的工具。traceroute 的原理是试图以最小的TTL发出探测包来跟踪数据包到达目标主机所经过的网关，然后监听一个来自网关ICMP的应答。发送数据包的大小默认为 38个字节。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">tracert [-d] [-h maximum_hops] [-j computer-list] [-w timeout] target_name</span><br><span class="line"></span><br><span class="line">SYNOPSIS</span><br><span class="line"></span><br><span class="line">       traceroute [-46dFITUnreAV] [-f first_ttl] [-g gate,...]</span><br><span class="line"></span><br><span class="line">               [-i device] [-m max_ttl] [-p port] [-s src_addr]</span><br><span class="line"></span><br><span class="line">               [-q nqueries] [-N squeries] [-t tos]</span><br><span class="line"></span><br><span class="line">               [-l flow_label] [-w waittime] [-z sendwait]</span><br><span class="line"></span><br><span class="line">               [-UL] [-P proto] [--sport&#x3D;port] [-M method] [-O mod_options]</span><br><span class="line"></span><br><span class="line">               [--mtu] [--back]</span><br><span class="line"></span><br><span class="line">               host [packet_len]</span><br><span class="line"></span><br><span class="line">traceroute [参数选项] hostname，域名或 IP地址</span><br><span class="line"></span><br><span class="line">-i 指定网络接口，对于多个网络接口有用。比如 -i eth1 或-i ppp1等；</span><br><span class="line"></span><br><span class="line">-m 把在外发探测试包中所用的最大生存期设置为max-ttl次转发，默认值为30次；</span><br><span class="line"></span><br><span class="line">-n 显示IP地址，不查主机名。当DNS不起作用时常用到这个参数；</span><br><span class="line"></span><br><span class="line">-p port 探测包使用的基本UDP端口设置为port ，默认值是33434</span><br><span class="line"></span><br><span class="line">-q n 在每次设置生存期时，把探测包的个数设置为值n，默认时为3；</span><br><span class="line"></span><br><span class="line">-r 绕过正常的路由表，直接发送到网络相连的主机；</span><br><span class="line"></span><br><span class="line">-w n 把对外发探测包的等待响应时间设置为n秒，默认值为3秒；</span><br></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs css"><br><span class="hljs-selector-tag">tracert</span> <span class="hljs-selector-attr">[-d]</span> <span class="hljs-selector-attr">[-h maximum_hops]</span> <span class="hljs-selector-attr">[-j computer-list]</span> <span class="hljs-selector-attr">[-w timeout]</span> <span class="hljs-selector-tag">target_name</span><br><br><span class="hljs-selector-tag">SYNOPSIS</span><br><br>       <span class="hljs-selector-tag">traceroute</span> <span class="hljs-selector-attr">[-46dFITUnreAV]</span> <span class="hljs-selector-attr">[-f first_ttl]</span> <span class="hljs-selector-attr">[-g gate,...]</span><br><br>               <span class="hljs-selector-attr">[-i device]</span> <span class="hljs-selector-attr">[-m max_ttl]</span> <span class="hljs-selector-attr">[-p port]</span> <span class="hljs-selector-attr">[-s src_addr]</span><br><br>               <span class="hljs-selector-attr">[-q nqueries]</span> <span class="hljs-selector-attr">[-N squeries]</span> <span class="hljs-selector-attr">[-t tos]</span><br><br>               <span class="hljs-selector-attr">[-l flow_label]</span> <span class="hljs-selector-attr">[-w waittime]</span> <span class="hljs-selector-attr">[-z sendwait]</span><br><br>               <span class="hljs-selector-attr">[-UL]</span> <span class="hljs-selector-attr">[-P proto]</span> <span class="hljs-selector-attr">[--sport=port]</span> <span class="hljs-selector-attr">[-M method]</span> <span class="hljs-selector-attr">[-O mod_options]</span><br><br>               <span class="hljs-selector-attr">[--mtu]</span> <span class="hljs-selector-attr">[--back]</span><br><br>               <span class="hljs-selector-tag">host</span> <span class="hljs-selector-attr">[packet_len]</span><br><br><span class="hljs-selector-tag">traceroute</span> <span class="hljs-selector-attr">[参数选项]</span> <span class="hljs-selector-tag">hostname</span>，域名或 <span class="hljs-selector-tag">IP</span>地址<br><br><span class="hljs-selector-tag">-i</span> 指定网络接口，对于多个网络接口有用。比如 <span class="hljs-selector-tag">-i</span> <span class="hljs-selector-tag">eth1</span> 或<span class="hljs-selector-tag">-i</span> <span class="hljs-selector-tag">ppp1</span>等；<br><br><span class="hljs-selector-tag">-m</span> 把在外发探测试包中所用的最大生存期设置为<span class="hljs-selector-tag">max-ttl</span>次转发，默认值为30次；<br><br><span class="hljs-selector-tag">-n</span> 显示<span class="hljs-selector-tag">IP</span>地址，不查主机名。当<span class="hljs-selector-tag">DNS</span>不起作用时常用到这个参数；<br><br><span class="hljs-selector-tag">-p</span> <span class="hljs-selector-tag">port</span> 探测包使用的基本<span class="hljs-selector-tag">UDP</span>端口设置为<span class="hljs-selector-tag">port</span> ，默认值是33434<br><br><span class="hljs-selector-tag">-q</span> <span class="hljs-selector-tag">n</span> 在每次设置生存期时，把探测包的个数设置为值<span class="hljs-selector-tag">n</span>，默认时为3；<br><br><span class="hljs-selector-tag">-r</span> 绕过正常的路由表，直接发送到网络相连的主机；<br><br><span class="hljs-selector-tag">-w</span> <span class="hljs-selector-tag">n</span> 把对外发探测包的等待响应时间设置为<span class="hljs-selector-tag">n</span>秒，默认值为3秒；<br></code></pre></td></tr></table></figure>
 
 <p>用法实例：</p>
 <p>traceroute <a href="http://www.baidu.com" target="_blank" rel="noopener">www.baidu.com</a> </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">pc:~$ traceroute www.baidu.com</span><br><span class="line"></span><br><span class="line">traceroute: Warning:www.baidu.comhas multiple addresses; using 220.181.111.188</span><br><span class="line"></span><br><span class="line">traceroute towww.a.shifen.com(220.181.111.188), 64 hops max, 52 byte packets</span><br><span class="line"></span><br><span class="line">1  bogon (10.x.x.x)  0.968 ms  0.711 ms  0.710 ms</span><br><span class="line"></span><br><span class="line">2  bogon (172.x.x.x)  0.571 ms  0.545 ms  0.429 ms</span><br><span class="line"></span><br><span class="line">3129.x.x.x.broad.bj.bj.dynamic.163data.com.cn (219.x.x.x)  4.131 ms  3.252 ms  2.789 ms</span><br><span class="line"></span><br><span class="line">425.x.x.x.static.bjtelecom.net(106.x.x.x)  2.565 ms  2.067 ms  2.133 ms</span><br><span class="line"></span><br><span class="line">5  * * *</span><br><span class="line"></span><br><span class="line">6  36.x.x.x (36.x.x.x)  3.360 ms</span><br><span class="line"></span><br><span class="line">    219.x.x.x (219.x.x.x)  3.425 ms</span><br><span class="line"></span><br><span class="line">    36.x.x.x (36.x.x.x)  3.304 ms</span><br><span class="line"></span><br><span class="line">7  * * *</span><br><span class="line"></span><br><span class="line">8  220.x.x.x (220.x.x.x)  2.803 ms  4.935 ms</span><br><span class="line"></span><br><span class="line">    220.x.x.x (220.x.x.x)  3.736 ms</span><br><span class="line"></span><br><span class="line">9  * * *</span><br></pre></td></tr></table></figure>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs crmsh"><br>pc:~$ traceroute www.baidu.com<br><br>traceroute: Warning:www.baidu.comhas multiple addresses; using <span class="hljs-number">220.181</span>.<span class="hljs-number">111.188</span><br><br>traceroute towww.a.shifen.com(<span class="hljs-number">220.181</span>.<span class="hljs-number">111.188</span>), <span class="hljs-number">64</span> hops max, <span class="hljs-number">52</span> byte packets<br><br><span class="hljs-number">1</span>  bogon (<span class="hljs-number">10</span>.x.x.x)  <span class="hljs-number">0.968</span> <span class="hljs-keyword">ms</span>  <span class="hljs-title">0</span>.<span class="hljs-number">711</span> <span class="hljs-keyword">ms</span>  <span class="hljs-title">0</span>.<span class="hljs-number">710</span> ms<br><br><span class="hljs-number">2</span>  bogon (<span class="hljs-number">172</span>.x.x.x)  <span class="hljs-number">0.571</span> <span class="hljs-keyword">ms</span>  <span class="hljs-title">0</span>.<span class="hljs-number">545</span> <span class="hljs-keyword">ms</span>  <span class="hljs-title">0</span>.<span class="hljs-number">429</span> ms<br><br><span class="hljs-number">3129</span>.x.x.x.broad.bj.bj.dynamic.<span class="hljs-number">163</span>data.com.cn (<span class="hljs-number">219</span>.x.x.x)  <span class="hljs-number">4.131</span> <span class="hljs-keyword">ms</span>  <span class="hljs-title">3</span>.<span class="hljs-number">252</span> <span class="hljs-keyword">ms</span>  <span class="hljs-title">2</span>.<span class="hljs-number">789</span> ms<br><br><span class="hljs-number">425</span>.x.x.x.static.bjtelecom.net(<span class="hljs-number">106</span>.x.x.x)  <span class="hljs-number">2.565</span> <span class="hljs-keyword">ms</span>  <span class="hljs-title">2</span>.<span class="hljs-number">067</span> <span class="hljs-keyword">ms</span>  <span class="hljs-title">2</span>.<span class="hljs-number">133</span> ms<br><br><span class="hljs-number">5</span>  * * *<br><br><span class="hljs-number">6</span>  <span class="hljs-number">36</span>.x.x.x (<span class="hljs-number">36</span>.x.x.x)  <span class="hljs-number">3.360</span> ms<br><br>    <span class="hljs-number">219</span>.x.x.x (<span class="hljs-number">219</span>.x.x.x)  <span class="hljs-number">3.425</span> ms<br><br>    <span class="hljs-number">36</span>.x.x.x (<span class="hljs-number">36</span>.x.x.x)  <span class="hljs-number">3.304</span> ms<br><br><span class="hljs-number">7</span>  * * *<br><br><span class="hljs-number">8</span>  <span class="hljs-number">220</span>.x.x.x (<span class="hljs-number">220</span>.x.x.x)  <span class="hljs-number">2.803</span> <span class="hljs-keyword">ms</span>  <span class="hljs-title">4</span>.<span class="hljs-number">935</span> ms<br><br>    <span class="hljs-number">220</span>.x.x.x (<span class="hljs-number">220</span>.x.x.x)  <span class="hljs-number">3.736</span> ms<br><br><span class="hljs-number">9</span>  * * *<br></code></pre></td></tr></table></figure>
 
 <p>traceroute -m 10 <a href="http://www.baidu.com" target="_blank" rel="noopener">www.baidu.com</a>      设置跳数为10</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">pc:~ $ traceroute -m 10 www.baidu.com</span><br><span class="line"></span><br><span class="line">traceroute: Warning:www.baidu.comhas multiple addresses; using 220.181.111.188</span><br><span class="line"></span><br><span class="line">traceroute to www.a.shifen.com(220.181.111.188), 10 hops max, 52 byte packets</span><br><span class="line"></span><br><span class="line">1  bogon (10.x.x.x)  1.067 ms  4.024 ms  0.712 ms</span><br><span class="line"></span><br><span class="line">2  bogon (172.x.x.x)  0.309 ms  0.337 ms  0.607 ms</span><br><span class="line"></span><br><span class="line">3  129.x.x.x.broad.bj.bj.dynamic.163data.com.cn (219.x.x.x)  2.683 ms  3.353 ms  2.947 ms</span><br><span class="line"></span><br><span class="line">4  25.x.x.x.static.bjtelecom.net(x.x.x.25)  2.179 ms  2.325 ms  2.043 ms</span><br><span class="line"></span><br><span class="line">5  * * *</span><br><span class="line"></span><br><span class="line">6  36.x.x.x (36.x.x.x)  3.590 ms  7.793 ms  6.461 ms</span><br><span class="line"></span><br><span class="line">7  * * *</span><br><span class="line"></span><br><span class="line">8  220.x.x.x (220.x.x.x)  3.175 ms  2.893 ms</span><br><span class="line"></span><br><span class="line">    220.x.x.x (220.x.x.x)  5.538 ms</span><br><span class="line"></span><br><span class="line">9  * * *</span><br><span class="line"></span><br><span class="line">10  * * *</span><br></pre></td></tr></table></figure>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs crmsh">pc:~ $ traceroute -m <span class="hljs-number">10</span> www.baidu.com<br><br>traceroute: Warning:www.baidu.comhas multiple addresses; using <span class="hljs-number">220.181</span>.<span class="hljs-number">111.188</span><br><br>traceroute to www.a.shifen.com(<span class="hljs-number">220.181</span>.<span class="hljs-number">111.188</span>), <span class="hljs-number">10</span> hops max, <span class="hljs-number">52</span> byte packets<br><br><span class="hljs-number">1</span>  bogon (<span class="hljs-number">10</span>.x.x.x)  <span class="hljs-number">1.067</span> <span class="hljs-keyword">ms</span>  <span class="hljs-title">4</span>.<span class="hljs-number">024</span> <span class="hljs-keyword">ms</span>  <span class="hljs-title">0</span>.<span class="hljs-number">712</span> ms<br><br><span class="hljs-number">2</span>  bogon (<span class="hljs-number">172</span>.x.x.x)  <span class="hljs-number">0.309</span> <span class="hljs-keyword">ms</span>  <span class="hljs-title">0</span>.<span class="hljs-number">337</span> <span class="hljs-keyword">ms</span>  <span class="hljs-title">0</span>.<span class="hljs-number">607</span> ms<br><br><span class="hljs-number">3</span>  <span class="hljs-number">129</span>.x.x.x.broad.bj.bj.dynamic.<span class="hljs-number">163</span>data.com.cn (<span class="hljs-number">219</span>.x.x.x)  <span class="hljs-number">2.683</span> <span class="hljs-keyword">ms</span>  <span class="hljs-title">3</span>.<span class="hljs-number">353</span> <span class="hljs-keyword">ms</span>  <span class="hljs-title">2</span>.<span class="hljs-number">947</span> ms<br><br><span class="hljs-number">4</span>  <span class="hljs-number">25</span>.x.x.x.static.bjtelecom.net(x.x.x.<span class="hljs-number">25</span>)  <span class="hljs-number">2.179</span> <span class="hljs-keyword">ms</span>  <span class="hljs-title">2</span>.<span class="hljs-number">325</span> <span class="hljs-keyword">ms</span>  <span class="hljs-title">2</span>.<span class="hljs-number">043</span> ms<br><br><span class="hljs-number">5</span>  * * *<br><br><span class="hljs-number">6</span>  <span class="hljs-number">36</span>.x.x.x (<span class="hljs-number">36</span>.x.x.x)  <span class="hljs-number">3.590</span> <span class="hljs-keyword">ms</span>  <span class="hljs-title">7</span>.<span class="hljs-number">793</span> <span class="hljs-keyword">ms</span>  <span class="hljs-title">6</span>.<span class="hljs-number">461</span> ms<br><br><span class="hljs-number">7</span>  * * *<br><br><span class="hljs-number">8</span>  <span class="hljs-number">220</span>.x.x.x (<span class="hljs-number">220</span>.x.x.x)  <span class="hljs-number">3.175</span> <span class="hljs-keyword">ms</span>  <span class="hljs-title">2</span>.<span class="hljs-number">893</span> ms<br><br>    <span class="hljs-number">220</span>.x.x.x (<span class="hljs-number">220</span>.x.x.x)  <span class="hljs-number">5.538</span> ms<br><br><span class="hljs-number">9</span>  * * *<br><br><span class="hljs-number">10</span>  * * *<br></code></pre></td></tr></table></figure>
 
 <p>traceroute -n <a href="http://www.baidu.com" target="_blank" rel="noopener">www.baidu.com</a>     只显示ip</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">pc:~ $ traceroute -n www.baidu.com</span><br><span class="line"></span><br><span class="line">traceroute: Warning:www.baidu.comhas multiple addresses; using 220.181.111.188</span><br><span class="line"></span><br><span class="line">traceroute to www.a.shifen.com(220.181.111.188), 64 hops max, 52 byte packets</span><br><span class="line"></span><br><span class="line">1  10.x.x.x  0.946 ms  0.761 ms  0.718 ms</span><br><span class="line"></span><br><span class="line">2  172.x.x.x  0.452 ms  0.338 ms  0.389 ms</span><br><span class="line"></span><br><span class="line">3  219.x.x.x  3.174 ms  4.038 ms  2.379 ms</span><br><span class="line"></span><br><span class="line">4  106.x.x.x  2.910 ms  1.960 ms  1.654 ms</span><br><span class="line"></span><br><span class="line">5  * * *</span><br><span class="line"></span><br><span class="line">6  36.x.x.x  3.321 ms  4.275 ms  3.637 ms</span><br></pre></td></tr></table></figure>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs crmsh">pc:~ $ traceroute -n www.baidu.com<br><br>traceroute: Warning:www.baidu.comhas multiple addresses; using <span class="hljs-number">220.181</span>.<span class="hljs-number">111.188</span><br><br>traceroute to www.a.shifen.com(<span class="hljs-number">220.181</span>.<span class="hljs-number">111.188</span>), <span class="hljs-number">64</span> hops max, <span class="hljs-number">52</span> byte packets<br><br><span class="hljs-number">1</span>  <span class="hljs-number">10</span>.x.x.x  <span class="hljs-number">0.946</span> <span class="hljs-keyword">ms</span>  <span class="hljs-title">0</span>.<span class="hljs-number">761</span> <span class="hljs-keyword">ms</span>  <span class="hljs-title">0</span>.<span class="hljs-number">718</span> ms<br><br><span class="hljs-number">2</span>  <span class="hljs-number">172</span>.x.x.x  <span class="hljs-number">0.452</span> <span class="hljs-keyword">ms</span>  <span class="hljs-title">0</span>.<span class="hljs-number">338</span> <span class="hljs-keyword">ms</span>  <span class="hljs-title">0</span>.<span class="hljs-number">389</span> ms<br><br><span class="hljs-number">3</span>  <span class="hljs-number">219</span>.x.x.x  <span class="hljs-number">3.174</span> <span class="hljs-keyword">ms</span>  <span class="hljs-title">4</span>.<span class="hljs-number">038</span> <span class="hljs-keyword">ms</span>  <span class="hljs-title">2</span>.<span class="hljs-number">379</span> ms<br><br><span class="hljs-number">4</span>  <span class="hljs-number">106</span>.x.x.x  <span class="hljs-number">2.910</span> <span class="hljs-keyword">ms</span>  <span class="hljs-title">1</span>.<span class="hljs-number">960</span> <span class="hljs-keyword">ms</span>  <span class="hljs-title">1</span>.<span class="hljs-number">654</span> ms<br><br><span class="hljs-number">5</span>  * * *<br><br><span class="hljs-number">6</span>  <span class="hljs-number">36</span>.x.x.x  <span class="hljs-number">3.321</span> <span class="hljs-keyword">ms</span>  <span class="hljs-title">4</span>.<span class="hljs-number">275</span> <span class="hljs-keyword">ms</span>  <span class="hljs-title">3</span>.<span class="hljs-number">637</span> ms<br></code></pre></td></tr></table></figure>
 
 <p>traceroute -p 6888 <a href="http://www.baidu.com" target="_blank" rel="noopener">www.baidu.com</a>    设置探测包使用的基本UDP端口</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">pc:~ $ traceroute -p 6888 www.baidu.com</span><br><span class="line"></span><br><span class="line">traceroute: Warning:www.baidu.comhas multiple addresses; using 220.181.111.188</span><br><span class="line"></span><br><span class="line">traceroute to www.a.shifen.com(220.181.111.188), 64 hops max, 52 byte packets</span><br><span class="line"></span><br><span class="line">1  bogon (10.x.x.x)  0.989 ms  0.752 ms  0.722 ms</span><br><span class="line"></span><br><span class="line">2  bogon (172.x.x.x)  0.489 ms  0.399 ms  0.327 ms</span><br><span class="line"></span><br><span class="line">3  129.x.x.x.broad.bj.bj.dynamic.163data.com.cn (219.x.x.x)  3.094 ms  3.442 ms  3.529 ms</span><br><span class="line"></span><br><span class="line">4  25.x.x.x.static.bjtelecom.net(106.x.x.x)  1.837 ms  2.488 ms  2.516 ms</span><br><span class="line"></span><br><span class="line">5  * * *</span><br><span class="line"></span><br><span class="line">6  * 36.x.x.x (36.x.x.x)  4.876 ms</span><br></pre></td></tr></table></figure>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs angelscript">pc:~ $ traceroute -p <span class="hljs-number">6888</span> www.baidu.com<br><br>traceroute: Warning:www.baidu.comhas multiple addresses; using <span class="hljs-number">220.181</span><span class="hljs-number">.111</span><span class="hljs-number">.188</span><br><br>traceroute to www.a.shifen.com(<span class="hljs-number">220.181</span><span class="hljs-number">.111</span><span class="hljs-number">.188</span>), <span class="hljs-number">64</span> hops max, <span class="hljs-number">52</span> byte packets<br><br><span class="hljs-number">1</span>  bogon (<span class="hljs-number">10.</span>x.x.x)  <span class="hljs-number">0.989</span> ms  <span class="hljs-number">0.752</span> ms  <span class="hljs-number">0.722</span> ms<br><br><span class="hljs-number">2</span>  bogon (<span class="hljs-number">172.</span>x.x.x)  <span class="hljs-number">0.489</span> ms  <span class="hljs-number">0.399</span> ms  <span class="hljs-number">0.327</span> ms<br><br><span class="hljs-number">3</span>  <span class="hljs-number">129.</span>x.x.x.broad.bj.bj.dynamic<span class="hljs-number">.163</span>data.com.cn (<span class="hljs-number">219.</span>x.x.x)  <span class="hljs-number">3.094</span> ms  <span class="hljs-number">3.442</span> ms  <span class="hljs-number">3.529</span> ms<br><br><span class="hljs-number">4</span>  <span class="hljs-number">25.</span>x.x.x.static.bjtelecom.net(<span class="hljs-number">106.</span>x.x.x)  <span class="hljs-number">1.837</span> ms  <span class="hljs-number">2.488</span> ms  <span class="hljs-number">2.516</span> ms<br><br><span class="hljs-number">5</span>  * * *<br><br><span class="hljs-number">6</span>  * <span class="hljs-number">36.</span>x.x.x (<span class="hljs-number">36.</span>x.x.x)  <span class="hljs-number">4.876</span> ms<br></code></pre></td></tr></table></figure>
 
 <p>traceroute -q 4 <a href="http://www.baidu.com" target="_blank" rel="noopener">www.baidu.com</a>   设置探测包的个数</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">pc:~$ traceroute -q 4 www.baidu.com</span><br><span class="line"></span><br><span class="line">traceroute: Warning:www.baidu.comhas multiple addresses; using 220.181.111.188</span><br><span class="line"></span><br><span class="line">traceroute to www.a.shifen.com(220.181.111.188), 64 hops max, 52 byte packets</span><br><span class="line"></span><br><span class="line">1  bogon (10.x.x.x)  0.970 ms  0.721 ms  4.360 ms  0.667 ms</span><br><span class="line"></span><br><span class="line">2  bogon (172.x.x.x)  0.534 ms  0.640 ms  0.363 ms  0.449 ms</span><br><span class="line"></span><br><span class="line">3  129.x.x.x.broad.bj.bj.dynamic.163data.com.cn (x.x.x.129)  2.831 ms  3.221 ms  2.878 ms  2.814 ms</span><br><span class="line"></span><br><span class="line">4  25.x.x.x.static.bjtelecom.net(x.x.x.25)  1.921 ms  2.564 ms  2.472 ms  3.979 ms</span><br><span class="line"></span><br><span class="line">5  177.x.x.x.static.bjtelecom.net(x.x.x.177)  2.465 ms * * *</span><br><span class="line"></span><br><span class="line">6  219.x.x.x (219.x.x.x)  4.245 ms</span><br><span class="line"></span><br><span class="line">    36.x.x.x (36.x.x.x)  3.681 ms  3.053 ms</span><br><span class="line"></span><br><span class="line">    220.x.x.x (220.x.x.x)  3.444 ms</span><br></pre></td></tr></table></figure>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs crmsh">pc:~$ traceroute -q <span class="hljs-number">4</span> www.baidu.com<br><br>traceroute: Warning:www.baidu.comhas multiple addresses; using <span class="hljs-number">220.181</span>.<span class="hljs-number">111.188</span><br><br>traceroute to www.a.shifen.com(<span class="hljs-number">220.181</span>.<span class="hljs-number">111.188</span>), <span class="hljs-number">64</span> hops max, <span class="hljs-number">52</span> byte packets<br><br><span class="hljs-number">1</span>  bogon (<span class="hljs-number">10</span>.x.x.x)  <span class="hljs-number">0.970</span> <span class="hljs-keyword">ms</span>  <span class="hljs-title">0</span>.<span class="hljs-number">721</span> <span class="hljs-keyword">ms</span>  <span class="hljs-title">4</span>.<span class="hljs-number">360</span> <span class="hljs-keyword">ms</span>  <span class="hljs-title">0</span>.<span class="hljs-number">667</span> ms<br><br><span class="hljs-number">2</span>  bogon (<span class="hljs-number">172</span>.x.x.x)  <span class="hljs-number">0.534</span> <span class="hljs-keyword">ms</span>  <span class="hljs-title">0</span>.<span class="hljs-number">640</span> <span class="hljs-keyword">ms</span>  <span class="hljs-title">0</span>.<span class="hljs-number">363</span> <span class="hljs-keyword">ms</span>  <span class="hljs-title">0</span>.<span class="hljs-number">449</span> ms<br><br><span class="hljs-number">3</span>  <span class="hljs-number">129</span>.x.x.x.broad.bj.bj.dynamic.<span class="hljs-number">163</span>data.com.cn (x.x.x.<span class="hljs-number">129</span>)  <span class="hljs-number">2.831</span> <span class="hljs-keyword">ms</span>  <span class="hljs-title">3</span>.<span class="hljs-number">221</span> <span class="hljs-keyword">ms</span>  <span class="hljs-title">2</span>.<span class="hljs-number">878</span> <span class="hljs-keyword">ms</span>  <span class="hljs-title">2</span>.<span class="hljs-number">814</span> ms<br><br><span class="hljs-number">4</span>  <span class="hljs-number">25</span>.x.x.x.static.bjtelecom.net(x.x.x.<span class="hljs-number">25</span>)  <span class="hljs-number">1.921</span> <span class="hljs-keyword">ms</span>  <span class="hljs-title">2</span>.<span class="hljs-number">564</span> <span class="hljs-keyword">ms</span>  <span class="hljs-title">2</span>.<span class="hljs-number">472</span> <span class="hljs-keyword">ms</span>  <span class="hljs-title">3</span>.<span class="hljs-number">979</span> ms<br><br><span class="hljs-number">5</span>  <span class="hljs-number">177</span>.x.x.x.static.bjtelecom.net(x.x.x.<span class="hljs-number">177</span>)  <span class="hljs-number">2.465</span> <span class="hljs-keyword">ms</span> <span class="hljs-title">* * *</span><br><span class="hljs-title"></span><br><span class="hljs-title">6</span>  <span class="hljs-number">219</span>.x.x.x (<span class="hljs-number">219</span>.x.x.x)  <span class="hljs-number">4.245</span> ms<br><br>    <span class="hljs-number">36</span>.x.x.x (<span class="hljs-number">36</span>.x.x.x)  <span class="hljs-number">3.681</span> <span class="hljs-keyword">ms</span>  <span class="hljs-title">3</span>.<span class="hljs-number">053</span> ms<br><br>    <span class="hljs-number">220</span>.x.x.x (<span class="hljs-number">220</span>.x.x.x)  <span class="hljs-number">3.444</span> ms<br></code></pre></td></tr></table></figure>
 
 <p>traceroute -r <a href="http://www.baidu.com" target="_blank" rel="noopener">www.baidu.com</a>     绕过正常的路由表直接发送到网络相连的主机</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">pc:~ $ traceroute -r www.baidu.com</span><br><span class="line"></span><br><span class="line">traceroute: Warning:www.baidu.comhas multiple addresses; using 220.181.111.188</span><br><span class="line"></span><br><span class="line">traceroute to www.a.shifen.com(220.181.111.188), 64 hops max, 52 byte packets</span><br><span class="line"></span><br><span class="line">traceroute: sendto: Network is unreachable</span><br><span class="line"></span><br><span class="line">1 traceroute: wrotewww.a.shifen.com52 chars, ret&#x3D;-1</span><br><span class="line"></span><br><span class="line">*traceroute: sendto: Network is unreachable</span><br><span class="line"></span><br><span class="line">traceroute: wrotewww.a.shifen.com52 chars, ret&#x3D;-1</span><br><span class="line"></span><br><span class="line">*traceroute: sendto: Network is unreachable</span><br><span class="line"></span><br><span class="line">traceroute: wrotewww.a.shifen.com52 chars, ret&#x3D;-1</span><br><span class="line"></span><br><span class="line">*</span><br><span class="line"></span><br><span class="line">traceroute: sendto: Network is unreachable</span><br><span class="line"></span><br><span class="line">2 traceroute: wrotewww.a.shifen.com52 chars, ret&#x3D;-1</span><br><span class="line"></span><br><span class="line">traceroute -w 3 www.baidu.com       把对外发探测包的等待响应时间设置为n秒，默认值为3秒</span><br></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs routeros">pc:~ $ traceroute -r www.baidu.com<br><br>traceroute: Warning:www.baidu.comhas multiple addresses; using 220.181.111.188<br><br>traceroute <span class="hljs-keyword">to</span> www.a.shifen.com(220.181.111.188), 64 hops max, 52 byte packets<br><br>traceroute: sendto:<span class="hljs-built_in"> Network </span>is unreachable<br><br>1 traceroute: wrotewww.a.shifen.com52 chars, <span class="hljs-attribute">ret</span>=-1<br><br>*traceroute: sendto:<span class="hljs-built_in"> Network </span>is unreachable<br><br>traceroute: wrotewww.a.shifen.com52 chars, <span class="hljs-attribute">ret</span>=-1<br><br>*traceroute: sendto:<span class="hljs-built_in"> Network </span>is unreachable<br><br>traceroute: wrotewww.a.shifen.com52 chars, <span class="hljs-attribute">ret</span>=-1<br><br>*<br><br>traceroute: sendto:<span class="hljs-built_in"> Network </span>is unreachable<br><br>2 traceroute: wrotewww.a.shifen.com52 chars, <span class="hljs-attribute">ret</span>=-1<br><br>traceroute -w 3 www.baidu.com       把对外发探测包的等待响应时间设置为n秒，默认值为3秒<br></code></pre></td></tr></table></figure>
 
 <p>pc:~ $ traceroute -w 3<a href="http://www.baidu.com" target="_blank" rel="noopener">www.baidu.com</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">traceroute: Warning:www.baidu.comhas multiple addresses; using 220.181.111.188</span><br><span class="line"></span><br><span class="line">traceroute to www.a.shifen.com(220.181.111.188), 64 hops max, 52 byte packets</span><br><span class="line"></span><br><span class="line">1  bogon (10.x.x.x)  0.957 ms  0.710 ms  0.713 ms</span><br><span class="line"></span><br><span class="line">2  bogon (172.x.x.x)  0.603 ms  0.616 ms  0.321 ms</span><br><span class="line"></span><br><span class="line">3 129.x.x.x.broad.bj.bj.dynamic.163data.com.cn (x.x.x.129)  3.744 ms  2.371 ms  2.625 ms</span><br><span class="line"></span><br><span class="line">4 25.x.x.x.static.bjtelecom.net(x.x.x.25)  2.022 ms *  3.474 ms</span><br><span class="line"></span><br><span class="line">5  * * *</span><br><span class="line"></span><br><span class="line">6  36.x.x.x (36.x.x.x)  4.408 ms  5.760 ms  3.091 ms</span><br><span class="line"></span><br><span class="line">7  * * *</span><br><span class="line"></span><br><span class="line">8  220.x.x.x (220.x.x.x)  3.482 ms</span><br><span class="line"></span><br><span class="line">    220.x.x.x (220.x.x.x)  3.024 ms</span><br><span class="line"></span><br><span class="line">    220.x.x.x (220.x.x.x)  3.377 ms</span><br><span class="line"></span><br><span class="line">9  * *</span><br></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-tag">traceroute</span>: <span class="hljs-selector-tag">Warning</span><span class="hljs-selector-pseudo">:www.baidu.comhas</span> <span class="hljs-selector-tag">multiple</span> <span class="hljs-selector-tag">addresses</span>; <span class="hljs-selector-tag">using</span> 220<span class="hljs-selector-class">.181</span><span class="hljs-selector-class">.111</span><span class="hljs-selector-class">.188</span><br><br><span class="hljs-selector-tag">traceroute</span> <span class="hljs-selector-tag">to</span> <span class="hljs-selector-tag">www</span><span class="hljs-selector-class">.a</span><span class="hljs-selector-class">.shifen</span><span class="hljs-selector-class">.com</span>(220<span class="hljs-selector-class">.181</span><span class="hljs-selector-class">.111</span><span class="hljs-selector-class">.188</span>), 64 <span class="hljs-selector-tag">hops</span> <span class="hljs-selector-tag">max</span>, 52 <span class="hljs-selector-tag">byte</span> <span class="hljs-selector-tag">packets</span><br><br>1  <span class="hljs-selector-tag">bogon</span> (10<span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.x</span>)  0<span class="hljs-selector-class">.957</span> <span class="hljs-selector-tag">ms</span>  0<span class="hljs-selector-class">.710</span> <span class="hljs-selector-tag">ms</span>  0<span class="hljs-selector-class">.713</span> <span class="hljs-selector-tag">ms</span><br><br>2  <span class="hljs-selector-tag">bogon</span> (172<span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.x</span>)  0<span class="hljs-selector-class">.603</span> <span class="hljs-selector-tag">ms</span>  0<span class="hljs-selector-class">.616</span> <span class="hljs-selector-tag">ms</span>  0<span class="hljs-selector-class">.321</span> <span class="hljs-selector-tag">ms</span><br><br>3 129<span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.broad</span><span class="hljs-selector-class">.bj</span><span class="hljs-selector-class">.bj</span><span class="hljs-selector-class">.dynamic</span><span class="hljs-selector-class">.163data</span><span class="hljs-selector-class">.com</span><span class="hljs-selector-class">.cn</span> (<span class="hljs-selector-tag">x</span><span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.129</span>)  3<span class="hljs-selector-class">.744</span> <span class="hljs-selector-tag">ms</span>  2<span class="hljs-selector-class">.371</span> <span class="hljs-selector-tag">ms</span>  2<span class="hljs-selector-class">.625</span> <span class="hljs-selector-tag">ms</span><br><br>4 25<span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.static</span><span class="hljs-selector-class">.bjtelecom</span><span class="hljs-selector-class">.net</span>(<span class="hljs-selector-tag">x</span><span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.25</span>)  2<span class="hljs-selector-class">.022</span> <span class="hljs-selector-tag">ms</span> *  3<span class="hljs-selector-class">.474</span> <span class="hljs-selector-tag">ms</span><br><br>5  * * *<br><br>6  36<span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.x</span> (36<span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.x</span>)  4<span class="hljs-selector-class">.408</span> <span class="hljs-selector-tag">ms</span>  5<span class="hljs-selector-class">.760</span> <span class="hljs-selector-tag">ms</span>  3<span class="hljs-selector-class">.091</span> <span class="hljs-selector-tag">ms</span><br><br>7  * * *<br><br>8  220<span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.x</span> (220<span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.x</span>)  3<span class="hljs-selector-class">.482</span> <span class="hljs-selector-tag">ms</span><br><br>    220<span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.x</span> (220<span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.x</span>)  3<span class="hljs-selector-class">.024</span> <span class="hljs-selector-tag">ms</span><br><br>    220<span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.x</span> (220<span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.x</span>)  3<span class="hljs-selector-class">.377</span> <span class="hljs-selector-tag">ms</span><br><br>9  * *<br></code></pre></td></tr></table></figure>
 
 <p>traceroute -i eth0 -4 <a href="http://www.baidu.com" target="_blank" rel="noopener">www.baidu.com</a> 使用eth0网口以及IPV4协议</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@ip-ops]# traceroute -i eth0 -4 www.baidu.com</span><br><span class="line"></span><br><span class="line">traceroute towww.baidu.com(220.181.112.244), 30 hops max, 60 byte packets</span><br><span class="line"></span><br><span class="line">1 compute.amazonaws.com.cn (54.x.x.x)  15.993 ms compute.amazonaws.com.cn (54.x.x.x)  11.778 ms.compute.amazonaws.com.cn (54.x.x.x)  12.896 ms</span><br><span class="line"></span><br><span class="line">2  100.x.x.x (100.x.x.x)  21.890 ms 100.x.x.x (100.x.x.x)  21.880 ms 100.x.x.x (100.x.x.x)  21.630 ms</span><br><span class="line"></span><br><span class="line">3  100.x.x.x (100.x.x.x)  12.609 ms 100.x.x.x (100.x.x.x)  22.017 ms 100.x.x.x(100.x.x.x)  14.010 ms</span><br><span class="line"></span><br><span class="line">4  100.x.x.x (100.x.x.x)  0.256 ms 100.x.x.x (100.x.x.x)  0.261 ms 100.x.x.x (100.x.x.x)  0.209 ms</span><br><span class="line"></span><br><span class="line">5  54.x.x.x (54.x.x.x)  1.071 ms 54.x.x.x (54.x.x.x)  1.536 ms  1.639 ms</span><br></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-attr">[root@ip-ops]</span># <span class="hljs-selector-tag">traceroute</span> <span class="hljs-selector-tag">-i</span> <span class="hljs-selector-tag">eth0</span> <span class="hljs-selector-tag">-4</span> <span class="hljs-selector-tag">www</span><span class="hljs-selector-class">.baidu</span><span class="hljs-selector-class">.com</span><br><br><span class="hljs-selector-tag">traceroute</span> <span class="hljs-selector-tag">towww</span><span class="hljs-selector-class">.baidu</span><span class="hljs-selector-class">.com</span>(220<span class="hljs-selector-class">.181</span><span class="hljs-selector-class">.112</span><span class="hljs-selector-class">.244</span>), 30 <span class="hljs-selector-tag">hops</span> <span class="hljs-selector-tag">max</span>, 60 <span class="hljs-selector-tag">byte</span> <span class="hljs-selector-tag">packets</span><br><br>1 <span class="hljs-selector-tag">compute</span><span class="hljs-selector-class">.amazonaws</span><span class="hljs-selector-class">.com</span><span class="hljs-selector-class">.cn</span> (54<span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.x</span>)  15<span class="hljs-selector-class">.993</span> <span class="hljs-selector-tag">ms</span> <span class="hljs-selector-tag">compute</span><span class="hljs-selector-class">.amazonaws</span><span class="hljs-selector-class">.com</span><span class="hljs-selector-class">.cn</span> (54<span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.x</span>)  11<span class="hljs-selector-class">.778</span> <span class="hljs-selector-tag">ms</span><span class="hljs-selector-class">.compute</span><span class="hljs-selector-class">.amazonaws</span><span class="hljs-selector-class">.com</span><span class="hljs-selector-class">.cn</span> (54<span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.x</span>)  12<span class="hljs-selector-class">.896</span> <span class="hljs-selector-tag">ms</span><br><br>2  100<span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.x</span> (100<span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.x</span>)  21<span class="hljs-selector-class">.890</span> <span class="hljs-selector-tag">ms</span> 100<span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.x</span> (100<span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.x</span>)  21<span class="hljs-selector-class">.880</span> <span class="hljs-selector-tag">ms</span> 100<span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.x</span> (100<span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.x</span>)  21<span class="hljs-selector-class">.630</span> <span class="hljs-selector-tag">ms</span><br><br>3  100<span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.x</span> (100<span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.x</span>)  12<span class="hljs-selector-class">.609</span> <span class="hljs-selector-tag">ms</span> 100<span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.x</span> (100<span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.x</span>)  22<span class="hljs-selector-class">.017</span> <span class="hljs-selector-tag">ms</span> 100<span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.x</span>(100<span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.x</span>)  14<span class="hljs-selector-class">.010</span> <span class="hljs-selector-tag">ms</span><br><br>4  100<span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.x</span> (100<span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.x</span>)  0<span class="hljs-selector-class">.256</span> <span class="hljs-selector-tag">ms</span> 100<span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.x</span> (100<span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.x</span>)  0<span class="hljs-selector-class">.261</span> <span class="hljs-selector-tag">ms</span> 100<span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.x</span> (100<span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.x</span>)  0<span class="hljs-selector-class">.209</span> <span class="hljs-selector-tag">ms</span><br><br>5  54<span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.x</span> (54<span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.x</span>)  1<span class="hljs-selector-class">.071</span> <span class="hljs-selector-tag">ms</span> 54<span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.x</span> (54<span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.x</span>)  1<span class="hljs-selector-class">.536</span> <span class="hljs-selector-tag">ms</span>  1<span class="hljs-selector-class">.639</span> <span class="hljs-selector-tag">ms</span><br></code></pre></td></tr></table></figure>
+      </section>
+
+      <section class="article-footer">
+        
+      </section>
+
+      <section class="article-navs">
+        
+<nav class="card-container card-article-nav">
+  <div class="card-wrap">
+    
+      <div id="article-nav-newer" class="card-item">
+        <article>
+          
+          <a class="card-link article-nav-link" href="/2018/06/19/39_%E5%86%85%E5%AD%98CPU/"></a>
+          <strong class="article-nav-caption">Newer</strong>
+          <p class="article-nav-title">
+            
+              内存CPU
+            
+          </p>
+        </article>
+      </div>
+    
+    
+      <div id="article-nav-older" class="card-item">
+        <article>
+          
+          <a class="card-link article-nav-link" href="/2018/05/05/9_elasticsearch/"></a>
+          <strong class="article-nav-caption">Older</strong>
+          <p class="article-nav-title">
+            
+              elasticsearch &amp; 记一次线上elasticsearch常用操作
+            
+          </p>
+        </article>
+      </div>
+    
+  </div>
+</nav>
+
+      </section>
     </div>
+  </article>
+</div>
+
+    <!-- footer container -->
+<footer id="footer" class="footer">
+  <div class="footer-container">
+    
+    <!-- <p>&copy; 2020 <a href="/" target="_blank">zhaodan</a></p> -->
 
     
-        <hr class="fhr">
-        <div id="vcomments"></div>
+      <p id="hitokoto"></p>
+      <script src="https://v1.hitokoto.cn/?c=h&amp;encode=js&select=%23hitokoto" defer></script>
     
-</div>
-    <div class="footer" id="footer">
-    <p>Copyright © 2020 <a class="flink" href="https://hexo.io" target="_blank" rel="noopener">Hexo</a>-<a class="flink" href="https://github.com/sanjinhub/hexo-theme-geek" target="_blank" rel="noopener">Geek</a>.
-        <label class="el-switch el-switch-green el-switch-sm" style="vertical-align: sub;">
-            <input type="checkbox" name="switch" id="update_style">
-            <span class="el-switch-style"></span>
-        </label>
-<!--         <script type="text/javascript">
-        var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");
-        document.write(unescape("%3Cspan id='cnzz_stat_icon_1278548644'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/stat.php%3Fid%3D1278548644%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
-        </script> -->
-    </p>
-</div>
-<input type="hidden" id="web_style" value="black">
-<input type="hidden" id="valine_appid" value="nmcd4VgylfORjevWz6UEoat3-9Nh9j0Va">
-<input type="hidden" id="valine_appKey" value="wyWWI1qMf6w1mv1KpT1D0HeC">
 
-<script src="/libs/jquery.min.js"></script>
+    
+
+    <p>&copy; 2019 | zhaodan | 加油</p>
+  </div>
+</footer>
+
+  </div>
+
+  <div class="back-to-top-fixed">
+    <svg class="icon icon-back-to-top" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M725.333333 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8l-213.333333-213.333333c-17.066667-17.066667-17.066667-42.666667 0-59.733333s42.666667-17.066667 59.733333 0l213.333333 213.333333c17.066667 17.066667 17.066667 42.666667 0 59.733333C746.666667 422.4 738.133333 426.666667 725.333333 426.666667z"></path>
+  <path d="M298.666667 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8-17.066667-17.066667-17.066667-42.666667 0-59.733333l213.333333-213.333333c17.066667-17.066667 42.666667-17.066667 59.733333 0s17.066667 42.666667 0 59.733333l-213.333333 213.333333C320 422.4 311.466667 426.666667 298.666667 426.666667z"></path>
+  <path d="M512 896c-25.6 0-42.666667-17.066667-42.666667-42.666667L469.333333 170.666667c0-25.6 17.066667-42.666667 42.666667-42.666667s42.666667 17.066667 42.666667 42.666667l0 682.666667C554.666667 878.933333 537.6 896 512 896z"></path>
+</svg> 
+  </div>
+
+  
+  
+<!-- valine 评论 start -->
+<script type="text/javascript" src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script type="text/javascript" src='//unpkg.com/valine/dist/Valine.min.js'></script>
+<script type="text/javascript">
+  new Valine({
+    el: "#valine_thread",
+    appId: "nmcd4VgylfORjevWz6UEoat3-9Nh9j0Va",
+    appKey: "wyWWI1qMf6w1mv1KpT1D0HeC",
+    avatar: "mm",
+    placeholder: "随便说点什么叭～",
+    notify: true,
+    visitor: true,
+    pageSize: 10,
+  });
+</script>
+<!-- valine 评论 end -->
 
 
-<script src="/libs/highlight/highlight.pack.js"></script>
 
-<script src='//cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js'></script>
+  <!-- aplayer 音频 start -->
+  
+<link rel="stylesheet" href="/lib/APlayer.min.css">
 
-<script src="/js/js.js"></script>
+  
+<script src="/lib/APlayer.min.js"></script>
 
-<style type="text/css">
-.v * {
-    color: #698fca;
+  <script type="text/javascript">
+    const aplayer = document.querySelectorAll(".aplayer");
+    aplayer && initaplayer(aplayer);
+    function initaplayer(els) {
+      let elsArr = Array.from(els);
+      elsArr.forEach(el => {
+        new APlayer({
+          container: el,
+          audio: { ...el.dataset },
+          theme: "#b7daff",
+          lrcType: 3,
+          autoplay: false,
+          loop: false,
+          mutex: true,
+        });
+      });
+    }
+  </script>
+  <!-- aplayer 音频 end -->
+  
+
+<!-- dplayer 视频 start -->
+
+<link rel="stylesheet" href="/lib/DPlayer.min.css">
+
+
+<script src="/lib/DPlayer.min.js"></script>
+
+<script type="text/javascript">
+  const dplayer = document.querySelectorAll(".dplayer");
+  dplayer && initDPlayer(dplayer);
+  function initDPlayer(els) {
+    let elsArr = Array.from(els);
+    elsArr.forEach(el => {
+      let url = el.dataset.url;
+      let cover = el.dataset.cover;
+      new DPlayer({
+        container: el,
+        video: { url: url, pic: cover },
+        theme: "#b7daff",
+        autoplay: false,
+        loop: false,
+        mutex: true,
+      });
+    });
+  }
+</script>
+<!-- dplayer 视频 end -->
+
+
+<!-- waterfall 瀑布流 start -->
+
+<script src="/lib/waterfall.min.js"></script>
+
+<script type="text/javascript">
+
+const waterfalls = document.querySelectorAll(".waterfall-container");
+
+if (waterfalls && waterfalls.length > 0) {
+  waterfalls.forEach((waterfall, index) => {
+    let cls = "waterfall-container-" + index;
+    waterfall.classList.add(cls);
+    initWaterfall(cls, waterfall);
+  });
 }
 
-.v .vlist .vcard .vhead .vsys {
-    color: #3a3e4a;
+function initWaterfall(selector, el) {
+  const options = {};
+  if (Object.keys(el.dataset).length > 0) {
+    for (let k in el.dataset) {
+      options[k] = el.dataset[k];
+    }
+  }
+  waterfall(`.${selector}`, options);
 }
+</script>
+<!-- waterfall 瀑布流 end -->
 
-.v .vlist .vcard .vh .vmeta .vat {
-    color: #638fd5;
-}
 
-.v .vlist .vcard .vhead .vnick {
-    color: #6ba1ff;
-}
+  <!-- zoom start -->
+  
+<script src="/lib/zoom.min.js"></script>
 
-.v a {
-    color: #8696b1;
-}
+  <script type="text/javascript">
+    document.querySelector(".article-content") && zoom(".article-content");
+  </script>
+  <!-- zoom end -->
+  
 
-.v .vlist .vcard .vhead .vnick:hover {
-    color: #669bfc;
-}
-</style>
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+<script src="/js/script.js"></script>
+
+  
+  <!-- 尾部用户自定义相关内容 -->
+
 </body>
-
 </html>

@@ -1,96 +1,342 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="renderer" content="webkit">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <title>
-        面对压迫、掠夺和孤单，我们的回答是生活
-    </title>
-    
-<link rel="stylesheet" href="/libs/highlight/styles/monokai-sublime.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    
-<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+  
 
-    
+  
+
+  
+    <meta name="author" content="zhaodan">
+  
+
+  
+    <meta name="copyright" content="zhaodan">
+  
+
+  
+
+  <title>EFK | </title>
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+    <link href="https://cdn.bootcss.com/highlight.js/9.15.6/styles/monokai.min.css" rel="stylesheet">
+  
+
+  
 <link rel="stylesheet" href="/css/style.css">
 
 <meta name="generator" content="Hexo 4.2.0"></head>
-
-<body id="bodyx">
-    <div class="hd posts">
-    <a href="/index.html"><i class="fa fa-reply replay-btn" aria-hidden="true"></i></a>
-    <div class="post-title">
-        <p>
-            EFK
-        </p>
-        <hr>
+<body>
+  <div class="root-container">
+    <!-- navbar -->
+<nav class="navbar">
+  <div class="navbar-content">
+    <!-- logo -->
+    <div class="navbar-logo">
+      <a href="/">
+        
+          
+        
+      </a>
     </div>
-    <div class="post-content">
+    <!-- link -->
+    <div class="navbar-link">
+      <div class="navbar-btn">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <ul class="navbar-list">
+        
+          <li class="navbar-list-item"><a href="/">主页</a></li>
+        
+          <li class="navbar-list-item"><a href="/about">关于</a></li>
+        
+          <li class="navbar-list-item"><a href="/archives">归档</a></li>
+        
+          <li class="navbar-list-item"><a href="/messages">留言板</a></li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    
+<!-- header container -->
+<header class="header-container post">
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+    <div class="header-content">
+      <div class="post-image" style="background-image: url(https://i.postimg.cc/kXYG7QKj/dengdeng.jpg)"></div>
+      <div class="post-text">
+        <div class="type-wrap">
+          
+        </div>
+        <h1 class="title-wrap">EFK</h1>
+        <h2 class="title-sub-wrap">
+          <strong>zhaodan</strong>
+          <span>发布于</span>
+          
+  <a href="javascript:;" class="article-date">
+    <time datetime="2018-07-11T16:00:00.000Z" itemprop="datePublished">2018-07-12</time>
+  </a>
+
+        </h2>
+      </div>
+    </div>
+  
+
+  
+  
+
+  </header>
+
+    <!-- 文章 -->
+
+<!-- 文章内容 -->
+
+<div class="body-container">
+  <article class="content-container article-container">
+    <div class="article-content">
+      
+      
+
+      <section class="article-entry">
         <p>我们平时分析log直接在日志文件中 grep、awk 就可以获得自己想要的信息，此方法效率低下，生产中需要集中化的日志管理，所有服务器上的日志收集汇总<br>Elasticsearch<br>一个节点(node)就是一个Elasticsearch实例，一个集群(cluster)由一个或多个节点组成，它们具有相同的cluster.name，它们协同工作，分享数据和负载。当加入新的节点或者删除一个节点时，集群就会感知到并平衡数据。<br>集群中一个节点会被选举为主节点(master),它将临时管理集群级别的一些变更，例如新建或删除索引、增加或移除节点等。主节点不参与文档级别的变更或搜索，这意味着在流量增长的时候，该主节点不会成为集群的瓶颈。<br>做为用户，我们能够与集群中的任何节点通信，包括主节点。每一个节点都知道文档存在于哪个节点上，它们可以转发请求到相应的节点上。我们访问的节点负责收集各节点返回的数据，最后一起返回给客户端。这一切都由Elasticsearch处理。</p>
 <p>一个完整的集中式日志系统，需要包含以下几个主要特点：<br>收集－能够采集多种来源的日志数据<br>传输－能够稳定的把日志数据传输到中央系统<br>存储－如何存储日志数据<br>分析－可以支持 UI 分析<br>警告－能够提供错误报告，监控机制</p>
 <p>fluentd基于CRuby实现，并对性能表现关键的一些组件用C语言重新实现，整体性能不错。<br>fluentd支持所有主流日志类型，插件支持较多，性能表现较好<br>logstash支持所有主流日志类型，插件支持最丰富，可以灵活DIY，但性能较差，JVM容易导致内存使用量高。<br>Elasticsearch是个开源分布式搜索引擎，提供搜集、分析、存储数据三大功能<br>Kibana 也是一个开源和免费的工具，Kibana可以为 td-agent和 ElasticSearch 提供的日志分析友好的 Web 界面，可以帮助汇总、分析和搜索重要数据日志。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br></pre></td><td class="code"><pre><span class="line"># yum install java</span><br><span class="line"># java -version</span><br><span class="line"></span><br><span class="line">Node1</span><br><span class="line"></span><br><span class="line"># wget https:&#x2F;&#x2F;artifacts.elastic.co&#x2F;downloads&#x2F;elasticsearch&#x2F;elasticsearch-6.3.1.rpm</span><br><span class="line"># vim &#x2F;etc&#x2F;elasticsearch&#x2F;elasticsearch.yml</span><br><span class="line">cluster.name: my-application</span><br><span class="line">node.name: node-1</span><br><span class="line">node.master: true</span><br><span class="line">network.host: 172.21.0.9</span><br><span class="line">http.port: 9200</span><br><span class="line"></span><br><span class="line">Node2</span><br><span class="line"># vim &#x2F;etc&#x2F;elasticsearch&#x2F;elasticsearch.yml</span><br><span class="line">cluster.name: my-application</span><br><span class="line">node.name: node-2</span><br><span class="line">node.master: false</span><br><span class="line">network.host: 172.21.0.37</span><br><span class="line">http.port: 9200</span><br><span class="line">discovery.zen.ping.unicast.hosts: [&quot;host1&quot;, &quot;172.21.0.9”]</span><br><span class="line"></span><br><span class="line"># &#x2F;etc&#x2F;init.d&#x2F;elasticsearch start</span><br><span class="line"># &#x2F;etc&#x2F;init.d&#x2F;elasticsearch status</span><br><span class="line"># curl http:&#x2F;&#x2F;172.21.0.9:9200&#x2F;_cat&#x2F;health</span><br><span class="line"># curl http:&#x2F;&#x2F;172.21.0.9:9200&#x2F;_cat&#x2F;nodes</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Fluentd (tdagent)</span><br><span class="line"></span><br><span class="line"># wget http:&#x2F;&#x2F;packages.treasuredata.com.s3.amazonaws.com&#x2F;3&#x2F;redhat&#x2F;7&#x2F;x86_64&#x2F;td-agent-3.2.0-0.el7.x86_64.rpm</span><br><span class="line"># rpm -ivh td-agent-3.2.0-0.el7.x86_64.rpm  --force --nodeps</span><br><span class="line"># yum install -y libcurl-devel</span><br><span class="line"># &#x2F;opt&#x2F;td-agent&#x2F;embedded&#x2F;bin&#x2F;fluent-gem install fluent-plugin-elasticsearch</span><br><span class="line"></span><br><span class="line"># cd &#x2F;etc&#x2F;td-agent&#x2F;</span><br><span class="line"># cat td-agent.conf</span><br><span class="line">&lt;source&gt;</span><br><span class="line">  @type forward</span><br><span class="line">  port 24224</span><br><span class="line">&lt;&#x2F;source&gt;</span><br><span class="line"></span><br><span class="line">####################################</span><br><span class="line">&lt;source&gt;</span><br><span class="line">  @type tail</span><br><span class="line">  path &#x2F;var&#x2F;log&#x2F;httpd&#x2F;access_log</span><br><span class="line">  pos_file &#x2F;var&#x2F;log&#x2F;td-agent&#x2F;httpd-access.log.pos</span><br><span class="line">  tag apache.access</span><br><span class="line">  &lt;parse&gt;</span><br><span class="line">    @type apache2</span><br><span class="line">  &lt;&#x2F;parse&gt;</span><br><span class="line">&lt;&#x2F;source&gt;</span><br><span class="line">####################################</span><br><span class="line">&lt;match debug.**&gt;</span><br><span class="line">  @type stdout</span><br><span class="line">&lt;&#x2F;match&gt;</span><br><span class="line">####################################</span><br><span class="line"></span><br><span class="line">&lt;match *.**&gt;</span><br><span class="line">  @type copy</span><br><span class="line">  &lt;store&gt;</span><br><span class="line">    @type elasticsearch</span><br><span class="line">    host 172.21.0.9</span><br><span class="line">    port 9200</span><br><span class="line">    logstash_format true</span><br><span class="line">    logstash_prefix fluentd-$&#123;tag&#125;</span><br><span class="line">    logstash_dateformat %Y%m%d</span><br><span class="line">    include_tag_key true</span><br><span class="line">    type_name access_log</span><br><span class="line">    tag_key @log_name</span><br><span class="line">    flush_interval 1s</span><br><span class="line">  &lt;&#x2F;store&gt;</span><br><span class="line">  &lt;store&gt;</span><br><span class="line">    @type stdout</span><br><span class="line">  &lt;&#x2F;store&gt;</span><br><span class="line">&lt;&#x2F;match&gt;</span><br><span class="line"></span><br><span class="line"># &#x2F;etc&#x2F;init.d&#x2F;td-agent restart</span><br><span class="line"># chmod 777 -R &#x2F;var&#x2F;log&#x2F;httpd&#x2F;</span><br><span class="line"># tail -f &#x2F;var&#x2F;log&#x2F;td-agent&#x2F;td-agent.log</span><br><span class="line"># curl &#39;http:&#x2F;&#x2F;172.21.0.9:9200&#x2F;_cat&#x2F;indices?v’</span><br><span class="line"></span><br><span class="line">Kibana</span><br><span class="line"></span><br><span class="line"># wget https:&#x2F;&#x2F;artifacts.elastic.co&#x2F;downloads&#x2F;kibana&#x2F;kibana-6.3.1-x86_64.rpm</span><br><span class="line"># rpm -ivh kibana-6.3.1-x86_64.rpm</span><br><span class="line"></span><br><span class="line"># vim &#x2F;etc&#x2F;kibana&#x2F;kibana.yml</span><br><span class="line">server.port: 5601</span><br><span class="line">server.host: “172.21.0.9&quot;</span><br><span class="line">elasticsearch.url: &quot;http:&#x2F;&#x2F;172.21.0.9:9200”</span><br><span class="line">kibana.index: &quot;.kibana”</span><br><span class="line"></span><br><span class="line"># &#x2F;etc&#x2F;init.d&#x2F;kibana restart</span><br><span class="line"># tail -f &#x2F;var&#x2F;log&#x2F;kibana&#x2F;kibana.stderr</span><br></pre></td></tr></table></figure>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br></pre></td><td class="code"><pre><code class="hljs makefile"><span class="hljs-comment"># yum install java</span><br><span class="hljs-comment"># java -version</span><br><br>Node1<br><br><span class="hljs-comment"># wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.3.1.rpm</span><br><span class="hljs-comment"># vim /etc/elasticsearch/elasticsearch.yml</span><br><span class="hljs-section">cluster.name: my-application</span><br><span class="hljs-section">node.name: node-1</span><br><span class="hljs-section">node.master: true</span><br><span class="hljs-section">network.host: 172.21.0.9</span><br><span class="hljs-section">http.port: 9200</span><br><br>Node2<br><span class="hljs-comment"># vim /etc/elasticsearch/elasticsearch.yml</span><br><span class="hljs-section">cluster.name: my-application</span><br><span class="hljs-section">node.name: node-2</span><br><span class="hljs-section">node.master: false</span><br><span class="hljs-section">network.host: 172.21.0.37</span><br><span class="hljs-section">http.port: 9200</span><br><span class="hljs-section">discovery.zen.ping.unicast.hosts: ["host1", "172.21.0.9”]</span><br><br><span class="hljs-comment"># /etc/init.d/elasticsearch start</span><br><span class="hljs-comment"># /etc/init.d/elasticsearch status</span><br><span class="hljs-comment"># curl http://172.21.0.9:9200/_cat/health</span><br><span class="hljs-comment"># curl http://172.21.0.9:9200/_cat/nodes</span><br><br><br>Fluentd (tdagent)<br><br><span class="hljs-comment"># wget http://packages.treasuredata.com.s3.amazonaws.com/3/redhat/7/x86_64/td-agent-3.2.0-0.el7.x86_64.rpm</span><br><span class="hljs-comment"># rpm -ivh td-agent-3.2.0-0.el7.x86_64.rpm  --force --nodeps</span><br><span class="hljs-comment"># yum install -y libcurl-devel</span><br><span class="hljs-comment"># /opt/td-agent/embedded/bin/fluent-gem install fluent-plugin-elasticsearch</span><br><br><span class="hljs-comment"># cd /etc/td-agent/</span><br><span class="hljs-comment"># cat td-agent.conf</span><br>&lt;source&gt;<br>  @type forward<br>  port 24224<br>&lt;/source&gt;<br><br><span class="hljs-comment">####################################</span><br>&lt;source&gt;<br>  @type tail<br>  path /var/log/httpd/access_log<br>  pos_file /var/log/td-agent/httpd-access.log.pos<br>  tag apache.access<br>  &lt;parse&gt;<br>    @type apache2<br>  &lt;/parse&gt;<br>&lt;/source&gt;<br><span class="hljs-comment">####################################</span><br>&lt;match debug.**&gt;<br>  @type stdout<br>&lt;/match&gt;<br><span class="hljs-comment">####################################</span><br><br>&lt;match *.**&gt;<br>  @type copy<br>  &lt;store&gt;<br>    @type elasticsearch<br>    host 172.21.0.9<br>    port 9200<br>    logstash_format true<br>    logstash_prefix fluentd-$&#123;tag&#125;<br>    logstash_dateformat %Y%m%d<br>    include_tag_key true<br>    type_name access_log<br>    tag_key @log_name<br>    flush_interval 1s<br>  &lt;/store&gt;<br>  &lt;store&gt;<br>    @type stdout<br>  &lt;/store&gt;<br>&lt;/match&gt;<br><br><span class="hljs-comment"># /etc/init.d/td-agent restart</span><br><span class="hljs-comment"># chmod 777 -R /var/log/httpd/</span><br><span class="hljs-comment"># tail -f /var/log/td-agent/td-agent.log</span><br><span class="hljs-comment"># curl 'http://172.21.0.9:9200/_cat/indices?v’</span><br><br>Kibana<br><br><span class="hljs-comment"># wget https://artifacts.elastic.co/downloads/kibana/kibana-6.3.1-x86_64.rpm</span><br><span class="hljs-comment"># rpm -ivh kibana-6.3.1-x86_64.rpm</span><br><br><span class="hljs-comment"># vim /etc/kibana/kibana.yml</span><br><span class="hljs-section">server.port: 5601</span><br><span class="hljs-section">server.host: “172.21.0.9"</span><br><span class="hljs-section">elasticsearch.url: "http://172.21.0.9:9200”</span><br><span class="hljs-section">kibana.index: ".kibana”</span><br><br><span class="hljs-comment"># /etc/init.d/kibana restart</span><br><span class="hljs-comment"># tail -f /var/log/kibana/kibana.stderr</span><br></code></pre></td></tr></table></figure>
 
+      </section>
+
+      <section class="article-footer">
+        
+      </section>
+
+      <section class="article-navs">
+        
+<nav class="card-container card-article-nav">
+  <div class="card-wrap">
+    
+      <div id="article-nav-newer" class="card-item">
+        <article>
+          
+          <a class="card-link article-nav-link" href="/2018/07/23/22_shell%E7%99%BB%E5%BD%95/"></a>
+          <strong class="article-nav-caption">Newer</strong>
+          <p class="article-nav-title">
+            
+              记一个shell登录脚本
+            
+          </p>
+        </article>
+      </div>
+    
+    
+      <div id="article-nav-older" class="card-item">
+        <article>
+          
+          <a class="card-link article-nav-link" href="/2018/06/25/20_jpress/"></a>
+          <strong class="article-nav-caption">Older</strong>
+          <p class="article-nav-title">
+            
+              基于docker搭建个人博客jpress
+            
+          </p>
+        </article>
+      </div>
+    
+  </div>
+</nav>
+
+      </section>
     </div>
+  </article>
+</div>
+
+    <!-- footer container -->
+<footer id="footer" class="footer">
+  <div class="footer-container">
+    
+    <!-- <p>&copy; 2020 <a href="/" target="_blank">zhaodan</a></p> -->
 
     
-        <hr class="fhr">
-        <div id="vcomments"></div>
+      <p id="hitokoto"></p>
+      <script src="https://v1.hitokoto.cn/?c=h&amp;encode=js&select=%23hitokoto" defer></script>
     
-</div>
-    <div class="footer" id="footer">
-    <p>Copyright © 2020 <a class="flink" href="https://hexo.io" target="_blank" rel="noopener">Hexo</a>-<a class="flink" href="https://github.com/sanjinhub/hexo-theme-geek" target="_blank" rel="noopener">Geek</a>.
-        <label class="el-switch el-switch-green el-switch-sm" style="vertical-align: sub;">
-            <input type="checkbox" name="switch" id="update_style">
-            <span class="el-switch-style"></span>
-        </label>
-<!--         <script type="text/javascript">
-        var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");
-        document.write(unescape("%3Cspan id='cnzz_stat_icon_1278548644'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/stat.php%3Fid%3D1278548644%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
-        </script> -->
-    </p>
-</div>
-<input type="hidden" id="web_style" value="black">
-<input type="hidden" id="valine_appid" value="nmcd4VgylfORjevWz6UEoat3-9Nh9j0Va">
-<input type="hidden" id="valine_appKey" value="wyWWI1qMf6w1mv1KpT1D0HeC">
 
-<script src="/libs/jquery.min.js"></script>
+    
+
+    <p>&copy; 2019 | zhaodan | 加油</p>
+  </div>
+</footer>
+
+  </div>
+
+  <div class="back-to-top-fixed">
+    <svg class="icon icon-back-to-top" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M725.333333 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8l-213.333333-213.333333c-17.066667-17.066667-17.066667-42.666667 0-59.733333s42.666667-17.066667 59.733333 0l213.333333 213.333333c17.066667 17.066667 17.066667 42.666667 0 59.733333C746.666667 422.4 738.133333 426.666667 725.333333 426.666667z"></path>
+  <path d="M298.666667 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8-17.066667-17.066667-17.066667-42.666667 0-59.733333l213.333333-213.333333c17.066667-17.066667 42.666667-17.066667 59.733333 0s17.066667 42.666667 0 59.733333l-213.333333 213.333333C320 422.4 311.466667 426.666667 298.666667 426.666667z"></path>
+  <path d="M512 896c-25.6 0-42.666667-17.066667-42.666667-42.666667L469.333333 170.666667c0-25.6 17.066667-42.666667 42.666667-42.666667s42.666667 17.066667 42.666667 42.666667l0 682.666667C554.666667 878.933333 537.6 896 512 896z"></path>
+</svg> 
+  </div>
+
+  
+  
+<!-- valine 评论 start -->
+<script type="text/javascript" src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script type="text/javascript" src='//unpkg.com/valine/dist/Valine.min.js'></script>
+<script type="text/javascript">
+  new Valine({
+    el: "#valine_thread",
+    appId: "nmcd4VgylfORjevWz6UEoat3-9Nh9j0Va",
+    appKey: "wyWWI1qMf6w1mv1KpT1D0HeC",
+    avatar: "mm",
+    placeholder: "随便说点什么叭～",
+    notify: true,
+    visitor: true,
+    pageSize: 10,
+  });
+</script>
+<!-- valine 评论 end -->
 
 
-<script src="/libs/highlight/highlight.pack.js"></script>
 
-<script src='//cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js'></script>
+  <!-- aplayer 音频 start -->
+  
+<link rel="stylesheet" href="/lib/APlayer.min.css">
 
-<script src="/js/js.js"></script>
+  
+<script src="/lib/APlayer.min.js"></script>
 
-<style type="text/css">
-.v * {
-    color: #698fca;
+  <script type="text/javascript">
+    const aplayer = document.querySelectorAll(".aplayer");
+    aplayer && initaplayer(aplayer);
+    function initaplayer(els) {
+      let elsArr = Array.from(els);
+      elsArr.forEach(el => {
+        new APlayer({
+          container: el,
+          audio: { ...el.dataset },
+          theme: "#b7daff",
+          lrcType: 3,
+          autoplay: false,
+          loop: false,
+          mutex: true,
+        });
+      });
+    }
+  </script>
+  <!-- aplayer 音频 end -->
+  
+
+<!-- dplayer 视频 start -->
+
+<link rel="stylesheet" href="/lib/DPlayer.min.css">
+
+
+<script src="/lib/DPlayer.min.js"></script>
+
+<script type="text/javascript">
+  const dplayer = document.querySelectorAll(".dplayer");
+  dplayer && initDPlayer(dplayer);
+  function initDPlayer(els) {
+    let elsArr = Array.from(els);
+    elsArr.forEach(el => {
+      let url = el.dataset.url;
+      let cover = el.dataset.cover;
+      new DPlayer({
+        container: el,
+        video: { url: url, pic: cover },
+        theme: "#b7daff",
+        autoplay: false,
+        loop: false,
+        mutex: true,
+      });
+    });
+  }
+</script>
+<!-- dplayer 视频 end -->
+
+
+<!-- waterfall 瀑布流 start -->
+
+<script src="/lib/waterfall.min.js"></script>
+
+<script type="text/javascript">
+
+const waterfalls = document.querySelectorAll(".waterfall-container");
+
+if (waterfalls && waterfalls.length > 0) {
+  waterfalls.forEach((waterfall, index) => {
+    let cls = "waterfall-container-" + index;
+    waterfall.classList.add(cls);
+    initWaterfall(cls, waterfall);
+  });
 }
 
-.v .vlist .vcard .vhead .vsys {
-    color: #3a3e4a;
+function initWaterfall(selector, el) {
+  const options = {};
+  if (Object.keys(el.dataset).length > 0) {
+    for (let k in el.dataset) {
+      options[k] = el.dataset[k];
+    }
+  }
+  waterfall(`.${selector}`, options);
 }
+</script>
+<!-- waterfall 瀑布流 end -->
 
-.v .vlist .vcard .vh .vmeta .vat {
-    color: #638fd5;
-}
 
-.v .vlist .vcard .vhead .vnick {
-    color: #6ba1ff;
-}
+  <!-- zoom start -->
+  
+<script src="/lib/zoom.min.js"></script>
 
-.v a {
-    color: #8696b1;
-}
+  <script type="text/javascript">
+    document.querySelector(".article-content") && zoom(".article-content");
+  </script>
+  <!-- zoom end -->
+  
 
-.v .vlist .vcard .vhead .vnick:hover {
-    color: #669bfc;
-}
-</style>
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+<script src="/js/script.js"></script>
+
+  
+  <!-- 尾部用户自定义相关内容 -->
+
 </body>
-
 </html>

@@ -1,107 +1,353 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="renderer" content="webkit">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <title>
-        面对压迫、掠夺和孤单，我们的回答是生活
-    </title>
-    
-<link rel="stylesheet" href="/libs/highlight/styles/monokai-sublime.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    
-<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+  
 
-    
+  
+
+  
+    <meta name="author" content="zhaodan">
+  
+
+  
+    <meta name="copyright" content="zhaodan">
+  
+
+  
+
+  <title>Curator Elasticsearch indices 管理工具 | </title>
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+    <link href="https://cdn.bootcss.com/highlight.js/9.15.6/styles/monokai.min.css" rel="stylesheet">
+  
+
+  
 <link rel="stylesheet" href="/css/style.css">
 
 <meta name="generator" content="Hexo 4.2.0"></head>
-
-<body id="bodyx">
-    <div class="hd posts">
-    <a href="/index.html"><i class="fa fa-reply replay-btn" aria-hidden="true"></i></a>
-    <div class="post-title">
-        <p>
-            Curator Elasticsearch indices 管理工具
-        </p>
-        <hr>
+<body>
+  <div class="root-container">
+    <!-- navbar -->
+<nav class="navbar">
+  <div class="navbar-content">
+    <!-- logo -->
+    <div class="navbar-logo">
+      <a href="/">
+        
+          
+        
+      </a>
     </div>
-    <div class="post-content">
+    <!-- link -->
+    <div class="navbar-link">
+      <div class="navbar-btn">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <ul class="navbar-list">
+        
+          <li class="navbar-list-item"><a href="/">主页</a></li>
+        
+          <li class="navbar-list-item"><a href="/about">关于</a></li>
+        
+          <li class="navbar-list-item"><a href="/archives">归档</a></li>
+        
+          <li class="navbar-list-item"><a href="/messages">留言板</a></li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    
+<!-- header container -->
+<header class="header-container post">
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+    <div class="header-content">
+      <div class="post-image" style="background-image: url(https://i.postimg.cc/kXYG7QKj/dengdeng.jpg)"></div>
+      <div class="post-text">
+        <div class="type-wrap">
+          
+        </div>
+        <h1 class="title-wrap">Curator Elasticsearch indices 管理工具</h1>
+        <h2 class="title-sub-wrap">
+          <strong>zhaodan</strong>
+          <span>发布于</span>
+          
+  <a href="javascript:;" class="article-date">
+    <time datetime="2019-01-10T16:00:00.000Z" itemprop="datePublished">2019-01-11</time>
+  </a>
+
+        </h2>
+      </div>
+    </div>
+  
+
+  
+  
+
+  </header>
+
+    <!-- 文章 -->
+
+<!-- 文章内容 -->
+
+<div class="body-container">
+  <article class="content-container article-container">
+    <div class="article-content">
+      
+      
+
+      <section class="article-entry">
         <p>ES索引数据太大，kibana查询数据总是内存爆满挂掉，为了方便管理索引文件，使用curator工具</p>
 <p>curator下载地址：<br><a href="https://github.com/elastic/curator" target="_blank" rel="noopener">https://github.com/elastic/curator</a></p>
 <p>ES-curator/curator-config/curator配置文件编写</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">##curator.yml</span><br><span class="line">---</span><br><span class="line"># Remember, leave a key empty if there is no value.  None will be a string,</span><br><span class="line"># not a Python &quot;NoneType&quot;</span><br><span class="line">client:</span><br><span class="line">  hosts:</span><br><span class="line">    - &#39;es-curator-ip&#39;</span><br><span class="line">    - &#39;es-curator-ip&#39;</span><br><span class="line">    - &#39;es-curator-ip&#39;</span><br><span class="line">  port: 9200</span><br><span class="line">  url_prefix:</span><br><span class="line">  use_ssl: False</span><br><span class="line">  certificate:</span><br><span class="line">  client_cert:</span><br><span class="line">  client_key:</span><br><span class="line">  aws_key:</span><br><span class="line">  aws_secret_key:</span><br><span class="line">  aws_region:</span><br><span class="line">  ssl_no_validate: False</span><br><span class="line">  http_auth:</span><br><span class="line">  timeout: 30</span><br><span class="line">  master_only: False</span><br><span class="line"></span><br><span class="line">logging:</span><br><span class="line">  loglevel: INFO</span><br><span class="line">  logfile: &#x2F;data&#x2F;ES-curator&#x2F;curator-config&#x2F;log&#x2F;curator.log</span><br><span class="line">  logformat: default</span><br><span class="line">  blacklist: [&#39;elasticsearch&#39;, &#39;urllib3&#39;]</span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-comment">##curator.yml</span><br><span class="hljs-meta">---</span><br><span class="hljs-comment"># Remember, leave a key empty if there is no value.  None will be a string,</span><br><span class="hljs-comment"># not a Python "NoneType"</span><br><span class="hljs-attr">client:</span><br>  <span class="hljs-attr">hosts:</span><br>    <span class="hljs-bullet">-</span> <span class="hljs-string">'es-curator-ip'</span><br>    <span class="hljs-bullet">-</span> <span class="hljs-string">'es-curator-ip'</span><br>    <span class="hljs-bullet">-</span> <span class="hljs-string">'es-curator-ip'</span><br>  <span class="hljs-attr">port:</span> <span class="hljs-number">9200</span><br>  <span class="hljs-attr">url_prefix:</span><br>  <span class="hljs-attr">use_ssl:</span> <span class="hljs-literal">False</span><br>  <span class="hljs-attr">certificate:</span><br>  <span class="hljs-attr">client_cert:</span><br>  <span class="hljs-attr">client_key:</span><br>  <span class="hljs-attr">aws_key:</span><br>  <span class="hljs-attr">aws_secret_key:</span><br>  <span class="hljs-attr">aws_region:</span><br>  <span class="hljs-attr">ssl_no_validate:</span> <span class="hljs-literal">False</span><br>  <span class="hljs-attr">http_auth:</span><br>  <span class="hljs-attr">timeout:</span> <span class="hljs-number">30</span><br>  <span class="hljs-attr">master_only:</span> <span class="hljs-literal">False</span><br><br><span class="hljs-attr">logging:</span><br>  <span class="hljs-attr">loglevel:</span> <span class="hljs-string">INFO</span><br>  <span class="hljs-attr">logfile:</span> <span class="hljs-string">/data/ES-curator/curator-config/log/curator.log</span><br>  <span class="hljs-attr">logformat:</span> <span class="hljs-string">default</span><br>  <span class="hljs-attr">blacklist:</span> <span class="hljs-string">['elasticsearch',</span> <span class="hljs-string">'urllib3'</span><span class="hljs-string">]</span><br></code></pre></td></tr></table></figure>
 
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">##close.yml 按时间匹配，关闭15天以前的index</span><br><span class="line">actions:</span><br><span class="line">  1:</span><br><span class="line">    action: close</span><br><span class="line">    description: &gt;-</span><br><span class="line">      Close indices older than 15 days (based on index name), for logstash-</span><br><span class="line">      prefixed indices.</span><br><span class="line">    options:</span><br><span class="line">      delete_aliases: False</span><br><span class="line">      timeout_override: 180</span><br><span class="line">      continue_if_exception: False</span><br><span class="line">      disable_action: False</span><br><span class="line">    filters:</span><br><span class="line">    - filtertype: pattern</span><br><span class="line">      kind: prefix</span><br><span class="line">      value: kbilogs-logics</span><br><span class="line">    - filtertype: age</span><br><span class="line">      source: name</span><br><span class="line">      direction: older</span><br><span class="line">      timestring: &#39;%Y.%m.%d&#39;</span><br><span class="line">      unit: days</span><br><span class="line">      unit_count: 15</span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-comment">##close.yml 按时间匹配，关闭15天以前的index</span><br><span class="hljs-attr">actions:</span><br>  <span class="hljs-attr">1:</span><br>    <span class="hljs-attr">action:</span> <span class="hljs-string">close</span><br>    <span class="hljs-attr">description:</span> <span class="hljs-string">&gt;-</span><br>      <span class="hljs-string">Close</span> <span class="hljs-string">indices</span> <span class="hljs-string">older</span> <span class="hljs-string">than</span> <span class="hljs-number">15</span> <span class="hljs-string">days</span> <span class="hljs-string">(based</span> <span class="hljs-string">on</span> <span class="hljs-string">index</span> <span class="hljs-string">name),</span> <span class="hljs-string">for</span> <span class="hljs-string">logstash-</span><br>      <span class="hljs-string">prefixed</span> <span class="hljs-string">indices.</span><br>    <span class="hljs-attr">options:</span><br>      <span class="hljs-attr">delete_aliases:</span> <span class="hljs-literal">False</span><br>      <span class="hljs-attr">timeout_override:</span> <span class="hljs-number">180</span><br>      <span class="hljs-attr">continue_if_exception:</span> <span class="hljs-literal">False</span><br>      <span class="hljs-attr">disable_action:</span> <span class="hljs-literal">False</span><br>    <span class="hljs-attr">filters:</span><br>    <span class="hljs-bullet">-</span> <span class="hljs-attr">filtertype:</span> <span class="hljs-string">pattern</span><br>      <span class="hljs-attr">kind:</span> <span class="hljs-string">prefix</span><br>      <span class="hljs-attr">value:</span> <span class="hljs-string">kbilogs-logics</span><br>    <span class="hljs-bullet">-</span> <span class="hljs-attr">filtertype:</span> <span class="hljs-string">age</span><br>      <span class="hljs-attr">source:</span> <span class="hljs-string">name</span><br>      <span class="hljs-attr">direction:</span> <span class="hljs-string">older</span><br>      <span class="hljs-attr">timestring:</span> <span class="hljs-string">'%Y.%m.%d'</span><br>      <span class="hljs-attr">unit:</span> <span class="hljs-string">days</span><br>      <span class="hljs-attr">unit_count:</span> <span class="hljs-number">15</span><br></code></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">##delete.yml 按时间匹配，删除365天之前的index</span><br><span class="line">actions:</span><br><span class="line">  1:</span><br><span class="line">    action: delete_indices</span><br><span class="line">    description: &quot;delete pay index&quot;</span><br><span class="line">    options:</span><br><span class="line">      ignore_empty_list: True</span><br><span class="line">      timeout_override: 500</span><br><span class="line">      disable_action: False</span><br><span class="line">    filters:</span><br><span class="line">    - filtertype: pattern</span><br><span class="line">      kind: regex</span><br><span class="line">      value: &#39;^(kbilogs-logics-pay-200|kbilogs-logics-pay-201|kbilogs-logics-pay-202|kbilogs-logics-pay-203|kbilogs-logics-pay-204).*$&#39;</span><br><span class="line">    - filtertype: age</span><br><span class="line">      source: creation_date</span><br><span class="line">      direction: older</span><br><span class="line">      timestring: &#39;%Y.%m.%d&#39;</span><br><span class="line">      unit: days</span><br><span class="line">      unit_count: 365</span><br><span class="line">  2:</span><br><span class="line">    action: delete_indices</span><br><span class="line">    description: &quot;delete game index&quot;</span><br><span class="line">    options:</span><br><span class="line">      ignore_empty_list: True</span><br><span class="line">      timeout_override: 500</span><br><span class="line">      disable_action: False</span><br><span class="line">    filters:</span><br><span class="line">    - filtertype: pattern</span><br><span class="line">      kind: regex</span><br><span class="line">      value: &#39;^(kbilogs-logics-gamex-200|kbilogs-logics-gamex-201|kbilogs-logics-gamex-202|kbilogs-logics-gamex-203|kbilogs-logics-gamex-204).*$&#39;</span><br><span class="line">    - filtertype: age</span><br><span class="line">      source: creation_date</span><br><span class="line">      direction: older</span><br><span class="line">      timestring: &#39;%Y.%m.%d&#39;</span><br><span class="line">      unit: days</span><br><span class="line">      unit_count: 60</span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-comment">##delete.yml 按时间匹配，删除365天之前的index</span><br><span class="hljs-attr">actions:</span><br>  <span class="hljs-attr">1:</span><br>    <span class="hljs-attr">action:</span> <span class="hljs-string">delete_indices</span><br>    <span class="hljs-attr">description:</span> <span class="hljs-string">"delete pay index"</span><br>    <span class="hljs-attr">options:</span><br>      <span class="hljs-attr">ignore_empty_list:</span> <span class="hljs-literal">True</span><br>      <span class="hljs-attr">timeout_override:</span> <span class="hljs-number">500</span><br>      <span class="hljs-attr">disable_action:</span> <span class="hljs-literal">False</span><br>    <span class="hljs-attr">filters:</span><br>    <span class="hljs-bullet">-</span> <span class="hljs-attr">filtertype:</span> <span class="hljs-string">pattern</span><br>      <span class="hljs-attr">kind:</span> <span class="hljs-string">regex</span><br>      <span class="hljs-attr">value:</span> <span class="hljs-string">'^(kbilogs-logics-pay-200|kbilogs-logics-pay-201|kbilogs-logics-pay-202|kbilogs-logics-pay-203|kbilogs-logics-pay-204).*$'</span><br>    <span class="hljs-bullet">-</span> <span class="hljs-attr">filtertype:</span> <span class="hljs-string">age</span><br>      <span class="hljs-attr">source:</span> <span class="hljs-string">creation_date</span><br>      <span class="hljs-attr">direction:</span> <span class="hljs-string">older</span><br>      <span class="hljs-attr">timestring:</span> <span class="hljs-string">'%Y.%m.%d'</span><br>      <span class="hljs-attr">unit:</span> <span class="hljs-string">days</span><br>      <span class="hljs-attr">unit_count:</span> <span class="hljs-number">365</span><br>  <span class="hljs-attr">2:</span><br>    <span class="hljs-attr">action:</span> <span class="hljs-string">delete_indices</span><br>    <span class="hljs-attr">description:</span> <span class="hljs-string">"delete game index"</span><br>    <span class="hljs-attr">options:</span><br>      <span class="hljs-attr">ignore_empty_list:</span> <span class="hljs-literal">True</span><br>      <span class="hljs-attr">timeout_override:</span> <span class="hljs-number">500</span><br>      <span class="hljs-attr">disable_action:</span> <span class="hljs-literal">False</span><br>    <span class="hljs-attr">filters:</span><br>    <span class="hljs-bullet">-</span> <span class="hljs-attr">filtertype:</span> <span class="hljs-string">pattern</span><br>      <span class="hljs-attr">kind:</span> <span class="hljs-string">regex</span><br>      <span class="hljs-attr">value:</span> <span class="hljs-string">'^(kbilogs-logics-gamex-200|kbilogs-logics-gamex-201|kbilogs-logics-gamex-202|kbilogs-logics-gamex-203|kbilogs-logics-gamex-204).*$'</span><br>    <span class="hljs-bullet">-</span> <span class="hljs-attr">filtertype:</span> <span class="hljs-string">age</span><br>      <span class="hljs-attr">source:</span> <span class="hljs-string">creation_date</span><br>      <span class="hljs-attr">direction:</span> <span class="hljs-string">older</span><br>      <span class="hljs-attr">timestring:</span> <span class="hljs-string">'%Y.%m.%d'</span><br>      <span class="hljs-attr">unit:</span> <span class="hljs-string">days</span><br>      <span class="hljs-attr">unit_count:</span> <span class="hljs-number">60</span><br></code></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">##merge_index_rule.yml  合并一天前的index</span><br><span class="line">actions:</span><br><span class="line">  1:</span><br><span class="line">    action: forcemerge</span><br><span class="line">    description: &quot;forcemerge pay index&quot;</span><br><span class="line">    options:</span><br><span class="line">      ignore_empty_list: True</span><br><span class="line">      timeout_override: 50000</span><br><span class="line">      disable_action: False</span><br><span class="line">      max_num_segments: 1</span><br><span class="line">      delay: 120</span><br><span class="line">    filters:</span><br><span class="line">    - filtertype: pattern</span><br><span class="line">      kind: regex</span><br><span class="line">      value: &#39;^(kbilogs-logics-pay-200|kbilogs-logics-pay-201|kbilogs-logics-pay-202|kbilogs-logics-pay-203|kbilogs-logics-pay-204).*$&#39;</span><br><span class="line">    - filtertype: age</span><br><span class="line">      source: creation_date</span><br><span class="line">      direction: older</span><br><span class="line">      timestring: &#39;%Y.%m.%d&#39;</span><br><span class="line">      unit: days</span><br><span class="line">      unit_count: 1</span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-comment">##merge_index_rule.yml  合并一天前的index</span><br><span class="hljs-attr">actions:</span><br>  <span class="hljs-attr">1:</span><br>    <span class="hljs-attr">action:</span> <span class="hljs-string">forcemerge</span><br>    <span class="hljs-attr">description:</span> <span class="hljs-string">"forcemerge pay index"</span><br>    <span class="hljs-attr">options:</span><br>      <span class="hljs-attr">ignore_empty_list:</span> <span class="hljs-literal">True</span><br>      <span class="hljs-attr">timeout_override:</span> <span class="hljs-number">50000</span><br>      <span class="hljs-attr">disable_action:</span> <span class="hljs-literal">False</span><br>      <span class="hljs-attr">max_num_segments:</span> <span class="hljs-number">1</span><br>      <span class="hljs-attr">delay:</span> <span class="hljs-number">120</span><br>    <span class="hljs-attr">filters:</span><br>    <span class="hljs-bullet">-</span> <span class="hljs-attr">filtertype:</span> <span class="hljs-string">pattern</span><br>      <span class="hljs-attr">kind:</span> <span class="hljs-string">regex</span><br>      <span class="hljs-attr">value:</span> <span class="hljs-string">'^(kbilogs-logics-pay-200|kbilogs-logics-pay-201|kbilogs-logics-pay-202|kbilogs-logics-pay-203|kbilogs-logics-pay-204).*$'</span><br>    <span class="hljs-bullet">-</span> <span class="hljs-attr">filtertype:</span> <span class="hljs-string">age</span><br>      <span class="hljs-attr">source:</span> <span class="hljs-string">creation_date</span><br>      <span class="hljs-attr">direction:</span> <span class="hljs-string">older</span><br>      <span class="hljs-attr">timestring:</span> <span class="hljs-string">'%Y.%m.%d'</span><br>      <span class="hljs-attr">unit:</span> <span class="hljs-string">days</span><br>      <span class="hljs-attr">unit_count:</span> <span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">## &#x2F;etc&#x2F;init.d&#x2F;curator-manage-index     启动脚本</span><br><span class="line"></span><br><span class="line">#!&#x2F;bin&#x2F;bash</span><br><span class="line"></span><br><span class="line">DOCKER_IMG&#x3D;&#39;curator:v5.5.4&#39;</span><br><span class="line">DOCKER_MOUNT_DIR&#x3D;&#39;&#x2F;data&#x2F;ES-curator&#x2F;curator-config&#x2F;:&#x2F;data&#x2F;ES-curator&#x2F;curator-config&#39;</span><br><span class="line">CURATOR_MAIN_CONFIG&#x3D;&#39;&#x2F;data&#x2F;ES-curator&#x2F;curator-config&#x2F;curator.yml&#39;</span><br><span class="line">CURATOR_ACTION_CLOSE_CONFIG&#x3D;&#39;&#x2F;data&#x2F;ES-curator&#x2F;curator-config&#x2F;close.yml&#39;</span><br><span class="line">CURATOR_ACTION_OPEN_CONFIG&#x3D;&#39;&#x2F;data&#x2F;ES-curator&#x2F;curator-config&#x2F;open_index_rule.yml&#39;</span><br><span class="line">CURATOR_ACTION_MERGE_CONFIG&#x3D;&#39;&#x2F;data&#x2F;ES-curator&#x2F;curator-config&#x2F;merge_index_rule.yml&#39;</span><br><span class="line">CURATOR_ACTION_DELETE_CONFIG&#x3D;&#39;&#x2F;data&#x2F;ES-curator&#x2F;curator-config&#x2F;delete.yml&#39;</span><br><span class="line"></span><br><span class="line">function close()&#123;</span><br><span class="line">docker run -d --rm -v $&#123;DOCKER_MOUNT_DIR&#125; $&#123;DOCKER_IMG&#125; --config $&#123;CURATOR_MAIN_CONFIG&#125; $&#123;CURATOR_ACTION_CLOSE_CONFIG&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function open()&#123;</span><br><span class="line">docker run -d --rm -v $&#123;DOCKER_MOUNT_DIR&#125; $&#123;DOCKER_IMG&#125; --config $&#123;CURATOR_MAIN_CONFIG&#125; $&#123;CURATOR_ACTION_OPEN_CONFIG&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function merge()&#123;</span><br><span class="line">docker run -d --rm -v $&#123;DOCKER_MOUNT_DIR&#125; $&#123;DOCKER_IMG&#125; --config $&#123;CURATOR_MAIN_CONFIG&#125; $&#123;CURATOR_ACTION_MERGE_CONFIG&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function delete()&#123;</span><br><span class="line">docker run -d --rm -v $&#123;DOCKER_MOUNT_DIR&#125; $&#123;DOCKER_IMG&#125; --config $&#123;CURATOR_MAIN_CONFIG&#125; $&#123;CURATOR_ACTION_DELETE_CONFIG&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">case &quot;$1&quot; in</span><br><span class="line">    close)</span><br><span class="line">    close</span><br><span class="line">    ;;</span><br><span class="line">    open)</span><br><span class="line">    echo &quot;Edit $&#123;CURATOR_ACTION_OPEN_CONFIG&#125; then run this comand again&quot;</span><br><span class="line">    open</span><br><span class="line">    ;;</span><br><span class="line">    merge)</span><br><span class="line">    merge</span><br><span class="line">    ;;</span><br><span class="line">    delete)</span><br><span class="line">    delete</span><br><span class="line">    ;;</span><br><span class="line">    cron)</span><br><span class="line">    delete &amp;&amp; merge &amp;&amp; close</span><br><span class="line">    ;;</span><br><span class="line">    *)</span><br><span class="line">    echo &quot;Usage: $0 close|open|merge|delete|cron&quot;</span><br><span class="line">esac</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">## /etc/init.d/curator-manage-index     启动脚本</span><br><br><span class="hljs-meta">#!/bin/bash</span><br><br>DOCKER_IMG=<span class="hljs-string">'curator:v5.5.4'</span><br>DOCKER_MOUNT_DIR=<span class="hljs-string">'/data/ES-curator/curator-config/:/data/ES-curator/curator-config'</span><br>CURATOR_MAIN_CONFIG=<span class="hljs-string">'/data/ES-curator/curator-config/curator.yml'</span><br>CURATOR_ACTION_CLOSE_CONFIG=<span class="hljs-string">'/data/ES-curator/curator-config/close.yml'</span><br>CURATOR_ACTION_OPEN_CONFIG=<span class="hljs-string">'/data/ES-curator/curator-config/open_index_rule.yml'</span><br>CURATOR_ACTION_MERGE_CONFIG=<span class="hljs-string">'/data/ES-curator/curator-config/merge_index_rule.yml'</span><br>CURATOR_ACTION_DELETE_CONFIG=<span class="hljs-string">'/data/ES-curator/curator-config/delete.yml'</span><br><br><span class="hljs-keyword">function</span> <span class="hljs-function"><span class="hljs-title">close</span></span>()&#123;<br>docker run -d --rm -v <span class="hljs-variable">$&#123;DOCKER_MOUNT_DIR&#125;</span> <span class="hljs-variable">$&#123;DOCKER_IMG&#125;</span> --config <span class="hljs-variable">$&#123;CURATOR_MAIN_CONFIG&#125;</span> <span class="hljs-variable">$&#123;CURATOR_ACTION_CLOSE_CONFIG&#125;</span><br>&#125;<br><br><span class="hljs-keyword">function</span> <span class="hljs-function"><span class="hljs-title">open</span></span>()&#123;<br>docker run -d --rm -v <span class="hljs-variable">$&#123;DOCKER_MOUNT_DIR&#125;</span> <span class="hljs-variable">$&#123;DOCKER_IMG&#125;</span> --config <span class="hljs-variable">$&#123;CURATOR_MAIN_CONFIG&#125;</span> <span class="hljs-variable">$&#123;CURATOR_ACTION_OPEN_CONFIG&#125;</span><br>&#125;<br><br><span class="hljs-keyword">function</span> <span class="hljs-function"><span class="hljs-title">merge</span></span>()&#123;<br>docker run -d --rm -v <span class="hljs-variable">$&#123;DOCKER_MOUNT_DIR&#125;</span> <span class="hljs-variable">$&#123;DOCKER_IMG&#125;</span> --config <span class="hljs-variable">$&#123;CURATOR_MAIN_CONFIG&#125;</span> <span class="hljs-variable">$&#123;CURATOR_ACTION_MERGE_CONFIG&#125;</span><br>&#125;<br><br><span class="hljs-keyword">function</span> <span class="hljs-function"><span class="hljs-title">delete</span></span>()&#123;<br>docker run -d --rm -v <span class="hljs-variable">$&#123;DOCKER_MOUNT_DIR&#125;</span> <span class="hljs-variable">$&#123;DOCKER_IMG&#125;</span> --config <span class="hljs-variable">$&#123;CURATOR_MAIN_CONFIG&#125;</span> <span class="hljs-variable">$&#123;CURATOR_ACTION_DELETE_CONFIG&#125;</span><br>&#125;<br><br><span class="hljs-keyword">case</span> <span class="hljs-string">"<span class="hljs-variable">$1</span>"</span> <span class="hljs-keyword">in</span><br>    close)<br>    close<br>    ;;<br>    open)<br>    <span class="hljs-built_in">echo</span> <span class="hljs-string">"Edit <span class="hljs-variable">$&#123;CURATOR_ACTION_OPEN_CONFIG&#125;</span> then run this comand again"</span><br>    open<br>    ;;<br>    merge)<br>    merge<br>    ;;<br>    delete)<br>    delete<br>    ;;<br>    cron)<br>    delete &amp;&amp; merge &amp;&amp; close<br>    ;;<br>    *)<br>    <span class="hljs-built_in">echo</span> <span class="hljs-string">"Usage: <span class="hljs-variable">$0</span> close|open|merge|delete|cron"</span><br><span class="hljs-keyword">esac</span><br></code></pre></td></tr></table></figure>
 
 <p>配置文件和启动脚本编写好后，将启动脚本挂到定时任务里，每天定时执行即可</p>
 
+      </section>
+
+      <section class="article-footer">
+        
+      </section>
+
+      <section class="article-navs">
+        
+<nav class="card-container card-article-nav">
+  <div class="card-wrap">
+    
+      <div id="article-nav-newer" class="card-item">
+        <article>
+          
+          <a class="card-link article-nav-link" href="/2019/01/14/36_2018%E5%B7%A5%E4%BD%9C%E6%80%BB%E7%BB%93/"></a>
+          <strong class="article-nav-caption">Newer</strong>
+          <p class="article-nav-title">
+            
+              2018工作回顾
+            
+          </p>
+        </article>
+      </div>
+    
+    
+      <div id="article-nav-older" class="card-item">
+        <article>
+          
+          <a class="card-link article-nav-link" href="/2019/01/10/34_jumpserver%E6%9D%83%E9%99%90%E5%88%92%E5%88%86/"></a>
+          <strong class="article-nav-caption">Older</strong>
+          <p class="article-nav-title">
+            
+              jumpserver权限划分
+            
+          </p>
+        </article>
+      </div>
+    
+  </div>
+</nav>
+
+      </section>
     </div>
+  </article>
+</div>
+
+    <!-- footer container -->
+<footer id="footer" class="footer">
+  <div class="footer-container">
+    
+    <!-- <p>&copy; 2020 <a href="/" target="_blank">zhaodan</a></p> -->
 
     
-        <hr class="fhr">
-        <div id="vcomments"></div>
+      <p id="hitokoto"></p>
+      <script src="https://v1.hitokoto.cn/?c=h&amp;encode=js&select=%23hitokoto" defer></script>
     
-</div>
-    <div class="footer" id="footer">
-    <p>Copyright © 2020 <a class="flink" href="https://hexo.io" target="_blank" rel="noopener">Hexo</a>-<a class="flink" href="https://github.com/sanjinhub/hexo-theme-geek" target="_blank" rel="noopener">Geek</a>.
-        <label class="el-switch el-switch-green el-switch-sm" style="vertical-align: sub;">
-            <input type="checkbox" name="switch" id="update_style">
-            <span class="el-switch-style"></span>
-        </label>
-<!--         <script type="text/javascript">
-        var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");
-        document.write(unescape("%3Cspan id='cnzz_stat_icon_1278548644'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/stat.php%3Fid%3D1278548644%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
-        </script> -->
-    </p>
-</div>
-<input type="hidden" id="web_style" value="black">
-<input type="hidden" id="valine_appid" value="nmcd4VgylfORjevWz6UEoat3-9Nh9j0Va">
-<input type="hidden" id="valine_appKey" value="wyWWI1qMf6w1mv1KpT1D0HeC">
 
-<script src="/libs/jquery.min.js"></script>
+    
+
+    <p>&copy; 2019 | zhaodan | 加油</p>
+  </div>
+</footer>
+
+  </div>
+
+  <div class="back-to-top-fixed">
+    <svg class="icon icon-back-to-top" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M725.333333 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8l-213.333333-213.333333c-17.066667-17.066667-17.066667-42.666667 0-59.733333s42.666667-17.066667 59.733333 0l213.333333 213.333333c17.066667 17.066667 17.066667 42.666667 0 59.733333C746.666667 422.4 738.133333 426.666667 725.333333 426.666667z"></path>
+  <path d="M298.666667 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8-17.066667-17.066667-17.066667-42.666667 0-59.733333l213.333333-213.333333c17.066667-17.066667 42.666667-17.066667 59.733333 0s17.066667 42.666667 0 59.733333l-213.333333 213.333333C320 422.4 311.466667 426.666667 298.666667 426.666667z"></path>
+  <path d="M512 896c-25.6 0-42.666667-17.066667-42.666667-42.666667L469.333333 170.666667c0-25.6 17.066667-42.666667 42.666667-42.666667s42.666667 17.066667 42.666667 42.666667l0 682.666667C554.666667 878.933333 537.6 896 512 896z"></path>
+</svg> 
+  </div>
+
+  
+  
+<!-- valine 评论 start -->
+<script type="text/javascript" src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script type="text/javascript" src='//unpkg.com/valine/dist/Valine.min.js'></script>
+<script type="text/javascript">
+  new Valine({
+    el: "#valine_thread",
+    appId: "nmcd4VgylfORjevWz6UEoat3-9Nh9j0Va",
+    appKey: "wyWWI1qMf6w1mv1KpT1D0HeC",
+    avatar: "mm",
+    placeholder: "随便说点什么叭～",
+    notify: true,
+    visitor: true,
+    pageSize: 10,
+  });
+</script>
+<!-- valine 评论 end -->
 
 
-<script src="/libs/highlight/highlight.pack.js"></script>
 
-<script src='//cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js'></script>
+  <!-- aplayer 音频 start -->
+  
+<link rel="stylesheet" href="/lib/APlayer.min.css">
 
-<script src="/js/js.js"></script>
+  
+<script src="/lib/APlayer.min.js"></script>
 
-<style type="text/css">
-.v * {
-    color: #698fca;
+  <script type="text/javascript">
+    const aplayer = document.querySelectorAll(".aplayer");
+    aplayer && initaplayer(aplayer);
+    function initaplayer(els) {
+      let elsArr = Array.from(els);
+      elsArr.forEach(el => {
+        new APlayer({
+          container: el,
+          audio: { ...el.dataset },
+          theme: "#b7daff",
+          lrcType: 3,
+          autoplay: false,
+          loop: false,
+          mutex: true,
+        });
+      });
+    }
+  </script>
+  <!-- aplayer 音频 end -->
+  
+
+<!-- dplayer 视频 start -->
+
+<link rel="stylesheet" href="/lib/DPlayer.min.css">
+
+
+<script src="/lib/DPlayer.min.js"></script>
+
+<script type="text/javascript">
+  const dplayer = document.querySelectorAll(".dplayer");
+  dplayer && initDPlayer(dplayer);
+  function initDPlayer(els) {
+    let elsArr = Array.from(els);
+    elsArr.forEach(el => {
+      let url = el.dataset.url;
+      let cover = el.dataset.cover;
+      new DPlayer({
+        container: el,
+        video: { url: url, pic: cover },
+        theme: "#b7daff",
+        autoplay: false,
+        loop: false,
+        mutex: true,
+      });
+    });
+  }
+</script>
+<!-- dplayer 视频 end -->
+
+
+<!-- waterfall 瀑布流 start -->
+
+<script src="/lib/waterfall.min.js"></script>
+
+<script type="text/javascript">
+
+const waterfalls = document.querySelectorAll(".waterfall-container");
+
+if (waterfalls && waterfalls.length > 0) {
+  waterfalls.forEach((waterfall, index) => {
+    let cls = "waterfall-container-" + index;
+    waterfall.classList.add(cls);
+    initWaterfall(cls, waterfall);
+  });
 }
 
-.v .vlist .vcard .vhead .vsys {
-    color: #3a3e4a;
+function initWaterfall(selector, el) {
+  const options = {};
+  if (Object.keys(el.dataset).length > 0) {
+    for (let k in el.dataset) {
+      options[k] = el.dataset[k];
+    }
+  }
+  waterfall(`.${selector}`, options);
 }
+</script>
+<!-- waterfall 瀑布流 end -->
 
-.v .vlist .vcard .vh .vmeta .vat {
-    color: #638fd5;
-}
 
-.v .vlist .vcard .vhead .vnick {
-    color: #6ba1ff;
-}
+  <!-- zoom start -->
+  
+<script src="/lib/zoom.min.js"></script>
 
-.v a {
-    color: #8696b1;
-}
+  <script type="text/javascript">
+    document.querySelector(".article-content") && zoom(".article-content");
+  </script>
+  <!-- zoom end -->
+  
 
-.v .vlist .vcard .vhead .vnick:hover {
-    color: #669bfc;
-}
-</style>
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+<script src="/js/script.js"></script>
+
+  
+  <!-- 尾部用户自定义相关内容 -->
+
 </body>
-
 </html>

@@ -1,107 +1,353 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="renderer" content="webkit">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <title>
-        面对压迫、掠夺和孤单，我们的回答是生活
-    </title>
-    
-<link rel="stylesheet" href="/libs/highlight/styles/monokai-sublime.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    
-<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+  
 
-    
+  
+
+  
+    <meta name="author" content="zhaodan">
+  
+
+  
+    <meta name="copyright" content="zhaodan">
+  
+
+  
+
+  <title>关于grafana collectd  解决合服后collectd有缓存的问题 | </title>
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+    <link href="https://cdn.bootcss.com/highlight.js/9.15.6/styles/monokai.min.css" rel="stylesheet">
+  
+
+  
 <link rel="stylesheet" href="/css/style.css">
 
 <meta name="generator" content="Hexo 4.2.0"></head>
-
-<body id="bodyx">
-    <div class="hd posts">
-    <a href="/index.html"><i class="fa fa-reply replay-btn" aria-hidden="true"></i></a>
-    <div class="post-title">
-        <p>
-            关于grafana collectd  解决合服后collectd有缓存的问题
-        </p>
-        <hr>
+<body>
+  <div class="root-container">
+    <!-- navbar -->
+<nav class="navbar">
+  <div class="navbar-content">
+    <!-- logo -->
+    <div class="navbar-logo">
+      <a href="/">
+        
+          
+        
+      </a>
     </div>
-    <div class="post-content">
+    <!-- link -->
+    <div class="navbar-link">
+      <div class="navbar-btn">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <ul class="navbar-list">
+        
+          <li class="navbar-list-item"><a href="/">主页</a></li>
+        
+          <li class="navbar-list-item"><a href="/about">关于</a></li>
+        
+          <li class="navbar-list-item"><a href="/archives">归档</a></li>
+        
+          <li class="navbar-list-item"><a href="/messages">留言板</a></li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    
+<!-- header container -->
+<header class="header-container post">
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+    <div class="header-content">
+      <div class="post-image" style="background-image: url(https://i.postimg.cc/kXYG7QKj/dengdeng.jpg)"></div>
+      <div class="post-text">
+        <div class="type-wrap">
+          
+        </div>
+        <h1 class="title-wrap">关于grafana collectd  解决合服后collectd有缓存的问题</h1>
+        <h2 class="title-sub-wrap">
+          <strong>zhaodan</strong>
+          <span>发布于</span>
+          
+  <a href="javascript:;" class="article-date">
+    <time datetime="2019-01-08T16:00:00.000Z" itemprop="datePublished">2019-01-09</time>
+  </a>
+
+        </h2>
+      </div>
+    </div>
+  
+
+  
+  
+
+  </header>
+
+    <!-- 文章 -->
+
+<!-- 文章内容 -->
+
+<div class="body-container">
+  <article class="content-container article-container">
+    <div class="article-content">
+      
+      
+
+      <section class="article-entry">
         <p>监控流程：<br>Collectd ——&gt; carbonrelay  ——&gt; carboncache2 ——&gt; grafana</p>
 <p>问题：合服后监控一个不存在的进程，监控一直报警，carboncache下的配置删除后重新自动生成<br>原因：collectd 没有真正停止，一直在发送缓存数据<br>解决办法：停止机器上的collectd服务，删除graphite数据</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">[root@ip collectd.d]# &#x2F;etc&#x2F;init.d&#x2F;collectd stop</span><br><span class="line">Stopping collectd:                                         [  OK  ]</span><br><span class="line">[root@ip collectd.d]# ps axu | grep coll</span><br><span class="line">zabbix    3786  0.0  0.0 119276  1720 ?        S    Oct10  15:41 &#x2F;usr&#x2F;sbin&#x2F;zabbix_agentd: collector [idle 1 sec]</span><br><span class="line">root     21881  0.0  0.0 774200  1636 ?        Ssl  Oct10  60:44 collectd</span><br><span class="line">root     22110  0.0  0.0   4344   260 ?        Ss   Oct10   0:00 collectdmon -P &#x2F;var&#x2F;run&#x2F;collectdmon.pid -c &#x2F;usr&#x2F;sbin&#x2F;collectd -- -C &#x2F;etc&#x2F;collectd.conf</span><br><span class="line">root     22111  0.0  0.0   4344   260 ?        Ss   Oct10   0:00 collectdmon -P &#x2F;var&#x2F;run&#x2F;collectdmon.pid -c &#x2F;usr&#x2F;sbin&#x2F;collectd -- -C &#x2F;etc&#x2F;collectd.conf</span><br><span class="line">root     22122  0.0  0.0   4344   260 ?        Ss   Oct10   0:00 collectdmon -P &#x2F;var&#x2F;run&#x2F;collectdmon.pid -c &#x2F;usr&#x2F;sbin&#x2F;collectd -- -C &#x2F;etc&#x2F;collectd.conf</span><br><span class="line">root     22168  0.0  0.0   4344   264 ?        Ss   Oct10   0:00 collectdmon -P &#x2F;var&#x2F;run&#x2F;collectdmon.pid -c &#x2F;usr&#x2F;sbin&#x2F;collectd -- -C &#x2F;etc&#x2F;collectd.conf</span><br><span class="line">root     22172  0.0  0.0 774200  2888 ?        Sl   Oct10  76:50 &#x2F;usr&#x2F;sbin&#x2F;collectd -C &#x2F;etc&#x2F;collectd.conf -f</span><br><span class="line">root     22176  0.0  0.0 774200  2812 ?        Sl   Oct10  76:02 &#x2F;usr&#x2F;sbin&#x2F;collectd -C &#x2F;etc&#x2F;collectd.conf -f</span><br><span class="line">root     22204  0.0  0.0 774200  2868 ?        Sl   Oct10  70:57 &#x2F;usr&#x2F;sbin&#x2F;collectd -C &#x2F;etc&#x2F;collectd.conf -f</span><br><span class="line">root     22234  0.0  0.0 774200  2848 ?        Sl   Oct10  72:51 &#x2F;usr&#x2F;sbin&#x2F;collectd -C &#x2F;etc&#x2F;collectd.conf -f</span><br><span class="line">[root@ip collectd.d]# &#x2F;etc&#x2F;init.d&#x2F;collectd stop</span><br><span class="line">Stopping collectd:                                         [FAILED]</span><br><span class="line">[root@ip collectd.d]#</span><br><span class="line">[root@ip collectd.d]# ps axu | grep coll</span><br><span class="line">zabbix    3786  0.0  0.0 119276  1720 ?        S    Oct10  15:41 &#x2F;usr&#x2F;sbin&#x2F;zabbix_agentd: collector [idle 1 sec]</span><br><span class="line">root      4648  0.0  0.0 110460   856 pts&#x2F;0    S+   01:34   0:00 grep coll</span><br><span class="line">root     21881  0.0  0.0 774200  1636 ?        Ssl  Oct10  60:44 collectd</span><br><span class="line">root     22110  0.0  0.0   4344   260 ?        Ss   Oct10   0:00 collectdmon -P &#x2F;var&#x2F;run&#x2F;collectdmon.pid -c &#x2F;usr&#x2F;sbin&#x2F;collectd -- -C &#x2F;etc&#x2F;collectd.conf</span><br><span class="line">root     22111  0.0  0.0   4344   260 ?        Ss   Oct10   0:00 collectdmon -P &#x2F;var&#x2F;run&#x2F;collectdmon.pid -c &#x2F;usr&#x2F;sbin&#x2F;collectd -- -C &#x2F;etc&#x2F;collectd.conf</span><br><span class="line">root     22122  0.0  0.0   4344   260 ?        Ss   Oct10   0:00 collectdmon -P &#x2F;var&#x2F;run&#x2F;collectdmon.pid -c &#x2F;usr&#x2F;sbin&#x2F;collectd -- -C &#x2F;etc&#x2F;collectd.conf</span><br><span class="line">root     22168  0.0  0.0   4344   264 ?        Ss   Oct10   0:00 collectdmon -P &#x2F;var&#x2F;run&#x2F;collectdmon.pid -c &#x2F;usr&#x2F;sbin&#x2F;collectd -- -C &#x2F;etc&#x2F;collectd.conf</span><br><span class="line">root     22172  0.0  0.0 774200  2888 ?        Sl   Oct10  76:50 &#x2F;usr&#x2F;sbin&#x2F;collectd -C &#x2F;etc&#x2F;collectd.conf -f</span><br><span class="line">root     22176  0.0  0.0 774200  2812 ?        Sl   Oct10  76:02 &#x2F;usr&#x2F;sbin&#x2F;collectd -C &#x2F;etc&#x2F;collectd.conf -f</span><br><span class="line">root     22204  0.0  0.0 774200  2868 ?        Sl   Oct10  70:57 &#x2F;usr&#x2F;sbin&#x2F;collectd -C &#x2F;etc&#x2F;collectd.conf -f</span><br><span class="line">root     22234  0.0  0.0 774200  2848 ?        Sl   Oct10  72:51 &#x2F;usr&#x2F;sbin&#x2F;collectd -C &#x2F;etc&#x2F;collectd.conf -f</span><br><span class="line">[root@ip collectd.d]# ps axu | grep coll |awk &#39;&#123;print $2&#125;&#39; | xargs kill -9</span><br><span class="line">kill: sending signal to 4650 failed: No such process</span><br><span class="line">[root@ip collectd.d]# ps axu | grep coll</span><br><span class="line">root      4656  0.0  0.0 110460   856 pts&#x2F;0    S+   01:34   0:00 grep coll</span><br></pre></td></tr></table></figure>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs angelscript">[<span class="hljs-symbol">root@</span>ip collectd.d]# /etc/init.d/collectd stop<br>Stopping collectd:                                         [  OK  ]<br>[<span class="hljs-symbol">root@</span>ip collectd.d]# ps axu | grep coll<br>zabbix    <span class="hljs-number">3786</span>  <span class="hljs-number">0.0</span>  <span class="hljs-number">0.0</span> <span class="hljs-number">119276</span>  <span class="hljs-number">1720</span> ?        S    Oct10  <span class="hljs-number">15</span>:<span class="hljs-number">41</span> /usr/sbin/zabbix_agentd: collector [idle <span class="hljs-number">1</span> sec]<br>root     <span class="hljs-number">21881</span>  <span class="hljs-number">0.0</span>  <span class="hljs-number">0.0</span> <span class="hljs-number">774200</span>  <span class="hljs-number">1636</span> ?        Ssl  Oct10  <span class="hljs-number">60</span>:<span class="hljs-number">44</span> collectd<br>root     <span class="hljs-number">22110</span>  <span class="hljs-number">0.0</span>  <span class="hljs-number">0.0</span>   <span class="hljs-number">4344</span>   <span class="hljs-number">260</span> ?        Ss   Oct10   <span class="hljs-number">0</span>:<span class="hljs-number">00</span> collectdmon -P /var/run/collectdmon.pid -c /usr/sbin/collectd -- -C /etc/collectd.conf<br>root     <span class="hljs-number">22111</span>  <span class="hljs-number">0.0</span>  <span class="hljs-number">0.0</span>   <span class="hljs-number">4344</span>   <span class="hljs-number">260</span> ?        Ss   Oct10   <span class="hljs-number">0</span>:<span class="hljs-number">00</span> collectdmon -P /var/run/collectdmon.pid -c /usr/sbin/collectd -- -C /etc/collectd.conf<br>root     <span class="hljs-number">22122</span>  <span class="hljs-number">0.0</span>  <span class="hljs-number">0.0</span>   <span class="hljs-number">4344</span>   <span class="hljs-number">260</span> ?        Ss   Oct10   <span class="hljs-number">0</span>:<span class="hljs-number">00</span> collectdmon -P /var/run/collectdmon.pid -c /usr/sbin/collectd -- -C /etc/collectd.conf<br>root     <span class="hljs-number">22168</span>  <span class="hljs-number">0.0</span>  <span class="hljs-number">0.0</span>   <span class="hljs-number">4344</span>   <span class="hljs-number">264</span> ?        Ss   Oct10   <span class="hljs-number">0</span>:<span class="hljs-number">00</span> collectdmon -P /var/run/collectdmon.pid -c /usr/sbin/collectd -- -C /etc/collectd.conf<br>root     <span class="hljs-number">22172</span>  <span class="hljs-number">0.0</span>  <span class="hljs-number">0.0</span> <span class="hljs-number">774200</span>  <span class="hljs-number">2888</span> ?        Sl   Oct10  <span class="hljs-number">76</span>:<span class="hljs-number">50</span> /usr/sbin/collectd -C /etc/collectd.conf -f<br>root     <span class="hljs-number">22176</span>  <span class="hljs-number">0.0</span>  <span class="hljs-number">0.0</span> <span class="hljs-number">774200</span>  <span class="hljs-number">2812</span> ?        Sl   Oct10  <span class="hljs-number">76</span>:<span class="hljs-number">02</span> /usr/sbin/collectd -C /etc/collectd.conf -f<br>root     <span class="hljs-number">22204</span>  <span class="hljs-number">0.0</span>  <span class="hljs-number">0.0</span> <span class="hljs-number">774200</span>  <span class="hljs-number">2868</span> ?        Sl   Oct10  <span class="hljs-number">70</span>:<span class="hljs-number">57</span> /usr/sbin/collectd -C /etc/collectd.conf -f<br>root     <span class="hljs-number">22234</span>  <span class="hljs-number">0.0</span>  <span class="hljs-number">0.0</span> <span class="hljs-number">774200</span>  <span class="hljs-number">2848</span> ?        Sl   Oct10  <span class="hljs-number">72</span>:<span class="hljs-number">51</span> /usr/sbin/collectd -C /etc/collectd.conf -f<br>[<span class="hljs-symbol">root@</span>ip collectd.d]# /etc/init.d/collectd stop<br>Stopping collectd:                                         [FAILED]<br>[<span class="hljs-symbol">root@</span>ip collectd.d]#<br>[<span class="hljs-symbol">root@</span>ip collectd.d]# ps axu | grep coll<br>zabbix    <span class="hljs-number">3786</span>  <span class="hljs-number">0.0</span>  <span class="hljs-number">0.0</span> <span class="hljs-number">119276</span>  <span class="hljs-number">1720</span> ?        S    Oct10  <span class="hljs-number">15</span>:<span class="hljs-number">41</span> /usr/sbin/zabbix_agentd: collector [idle <span class="hljs-number">1</span> sec]<br>root      <span class="hljs-number">4648</span>  <span class="hljs-number">0.0</span>  <span class="hljs-number">0.0</span> <span class="hljs-number">110460</span>   <span class="hljs-number">856</span> pts/<span class="hljs-number">0</span>    S+   <span class="hljs-number">01</span>:<span class="hljs-number">34</span>   <span class="hljs-number">0</span>:<span class="hljs-number">00</span> grep coll<br>root     <span class="hljs-number">21881</span>  <span class="hljs-number">0.0</span>  <span class="hljs-number">0.0</span> <span class="hljs-number">774200</span>  <span class="hljs-number">1636</span> ?        Ssl  Oct10  <span class="hljs-number">60</span>:<span class="hljs-number">44</span> collectd<br>root     <span class="hljs-number">22110</span>  <span class="hljs-number">0.0</span>  <span class="hljs-number">0.0</span>   <span class="hljs-number">4344</span>   <span class="hljs-number">260</span> ?        Ss   Oct10   <span class="hljs-number">0</span>:<span class="hljs-number">00</span> collectdmon -P /var/run/collectdmon.pid -c /usr/sbin/collectd -- -C /etc/collectd.conf<br>root     <span class="hljs-number">22111</span>  <span class="hljs-number">0.0</span>  <span class="hljs-number">0.0</span>   <span class="hljs-number">4344</span>   <span class="hljs-number">260</span> ?        Ss   Oct10   <span class="hljs-number">0</span>:<span class="hljs-number">00</span> collectdmon -P /var/run/collectdmon.pid -c /usr/sbin/collectd -- -C /etc/collectd.conf<br>root     <span class="hljs-number">22122</span>  <span class="hljs-number">0.0</span>  <span class="hljs-number">0.0</span>   <span class="hljs-number">4344</span>   <span class="hljs-number">260</span> ?        Ss   Oct10   <span class="hljs-number">0</span>:<span class="hljs-number">00</span> collectdmon -P /var/run/collectdmon.pid -c /usr/sbin/collectd -- -C /etc/collectd.conf<br>root     <span class="hljs-number">22168</span>  <span class="hljs-number">0.0</span>  <span class="hljs-number">0.0</span>   <span class="hljs-number">4344</span>   <span class="hljs-number">264</span> ?        Ss   Oct10   <span class="hljs-number">0</span>:<span class="hljs-number">00</span> collectdmon -P /var/run/collectdmon.pid -c /usr/sbin/collectd -- -C /etc/collectd.conf<br>root     <span class="hljs-number">22172</span>  <span class="hljs-number">0.0</span>  <span class="hljs-number">0.0</span> <span class="hljs-number">774200</span>  <span class="hljs-number">2888</span> ?        Sl   Oct10  <span class="hljs-number">76</span>:<span class="hljs-number">50</span> /usr/sbin/collectd -C /etc/collectd.conf -f<br>root     <span class="hljs-number">22176</span>  <span class="hljs-number">0.0</span>  <span class="hljs-number">0.0</span> <span class="hljs-number">774200</span>  <span class="hljs-number">2812</span> ?        Sl   Oct10  <span class="hljs-number">76</span>:<span class="hljs-number">02</span> /usr/sbin/collectd -C /etc/collectd.conf -f<br>root     <span class="hljs-number">22204</span>  <span class="hljs-number">0.0</span>  <span class="hljs-number">0.0</span> <span class="hljs-number">774200</span>  <span class="hljs-number">2868</span> ?        Sl   Oct10  <span class="hljs-number">70</span>:<span class="hljs-number">57</span> /usr/sbin/collectd -C /etc/collectd.conf -f<br>root     <span class="hljs-number">22234</span>  <span class="hljs-number">0.0</span>  <span class="hljs-number">0.0</span> <span class="hljs-number">774200</span>  <span class="hljs-number">2848</span> ?        Sl   Oct10  <span class="hljs-number">72</span>:<span class="hljs-number">51</span> /usr/sbin/collectd -C /etc/collectd.conf -f<br>[<span class="hljs-symbol">root@</span>ip collectd.d]# ps axu | grep coll |awk <span class="hljs-string">'&#123;print $2&#125;'</span> | xargs kill <span class="hljs-number">-9</span><br>kill: sending signal to <span class="hljs-number">4650</span> failed: No such process<br>[<span class="hljs-symbol">root@</span>ip collectd.d]# ps axu | grep coll<br>root      <span class="hljs-number">4656</span>  <span class="hljs-number">0.0</span>  <span class="hljs-number">0.0</span> <span class="hljs-number">110460</span>   <span class="hljs-number">856</span> pts/<span class="hljs-number">0</span>    S+   <span class="hljs-number">01</span>:<span class="hljs-number">34</span>   <span class="hljs-number">0</span>:<span class="hljs-number">00</span> grep coll<br></code></pre></td></tr></table></figure>
 
 
 
 <hr>
 <p>####记collectd插件<br>线上数据库压力比较大，导致玩家掉线，故需要一个可以监控到连接数的图表，collectd刚好有这个插件，监控某一个端口的TCP连接数<br>添加一个端口连接数的配置文件，（还需要将collectd.conf配置文件中的tcpconns插件打开）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">监控单个端口：</span><br><span class="line">[root@ip collectd.d]# cat ardb_port.conf</span><br><span class="line">&lt;Plugin &quot;tcpconns&quot;&gt;</span><br><span class="line">  ListeningPorts false</span><br><span class="line">  LocalPort &quot;16379&quot;</span><br><span class="line">  RemotePort &quot;16379&quot;</span><br><span class="line">&lt;&#x2F;Plugin&gt;</span><br><span class="line"></span><br><span class="line">监控多个端口：</span><br><span class="line">[root@ip collectd.d]# cat ardb_tcpconns.conf</span><br><span class="line">&lt;Plugin &quot;tcpconns&quot;&gt;</span><br><span class="line">  ListeningPorts false</span><br><span class="line">  LocalPort &quot;16379&quot;</span><br><span class="line">  LocalPort &quot;6379&quot;</span><br><span class="line">&lt;&#x2F;Plugin&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs stata">监控单个端口：<br>[root@ip collectd.<span class="hljs-keyword">d</span>]# <span class="hljs-keyword">cat</span> ardb_port.<span class="hljs-keyword">conf</span><br>&lt;<span class="hljs-keyword">Plugin</span> <span class="hljs-string">"tcpconns"</span>&gt;<br>  ListeningPorts false<br>  LocalPort <span class="hljs-string">"16379"</span><br>  RemotePort <span class="hljs-string">"16379"</span><br>&lt;/<span class="hljs-keyword">Plugin</span>&gt;<br><br>监控多个端口：<br>[root@ip collectd.<span class="hljs-keyword">d</span>]# <span class="hljs-keyword">cat</span> ardb_tcpconns.<span class="hljs-keyword">conf</span><br>&lt;<span class="hljs-keyword">Plugin</span> <span class="hljs-string">"tcpconns"</span>&gt;<br>  ListeningPorts false<br>  LocalPort <span class="hljs-string">"16379"</span><br>  LocalPort <span class="hljs-string">"6379"</span><br>&lt;/<span class="hljs-keyword">Plugin</span>&gt;<br></code></pre></td></tr></table></figure>
 <hr>
 <p>解决collectd监控redis数据库获取redis info问题</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">collectd监控redis的信息需要装额外的Python插件，安装了插件后查看会有Python模块，不装这个插件会报错</span><br><span class="line"># yum install collectd-python.x86_64</span><br></pre></td></tr></table></figure>
+<figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs vala">collectd监控redis的信息需要装额外的Python插件，安装了插件后查看会有Python模块，不装这个插件会报错<br><span class="hljs-meta"># yum install collectd-python.x86_64</span><br></code></pre></td></tr></table></figure>
 <p><a href="https://postimg.cc/nX13V6k0" target="_blank" rel="noopener"><img src="https://i.postimg.cc/y8MtjKS4/collectd-python.png" alt="collectd-python.png"></a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">下载redis Python插件到plugins目录下，Python插件地址：https:&#x2F;&#x2F;github.com&#x2F;powdahound&#x2F;redis-collectd-plugin</span><br></pre></td></tr></table></figure>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">下载redis Python插件到plugins目录下，Python插件地址：https:<span class="hljs-regexp">//gi</span>thub.com<span class="hljs-regexp">/powdahound/</span>redis-collectd-plugin<br></code></pre></td></tr></table></figure>
 <p><a href="https://postimg.cc/k2Cjmnx2" target="_blank" rel="noopener"><img src="https://i.postimg.cc/Sx2HcRRf/collectd-redis.png" alt="collectd-redis.png"></a></p>
 
+      </section>
+
+      <section class="article-footer">
+        
+      </section>
+
+      <section class="article-navs">
+        
+<nav class="card-container card-article-nav">
+  <div class="card-wrap">
+    
+      <div id="article-nav-newer" class="card-item">
+        <article>
+          
+          <a class="card-link article-nav-link" href="/2019/01/10/34_jumpserver%E6%9D%83%E9%99%90%E5%88%92%E5%88%86/"></a>
+          <strong class="article-nav-caption">Newer</strong>
+          <p class="article-nav-title">
+            
+              jumpserver权限划分
+            
+          </p>
+        </article>
+      </div>
+    
+    
+      <div id="article-nav-older" class="card-item">
+        <article>
+          
+          <a class="card-link article-nav-link" href="/2019/01/02/32_mac%E4%B8%8B%E9%85%8D%E7%BD%AErz/"></a>
+          <strong class="article-nav-caption">Older</strong>
+          <p class="article-nav-title">
+            
+              mac下配置rz,sz工具
+            
+          </p>
+        </article>
+      </div>
+    
+  </div>
+</nav>
+
+      </section>
     </div>
+  </article>
+</div>
+
+    <!-- footer container -->
+<footer id="footer" class="footer">
+  <div class="footer-container">
+    
+    <!-- <p>&copy; 2020 <a href="/" target="_blank">zhaodan</a></p> -->
 
     
-        <hr class="fhr">
-        <div id="vcomments"></div>
+      <p id="hitokoto"></p>
+      <script src="https://v1.hitokoto.cn/?c=h&amp;encode=js&select=%23hitokoto" defer></script>
     
-</div>
-    <div class="footer" id="footer">
-    <p>Copyright © 2020 <a class="flink" href="https://hexo.io" target="_blank" rel="noopener">Hexo</a>-<a class="flink" href="https://github.com/sanjinhub/hexo-theme-geek" target="_blank" rel="noopener">Geek</a>.
-        <label class="el-switch el-switch-green el-switch-sm" style="vertical-align: sub;">
-            <input type="checkbox" name="switch" id="update_style">
-            <span class="el-switch-style"></span>
-        </label>
-<!--         <script type="text/javascript">
-        var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");
-        document.write(unescape("%3Cspan id='cnzz_stat_icon_1278548644'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/stat.php%3Fid%3D1278548644%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
-        </script> -->
-    </p>
-</div>
-<input type="hidden" id="web_style" value="black">
-<input type="hidden" id="valine_appid" value="nmcd4VgylfORjevWz6UEoat3-9Nh9j0Va">
-<input type="hidden" id="valine_appKey" value="wyWWI1qMf6w1mv1KpT1D0HeC">
 
-<script src="/libs/jquery.min.js"></script>
+    
+
+    <p>&copy; 2019 | zhaodan | 加油</p>
+  </div>
+</footer>
+
+  </div>
+
+  <div class="back-to-top-fixed">
+    <svg class="icon icon-back-to-top" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M725.333333 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8l-213.333333-213.333333c-17.066667-17.066667-17.066667-42.666667 0-59.733333s42.666667-17.066667 59.733333 0l213.333333 213.333333c17.066667 17.066667 17.066667 42.666667 0 59.733333C746.666667 422.4 738.133333 426.666667 725.333333 426.666667z"></path>
+  <path d="M298.666667 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8-17.066667-17.066667-17.066667-42.666667 0-59.733333l213.333333-213.333333c17.066667-17.066667 42.666667-17.066667 59.733333 0s17.066667 42.666667 0 59.733333l-213.333333 213.333333C320 422.4 311.466667 426.666667 298.666667 426.666667z"></path>
+  <path d="M512 896c-25.6 0-42.666667-17.066667-42.666667-42.666667L469.333333 170.666667c0-25.6 17.066667-42.666667 42.666667-42.666667s42.666667 17.066667 42.666667 42.666667l0 682.666667C554.666667 878.933333 537.6 896 512 896z"></path>
+</svg> 
+  </div>
+
+  
+  
+<!-- valine 评论 start -->
+<script type="text/javascript" src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script type="text/javascript" src='//unpkg.com/valine/dist/Valine.min.js'></script>
+<script type="text/javascript">
+  new Valine({
+    el: "#valine_thread",
+    appId: "nmcd4VgylfORjevWz6UEoat3-9Nh9j0Va",
+    appKey: "wyWWI1qMf6w1mv1KpT1D0HeC",
+    avatar: "mm",
+    placeholder: "随便说点什么叭～",
+    notify: true,
+    visitor: true,
+    pageSize: 10,
+  });
+</script>
+<!-- valine 评论 end -->
 
 
-<script src="/libs/highlight/highlight.pack.js"></script>
 
-<script src='//cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js'></script>
+  <!-- aplayer 音频 start -->
+  
+<link rel="stylesheet" href="/lib/APlayer.min.css">
 
-<script src="/js/js.js"></script>
+  
+<script src="/lib/APlayer.min.js"></script>
 
-<style type="text/css">
-.v * {
-    color: #698fca;
+  <script type="text/javascript">
+    const aplayer = document.querySelectorAll(".aplayer");
+    aplayer && initaplayer(aplayer);
+    function initaplayer(els) {
+      let elsArr = Array.from(els);
+      elsArr.forEach(el => {
+        new APlayer({
+          container: el,
+          audio: { ...el.dataset },
+          theme: "#b7daff",
+          lrcType: 3,
+          autoplay: false,
+          loop: false,
+          mutex: true,
+        });
+      });
+    }
+  </script>
+  <!-- aplayer 音频 end -->
+  
+
+<!-- dplayer 视频 start -->
+
+<link rel="stylesheet" href="/lib/DPlayer.min.css">
+
+
+<script src="/lib/DPlayer.min.js"></script>
+
+<script type="text/javascript">
+  const dplayer = document.querySelectorAll(".dplayer");
+  dplayer && initDPlayer(dplayer);
+  function initDPlayer(els) {
+    let elsArr = Array.from(els);
+    elsArr.forEach(el => {
+      let url = el.dataset.url;
+      let cover = el.dataset.cover;
+      new DPlayer({
+        container: el,
+        video: { url: url, pic: cover },
+        theme: "#b7daff",
+        autoplay: false,
+        loop: false,
+        mutex: true,
+      });
+    });
+  }
+</script>
+<!-- dplayer 视频 end -->
+
+
+<!-- waterfall 瀑布流 start -->
+
+<script src="/lib/waterfall.min.js"></script>
+
+<script type="text/javascript">
+
+const waterfalls = document.querySelectorAll(".waterfall-container");
+
+if (waterfalls && waterfalls.length > 0) {
+  waterfalls.forEach((waterfall, index) => {
+    let cls = "waterfall-container-" + index;
+    waterfall.classList.add(cls);
+    initWaterfall(cls, waterfall);
+  });
 }
 
-.v .vlist .vcard .vhead .vsys {
-    color: #3a3e4a;
+function initWaterfall(selector, el) {
+  const options = {};
+  if (Object.keys(el.dataset).length > 0) {
+    for (let k in el.dataset) {
+      options[k] = el.dataset[k];
+    }
+  }
+  waterfall(`.${selector}`, options);
 }
+</script>
+<!-- waterfall 瀑布流 end -->
 
-.v .vlist .vcard .vh .vmeta .vat {
-    color: #638fd5;
-}
 
-.v .vlist .vcard .vhead .vnick {
-    color: #6ba1ff;
-}
+  <!-- zoom start -->
+  
+<script src="/lib/zoom.min.js"></script>
 
-.v a {
-    color: #8696b1;
-}
+  <script type="text/javascript">
+    document.querySelector(".article-content") && zoom(".article-content");
+  </script>
+  <!-- zoom end -->
+  
 
-.v .vlist .vcard .vhead .vnick:hover {
-    color: #669bfc;
-}
-</style>
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+<script src="/js/script.js"></script>
+
+  
+  <!-- 尾部用户自定义相关内容 -->
+
 </body>
-
 </html>

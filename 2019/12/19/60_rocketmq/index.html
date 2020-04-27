@@ -1,34 +1,130 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="renderer" content="webkit">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <title>
-        面对压迫、掠夺和孤单，我们的回答是生活
-    </title>
-    
-<link rel="stylesheet" href="/libs/highlight/styles/monokai-sublime.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    
-<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+  
 
-    
+  
+
+  
+    <meta name="author" content="zhaodan">
+  
+
+  
+    <meta name="copyright" content="zhaodan">
+  
+
+  
+
+  <title>rocketmq搭建精简版 | </title>
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+    <link href="https://cdn.bootcss.com/highlight.js/9.15.6/styles/monokai.min.css" rel="stylesheet">
+  
+
+  
 <link rel="stylesheet" href="/css/style.css">
 
 <meta name="generator" content="Hexo 4.2.0"></head>
-
-<body id="bodyx">
-    <div class="hd posts">
-    <a href="/index.html"><i class="fa fa-reply replay-btn" aria-hidden="true"></i></a>
-    <div class="post-title">
-        <p>
-            rocketmq搭建精简版
-        </p>
-        <hr>
+<body>
+  <div class="root-container">
+    <!-- navbar -->
+<nav class="navbar">
+  <div class="navbar-content">
+    <!-- logo -->
+    <div class="navbar-logo">
+      <a href="/">
+        
+          
+        
+      </a>
     </div>
-    <div class="post-content">
+    <!-- link -->
+    <div class="navbar-link">
+      <div class="navbar-btn">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <ul class="navbar-list">
+        
+          <li class="navbar-list-item"><a href="/">主页</a></li>
+        
+          <li class="navbar-list-item"><a href="/about">关于</a></li>
+        
+          <li class="navbar-list-item"><a href="/archives">归档</a></li>
+        
+          <li class="navbar-list-item"><a href="/messages">留言板</a></li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    
+<!-- header container -->
+<header class="header-container post">
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+    <div class="header-content">
+      <div class="post-image" style="background-image: url(https://i.postimg.cc/kXYG7QKj/dengdeng.jpg)"></div>
+      <div class="post-text">
+        <div class="type-wrap">
+          
+        </div>
+        <h1 class="title-wrap">rocketmq搭建精简版</h1>
+        <h2 class="title-sub-wrap">
+          <strong>zhaodan</strong>
+          <span>发布于</span>
+          
+  <a href="javascript:;" class="article-date">
+    <time datetime="2019-12-18T16:00:00.000Z" itemprop="datePublished">2019-12-19</time>
+  </a>
+
+        </h2>
+      </div>
+    </div>
+  
+
+  
+  
+
+  </header>
+
+    <!-- 文章 -->
+
+<!-- 文章内容 -->
+
+<div class="body-container">
+  <article class="content-container article-container">
+    <div class="article-content">
+      
+      
+
+      <section class="article-entry">
         <p>德国地区是三台主机组成的集群，分配情况为三个nameserver三个broker无slave</p>
 <p>所有主机都要配置：</p>
 <ol>
@@ -40,86 +136,236 @@
 <p>[rocketmq]<br>172.17.4.20    rocketmq-nameserver1    rocketmq-master1<br>172.17.4.21    rocketmq-nameserver2    rocketmq-master2<br>172.17.4.22    rocketmq-nameserver3    rocketmq-master3</p>
 <p>jdk-8u181-linux-x64.tar.gz<br>rocketmq-all-4.5.2-bin-release.tar.gz<br>rocketmq-console-ng-1.0.1.jar</p>
 <p>配置java环境:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mkdir  &#x2F;usr&#x2F;lib&#x2F;jvm&#x2F;</span><br><span class="line">tar  -xzvf  jdk-8u181-linux-x64.tar.gz -C &#x2F;usr&#x2F;lib&#x2F;jvm&#x2F;</span><br><span class="line">echo &quot;export JAVA_HOME&#x3D;&#x2F;usr&#x2F;lib&#x2F;jvm&#x2F;jdk1.8.0_181&quot;&gt;&gt;&#x2F;etc&#x2F;profile</span><br><span class="line">echo &#39;export JRE_HOME&#x3D;$&#123;JAVA_HOME&#125;&#x2F;jre&#39;&gt;&gt;&#x2F;etc&#x2F;profile</span><br><span class="line">echo  &#39;export CLASSPATH&#x3D;.:$&#123;JAVA_HOME&#125;&#x2F;lib:$&#123;JRE_HOME&#125;&#x2F;lib&#39;&gt;&gt;&#x2F;etc&#x2F;profile</span><br><span class="line">echo  &#39;export  PATH&#x3D;$&#123;JAVA_HOME&#125;&#x2F;bin:$PATH&#39;&gt;&gt;&#x2F;etc&#x2F;profile</span><br><span class="line">source  &#x2F;etc&#x2F;profile</span><br><span class="line">java -version</span><br></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs routeros">mkdir  /usr/lib/jvm/<br>tar  -xzvf  jdk-8u181-linux-x64.tar.gz -C /usr/lib/jvm/<br>echo <span class="hljs-string">"export JAVA_HOME=/usr/lib/jvm/jdk1.8.0_181"</span>&gt;&gt;/etc/profile<br>echo <span class="hljs-string">'export JRE_HOME=$&#123;JAVA_HOME&#125;/jre'</span>&gt;&gt;/etc/profile<br>echo  <span class="hljs-string">'export CLASSPATH=.:$&#123;JAVA_HOME&#125;/lib:$&#123;JRE_HOME&#125;/lib'</span>&gt;&gt;/etc/profile<br>echo  <span class="hljs-string">'export  PATH=$&#123;JAVA_HOME&#125;/bin:$PATH'</span>&gt;&gt;/etc/profile<br>source  /etc/profile<br>java -version<br></code></pre></td></tr></table></figure>
 
 <p>部署rocketmq：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p &#x2F;data&#x2F;rocketmq&#x2F;store</span><br><span class="line">cd rocketmq&#x2F;store&#x2F;</span><br><span class="line">mkdir commitlog config consumequeue index</span><br><span class="line">touch abort checkpoint lock</span><br></pre></td></tr></table></figure>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">mkdir -p /data/rocketmq/store<br>cd rocketmq/store/<br>mkdir commitlog config consumequeue <span class="hljs-keyword">index</span><br>touch <span class="hljs-keyword">abort</span> <span class="hljs-keyword">checkpoint</span> <span class="hljs-keyword">lock</span><br></code></pre></td></tr></table></figure>
 
 <p>解压rocketmq并修改配置：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"># cat &#x2F;usr&#x2F;local&#x2F;rocketmq-all-4.5.2-bin-release&#x2F;conf&#x2F;2m-noslave&#x2F;broker-a.properties</span><br><span class="line"># Licensed to the Apache Software Foundation (ASF) under one or more</span><br><span class="line"># contributor license agreements.  See the NOTICE file distributed with</span><br><span class="line"># this work for additional information regarding copyright ownership.</span><br><span class="line"># The ASF licenses this file to You under the Apache License, Version 2.0</span><br><span class="line"># (the &quot;License&quot;); you may not use this file except in compliance with</span><br><span class="line"># the License.  You may obtain a copy of the License at</span><br><span class="line">#</span><br><span class="line">#     http:&#x2F;&#x2F;www.apache.org&#x2F;licenses&#x2F;LICENSE-2.0</span><br><span class="line">#</span><br><span class="line"># Unless required by applicable law or agreed to in writing, software</span><br><span class="line"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span><br><span class="line"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span><br><span class="line"># See the License for the specific language governing permissions and</span><br><span class="line"># limitations under the License.</span><br><span class="line">brokerClusterName&#x3D;rocketmq-Cluster</span><br><span class="line">brokerName&#x3D;broker-a</span><br><span class="line">brokerId&#x3D;0</span><br><span class="line">namesrvAddr&#x3D;172.17.4.20:9876;172.17.4.21:9876;172.17.4.22:9876</span><br><span class="line">defaultTopicQueueNums&#x3D;6</span><br><span class="line">autoCreateTopicEnable&#x3D;true</span><br><span class="line">autoCreateSubscriptionGroup&#x3D;true</span><br><span class="line">listenPort&#x3D;10911</span><br><span class="line">deleteWhen&#x3D;04</span><br><span class="line">fileReservedTime&#x3D;24</span><br><span class="line">storePathRootDir&#x3D;&#x2F;data&#x2F;rocketmq&#x2F;store</span><br><span class="line">storePathCommitLog&#x3D;&#x2F;data&#x2F;rocketmq&#x2F;store&#x2F;commitlog</span><br><span class="line">storePathConsumeQueue&#x3D;&#x2F;data&#x2F;rocketmq&#x2F;store&#x2F;consumequeue</span><br><span class="line">storePathIndex&#x3D;&#x2F;data&#x2F;rocketmq&#x2F;store&#x2F;index</span><br><span class="line">storeCheckpoint&#x3D;&#x2F;data&#x2F;rocketmq&#x2F;store&#x2F;checkpoint</span><br><span class="line">abortFile&#x3D;&#x2F;data&#x2F;rocketmq&#x2F;store&#x2F;abort</span><br><span class="line">brokerRole&#x3D;ASYNC_MASTER</span><br><span class="line">flushDiskType&#x3D;ASYNC_FLUSH</span><br><span class="line">messageDelayLevel&#x3D;1s 5s 10s 30s 1m 2m 3m 4m 5m 6m 7m 8m 9m 10m 20m 30m 1h 2h</span><br><span class="line">maxTransferCountOnMessageInMemory&#x3D;400</span><br><span class="line">#发送消息的最大线程数</span><br><span class="line">sendMessageThreadPoolNums&#x3D;32</span><br><span class="line">#large thread numbers</span><br><span class="line">#发送消息是否使用可重入锁</span><br><span class="line">useReentrantLockWhenPutMessage&#x3D;true</span><br><span class="line">waitTimeMillsInSendQueue&#x3D;1000</span><br><span class="line">transientStorePoolEnable&#x3D;true</span><br><span class="line">transientStorePoolSize&#x3D;5</span><br></pre></td></tr></table></figure>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-comment"># cat /usr/local/rocketmq-all-4.5.2-bin-release/conf/2m-noslave/broker-a.properties</span><br><span class="hljs-comment"># Licensed to the Apache Software Foundation (ASF) under one or more</span><br><span class="hljs-comment"># contributor license agreements.  See the NOTICE file distributed with</span><br><span class="hljs-comment"># this work for additional information regarding copyright ownership.</span><br><span class="hljs-comment"># The ASF licenses this file to You under the Apache License, Version 2.0</span><br><span class="hljs-comment"># (the "License"); you may not use this file except in compliance with</span><br><span class="hljs-comment"># the License.  You may obtain a copy of the License at</span><br><span class="hljs-comment">#</span><br><span class="hljs-comment">#     http://www.apache.org/licenses/LICENSE-2.0</span><br><span class="hljs-comment">#</span><br><span class="hljs-comment"># Unless required by applicable law or agreed to in writing, software</span><br><span class="hljs-comment"># distributed under the License is distributed on an "AS IS" BASIS,</span><br><span class="hljs-comment"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span><br><span class="hljs-comment"># See the License for the specific language governing permissions and</span><br><span class="hljs-comment"># limitations under the License.</span><br><span class="hljs-attr">brokerClusterName</span>=rocketmq-Cluster<br><span class="hljs-attr">brokerName</span>=broker-a<br><span class="hljs-attr">brokerId</span>=<span class="hljs-number">0</span><br><span class="hljs-attr">namesrvAddr</span>=<span class="hljs-number">172.17</span>.<span class="hljs-number">4.20</span>:<span class="hljs-number">9876</span><span class="hljs-comment">;172.17.4.21:9876;172.17.4.22:9876</span><br><span class="hljs-attr">defaultTopicQueueNums</span>=<span class="hljs-number">6</span><br><span class="hljs-attr">autoCreateTopicEnable</span>=<span class="hljs-literal">true</span><br><span class="hljs-attr">autoCreateSubscriptionGroup</span>=<span class="hljs-literal">true</span><br><span class="hljs-attr">listenPort</span>=<span class="hljs-number">10911</span><br><span class="hljs-attr">deleteWhen</span>=<span class="hljs-number">04</span><br><span class="hljs-attr">fileReservedTime</span>=<span class="hljs-number">24</span><br><span class="hljs-attr">storePathRootDir</span>=/data/rocketmq/store<br><span class="hljs-attr">storePathCommitLog</span>=/data/rocketmq/store/commitlog<br><span class="hljs-attr">storePathConsumeQueue</span>=/data/rocketmq/store/consumequeue<br><span class="hljs-attr">storePathIndex</span>=/data/rocketmq/store/index<br><span class="hljs-attr">storeCheckpoint</span>=/data/rocketmq/store/checkpoint<br><span class="hljs-attr">abortFile</span>=/data/rocketmq/store/abort<br><span class="hljs-attr">brokerRole</span>=ASYNC_MASTER<br><span class="hljs-attr">flushDiskType</span>=ASYNC_FLUSH<br><span class="hljs-attr">messageDelayLevel</span>=<span class="hljs-number">1</span>s <span class="hljs-number">5</span>s <span class="hljs-number">10</span>s <span class="hljs-number">30</span>s <span class="hljs-number">1</span>m <span class="hljs-number">2</span>m <span class="hljs-number">3</span>m <span class="hljs-number">4</span>m <span class="hljs-number">5</span>m <span class="hljs-number">6</span>m <span class="hljs-number">7</span>m <span class="hljs-number">8</span>m <span class="hljs-number">9</span>m <span class="hljs-number">10</span>m <span class="hljs-number">20</span>m <span class="hljs-number">30</span>m <span class="hljs-number">1</span>h <span class="hljs-number">2</span>h<br><span class="hljs-attr">maxTransferCountOnMessageInMemory</span>=<span class="hljs-number">400</span><br><span class="hljs-comment">#发送消息的最大线程数</span><br><span class="hljs-attr">sendMessageThreadPoolNums</span>=<span class="hljs-number">32</span><br><span class="hljs-comment">#large thread numbers</span><br><span class="hljs-comment">#发送消息是否使用可重入锁</span><br><span class="hljs-attr">useReentrantLockWhenPutMessage</span>=<span class="hljs-literal">true</span><br><span class="hljs-attr">waitTimeMillsInSendQueue</span>=<span class="hljs-number">1000</span><br><span class="hljs-attr">transientStorePoolEnable</span>=<span class="hljs-literal">true</span><br><span class="hljs-attr">transientStorePoolSize</span>=<span class="hljs-number">5</span><br></code></pre></td></tr></table></figure>
 <p>根据实例配置调整内存：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vim &#x2F;usr&#x2F;local&#x2F;rocketmq-all-4.5.2-bin-release&#x2F;bin&#x2F;runbroker.sh</span><br><span class="line">JAVA_OPT&#x3D;&quot;$&#123;JAVA_OPT&#125; -server -Xms4g -Xmx4g -Xmn2g&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">vim /usr/<span class="hljs-keyword">local</span>/rocketmq-<span class="hljs-keyword">all</span><span class="hljs-number">-4.5</span><span class="hljs-number">.2</span>-bin-<span class="hljs-keyword">release</span>/bin/runbroker.sh<br>JAVA_OPT="$&#123;JAVA_OPT&#125; -server -Xms4g -Xmx4g -Xmn2g"<br></code></pre></td></tr></table></figure>
 
 <p>启动服务顺序：<br>先启动nameserver再启动broker，停止服务时顺序也一样</p>
 <p>启动nameserver：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># cat &#x2F;home&#x2F;david&#x2F;start_mqnamesrv.sh</span><br><span class="line">nohup sh &#x2F;usr&#x2F;local&#x2F;rocketmq-all-4.5.2-bin-release&#x2F;bin&#x2F;mqnamesrv &gt; &#x2F;dev&#x2F;null 2&gt;&amp;1 &amp;</span><br></pre></td></tr></table></figure>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs angelscript"># cat /home/david/start_mqnamesrv.sh<br>nohup sh /usr/local/rocketmq-all<span class="hljs-number">-4.5</span><span class="hljs-number">.2</span>-bin-release/bin/mqnamesrv &gt; /dev/<span class="hljs-literal">null</span> <span class="hljs-number">2</span>&gt;&amp;<span class="hljs-number">1</span> &amp;<br></code></pre></td></tr></table></figure>
 
 <p>启动broker:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># cat &#x2F;home&#x2F;david&#x2F;start_mqbroker.sh</span><br><span class="line">nohup sh &#x2F;usr&#x2F;local&#x2F;rocketmq-all-4.5.2-bin-release&#x2F;bin&#x2F;mqbroker -c &#x2F;usr&#x2F;local&#x2F;rocketmq-all-4.5.2-bin-release&#x2F;conf&#x2F;2m-noslave&#x2F;broker-a.properties &gt; &#x2F;dev&#x2F;null 2&gt;&amp;1 &amp;</span><br></pre></td></tr></table></figure>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs angelscript"># cat /home/david/start_mqbroker.sh<br>nohup sh /usr/local/rocketmq-all<span class="hljs-number">-4.5</span><span class="hljs-number">.2</span>-bin-release/bin/mqbroker -c /usr/local/rocketmq-all<span class="hljs-number">-4.5</span><span class="hljs-number">.2</span>-bin-release/conf/<span class="hljs-number">2</span>m-noslave/broker-a.properties &gt; /dev/<span class="hljs-literal">null</span> <span class="hljs-number">2</span>&gt;&amp;<span class="hljs-number">1</span> &amp;<br></code></pre></td></tr></table></figure>
 
 <p>检查集群状态：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@rocketmq-nameserver1 ~]# cd &#x2F;usr&#x2F;local&#x2F;rocketmq-all-4.5.2-bin-release&#x2F;bin&#x2F;</span><br><span class="line">[root@rocketmq-nameserver1 bin]# .&#x2F;mqadmin clusterList --namesrvAddr&#x3D;172.17.4.20:9876</span><br><span class="line">RocketMQLog:WARN No appenders could be found for logger (io.netty.util.internal.PlatformDependent0).</span><br><span class="line">RocketMQLog:WARN Please initialize the logger system properly.</span><br><span class="line">#Cluster Name     #Broker Name            #BID  #Addr                  #Version                #InTPS(LOAD)       #OutTPS(LOAD) #PCWait(ms) #Hour #SPACE</span><br><span class="line">rocketmq-cluster  broker-b                0     172.17.4.21:10911      V4_5_2                   0.00(0,0ms)         0.00(0,0ms)          0 438169.53 0.0003</span><br><span class="line">rocketmq-cluster  broker-c                0     172.17.4.22:10911      V4_5_2                   0.00(0,0ms)         0.00(0,0ms)          0 438169.53 0.0003</span><br><span class="line">rocketmq-Cluster  broker-a                0     172.17.4.20:10911      V4_5_2                   0.00(0,0ms)         0.00(0,0ms)          0 438169.53 0.0003</span><br></pre></td></tr></table></figure>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs angelscript">[<span class="hljs-symbol">root@</span>rocketmq-nameserver1 ~]# cd /usr/local/rocketmq-all<span class="hljs-number">-4.5</span><span class="hljs-number">.2</span>-bin-release/bin/<br>[<span class="hljs-symbol">root@</span>rocketmq-nameserver1 bin]# ./mqadmin clusterList --namesrvAddr=<span class="hljs-number">172.17</span><span class="hljs-number">.4</span><span class="hljs-number">.20</span>:<span class="hljs-number">9876</span><br>RocketMQLog:WARN No appenders could be found <span class="hljs-keyword">for</span> logger (io.netty.util.<span class="hljs-built_in">int</span>ernal.PlatformDependent0).<br>RocketMQLog:WARN Please initialize the logger system properly.<br>#Cluster Name     #Broker Name            #BID  #Addr                  #Version                #InTPS(LOAD)       #OutTPS(LOAD) #PCWait(ms) #Hour #SPACE<br>rocketmq-cluster  broker-b                <span class="hljs-number">0</span>     <span class="hljs-number">172.17</span><span class="hljs-number">.4</span><span class="hljs-number">.21</span>:<span class="hljs-number">10911</span>      V4_5_2                   <span class="hljs-number">0.00</span>(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>ms)         <span class="hljs-number">0.00</span>(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>ms)          <span class="hljs-number">0</span> <span class="hljs-number">438169.53</span> <span class="hljs-number">0.0003</span><br>rocketmq-cluster  broker-c                <span class="hljs-number">0</span>     <span class="hljs-number">172.17</span><span class="hljs-number">.4</span><span class="hljs-number">.22</span>:<span class="hljs-number">10911</span>      V4_5_2                   <span class="hljs-number">0.00</span>(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>ms)         <span class="hljs-number">0.00</span>(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>ms)          <span class="hljs-number">0</span> <span class="hljs-number">438169.53</span> <span class="hljs-number">0.0003</span><br>rocketmq-Cluster  broker-a                <span class="hljs-number">0</span>     <span class="hljs-number">172.17</span><span class="hljs-number">.4</span><span class="hljs-number">.20</span>:<span class="hljs-number">10911</span>      V4_5_2                   <span class="hljs-number">0.00</span>(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>ms)         <span class="hljs-number">0.00</span>(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>ms)          <span class="hljs-number">0</span> <span class="hljs-number">438169.53</span> <span class="hljs-number">0.0003</span><br></code></pre></td></tr></table></figure>
 
 <p>启动rocketmq_console：<br>console启动时只能识别第一个IP，所以开发打包时写死了集群IP</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar &#x2F;opt&#x2F;rocketmq-console&#x2F;rocketmq-console-ng-1.0.1.jar --server.port&#x3D;12581</span><br></pre></td></tr></table></figure>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs angelscript">java -jar /opt/rocketmq-console/rocketmq-console-ng<span class="hljs-number">-1.0</span><span class="hljs-number">.1</span>.jar --server.port=<span class="hljs-number">12581</span><br></code></pre></td></tr></table></figure>
 
+      </section>
+
+      <section class="article-footer">
+        
+      </section>
+
+      <section class="article-navs">
+        
+<nav class="card-container card-article-nav">
+  <div class="card-wrap">
+    
+      <div id="article-nav-newer" class="card-item">
+        <article>
+          
+          <a class="card-link article-nav-link" href="/2020/01/16/61_fdisk/"></a>
+          <strong class="article-nav-caption">Newer</strong>
+          <p class="article-nav-title">
+            
+              修复磁盘解决不能写和清理结构问题
+            
+          </p>
+        </article>
+      </div>
+    
+    
+      <div id="article-nav-older" class="card-item">
+        <article>
+          
+          <a class="card-link article-nav-link" href="/2019/12/18/59_CDH/"></a>
+          <strong class="article-nav-caption">Older</strong>
+          <p class="article-nav-title">
+            
+              搭建德国CDH(踩坑无数后整理版)
+            
+          </p>
+        </article>
+      </div>
+    
+  </div>
+</nav>
+
+      </section>
     </div>
+  </article>
+</div>
+
+    <!-- footer container -->
+<footer id="footer" class="footer">
+  <div class="footer-container">
+    
+    <!-- <p>&copy; 2020 <a href="/" target="_blank">zhaodan</a></p> -->
 
     
-        <hr class="fhr">
-        <div id="vcomments"></div>
+      <p id="hitokoto"></p>
+      <script src="https://v1.hitokoto.cn/?c=h&amp;encode=js&select=%23hitokoto" defer></script>
     
-</div>
-    <div class="footer" id="footer">
-    <p>Copyright © 2020 <a class="flink" href="https://hexo.io" target="_blank" rel="noopener">Hexo</a>-<a class="flink" href="https://github.com/sanjinhub/hexo-theme-geek" target="_blank" rel="noopener">Geek</a>.
-        <label class="el-switch el-switch-green el-switch-sm" style="vertical-align: sub;">
-            <input type="checkbox" name="switch" id="update_style">
-            <span class="el-switch-style"></span>
-        </label>
-<!--         <script type="text/javascript">
-        var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");
-        document.write(unescape("%3Cspan id='cnzz_stat_icon_1278548644'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/stat.php%3Fid%3D1278548644%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
-        </script> -->
-    </p>
-</div>
-<input type="hidden" id="web_style" value="black">
-<input type="hidden" id="valine_appid" value="nmcd4VgylfORjevWz6UEoat3-9Nh9j0Va">
-<input type="hidden" id="valine_appKey" value="wyWWI1qMf6w1mv1KpT1D0HeC">
 
-<script src="/libs/jquery.min.js"></script>
+    
+
+    <p>&copy; 2019 | zhaodan | 加油</p>
+  </div>
+</footer>
+
+  </div>
+
+  <div class="back-to-top-fixed">
+    <svg class="icon icon-back-to-top" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M725.333333 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8l-213.333333-213.333333c-17.066667-17.066667-17.066667-42.666667 0-59.733333s42.666667-17.066667 59.733333 0l213.333333 213.333333c17.066667 17.066667 17.066667 42.666667 0 59.733333C746.666667 422.4 738.133333 426.666667 725.333333 426.666667z"></path>
+  <path d="M298.666667 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8-17.066667-17.066667-17.066667-42.666667 0-59.733333l213.333333-213.333333c17.066667-17.066667 42.666667-17.066667 59.733333 0s17.066667 42.666667 0 59.733333l-213.333333 213.333333C320 422.4 311.466667 426.666667 298.666667 426.666667z"></path>
+  <path d="M512 896c-25.6 0-42.666667-17.066667-42.666667-42.666667L469.333333 170.666667c0-25.6 17.066667-42.666667 42.666667-42.666667s42.666667 17.066667 42.666667 42.666667l0 682.666667C554.666667 878.933333 537.6 896 512 896z"></path>
+</svg> 
+  </div>
+
+  
+  
+<!-- valine 评论 start -->
+<script type="text/javascript" src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script type="text/javascript" src='//unpkg.com/valine/dist/Valine.min.js'></script>
+<script type="text/javascript">
+  new Valine({
+    el: "#valine_thread",
+    appId: "nmcd4VgylfORjevWz6UEoat3-9Nh9j0Va",
+    appKey: "wyWWI1qMf6w1mv1KpT1D0HeC",
+    avatar: "mm",
+    placeholder: "随便说点什么叭～",
+    notify: true,
+    visitor: true,
+    pageSize: 10,
+  });
+</script>
+<!-- valine 评论 end -->
 
 
-<script src="/libs/highlight/highlight.pack.js"></script>
 
-<script src='//cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js'></script>
+  <!-- aplayer 音频 start -->
+  
+<link rel="stylesheet" href="/lib/APlayer.min.css">
 
-<script src="/js/js.js"></script>
+  
+<script src="/lib/APlayer.min.js"></script>
 
-<style type="text/css">
-.v * {
-    color: #698fca;
+  <script type="text/javascript">
+    const aplayer = document.querySelectorAll(".aplayer");
+    aplayer && initaplayer(aplayer);
+    function initaplayer(els) {
+      let elsArr = Array.from(els);
+      elsArr.forEach(el => {
+        new APlayer({
+          container: el,
+          audio: { ...el.dataset },
+          theme: "#b7daff",
+          lrcType: 3,
+          autoplay: false,
+          loop: false,
+          mutex: true,
+        });
+      });
+    }
+  </script>
+  <!-- aplayer 音频 end -->
+  
+
+<!-- dplayer 视频 start -->
+
+<link rel="stylesheet" href="/lib/DPlayer.min.css">
+
+
+<script src="/lib/DPlayer.min.js"></script>
+
+<script type="text/javascript">
+  const dplayer = document.querySelectorAll(".dplayer");
+  dplayer && initDPlayer(dplayer);
+  function initDPlayer(els) {
+    let elsArr = Array.from(els);
+    elsArr.forEach(el => {
+      let url = el.dataset.url;
+      let cover = el.dataset.cover;
+      new DPlayer({
+        container: el,
+        video: { url: url, pic: cover },
+        theme: "#b7daff",
+        autoplay: false,
+        loop: false,
+        mutex: true,
+      });
+    });
+  }
+</script>
+<!-- dplayer 视频 end -->
+
+
+<!-- waterfall 瀑布流 start -->
+
+<script src="/lib/waterfall.min.js"></script>
+
+<script type="text/javascript">
+
+const waterfalls = document.querySelectorAll(".waterfall-container");
+
+if (waterfalls && waterfalls.length > 0) {
+  waterfalls.forEach((waterfall, index) => {
+    let cls = "waterfall-container-" + index;
+    waterfall.classList.add(cls);
+    initWaterfall(cls, waterfall);
+  });
 }
 
-.v .vlist .vcard .vhead .vsys {
-    color: #3a3e4a;
+function initWaterfall(selector, el) {
+  const options = {};
+  if (Object.keys(el.dataset).length > 0) {
+    for (let k in el.dataset) {
+      options[k] = el.dataset[k];
+    }
+  }
+  waterfall(`.${selector}`, options);
 }
+</script>
+<!-- waterfall 瀑布流 end -->
 
-.v .vlist .vcard .vh .vmeta .vat {
-    color: #638fd5;
-}
 
-.v .vlist .vcard .vhead .vnick {
-    color: #6ba1ff;
-}
+  <!-- zoom start -->
+  
+<script src="/lib/zoom.min.js"></script>
 
-.v a {
-    color: #8696b1;
-}
+  <script type="text/javascript">
+    document.querySelector(".article-content") && zoom(".article-content");
+  </script>
+  <!-- zoom end -->
+  
 
-.v .vlist .vcard .vhead .vnick:hover {
-    color: #669bfc;
-}
-</style>
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+<script src="/js/script.js"></script>
+
+  
+  <!-- 尾部用户自定义相关内容 -->
+
 </body>
-
 </html>
