@@ -35,7 +35,7 @@
   
 <link rel="stylesheet" href="/css/style.css">
 
-<meta name="generator" content="Hexo 4.2.0"></head>
+</head>
 <body>
   <div class="root-container">
     <!-- navbar -->
@@ -115,8 +115,19 @@
   <article class="content-container article-container">
     <div class="article-content">
       <div class="article-entry"><p>虽然也许不会有什么评论，但是作为一个博客留言板是必不可少的。。。。。</p>
-<!--评论显示区，请插入合适的位置-->
-<div class="comments"></div>
+<head>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+    <div id="vcomments"></div>
+    <script>
+        new Valine({
+            el: '#vcomments',
+            appId: '<atxC7OKi5cU4kOoIXIsuaiYS-gzGzoHsz>',
+            appKey: '<tL6NhwpCUMckbjsucUjOnhVH>'
+        })
+    </script>
+</body>
 </div>
     </div>
   </article>
