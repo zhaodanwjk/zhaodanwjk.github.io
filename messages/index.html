@@ -35,7 +35,7 @@
   
 <link rel="stylesheet" href="/css/style.css">
 
-</head>
+<meta name="generator" content="Hexo 4.2.0"></head>
 <body>
   <div class="root-container">
     <!-- navbar -->
@@ -115,22 +115,8 @@
   <article class="content-container article-container">
     <div class="article-content">
       <div class="article-entry"><p>虽然也许不会有什么评论，但是作为一个博客留言板是必不可少的。。。。。</p>
-<head>
-    ..
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    ...
-<meta name="generator" content="Hexo 4.2.0"></head>
-<body>
-    ...
-    <div id="vcomments"></div>
-    <script>
-        new Valine({
-            el: '#vcomments',
-            appId: '<atxC7OKi5cU4kOoIXIsuaiYS-gzGzoHsz>',
-            appKey: '<tL6NhwpCUMckbjsucUjOnhVH>'
-        })
-    </script>
-</body>
+<!--评论显示区，请插入合适的位置-->
+<div class="comments"></div>
 </div>
     </div>
   </article>
@@ -179,23 +165,24 @@
 
   
   
-<!-- valine 评论 start -->
-<script type="text/javascript" src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-<script type="text/javascript" src='//unpkg.com/valine/dist/Valine.min.js'></script>
-<script type="text/javascript">
-  new Valine({
-    el: "#valine_thread",
-    appId: "atxC7OKi5cU4kOoIXIsuaiYS-gzGzoHsz",
-    appKey: "tL6NhwpCUMckbjsucUjOnhVH",
-    avatar: "mm",
-    placeholder: "随便说点什么叭～",
-    notify: "true",
-    visitor: "true",
-    pageSize: "10",
-  });
 
-</script>
-<!-- valine 评论 end -->
+     <!--载入js，在</body>之前插入即可-->
+     <!--Leancloud 操作库:-->
+     <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+     <!--Valine 的核心代码库-->
+     <script src="./dist/Valine.min.js"></script>
+     <script>
+         new Valine({
+             // AV 对象来自上面引入av-min.js(老司机们不要开车➳♡゛扎心了老铁)
+             av: AV,
+             el: '.comment',
+             emoticon_url: 'https://cloud.panjunwen.com/alu',
+             emoticon_list: ["吐.png","期待.png","高兴.png","吐血倒地.png","哭泣.png","欢呼.png"],
+             app_id: 'atxC7OKi5cU4kOoIXIsuaiYS-gzGzoHsz', // 这里填写上面得到的APP ID
+             app_key: 'tL6NhwpCUMckbjsucUjOnhVH', // 这里填写上面得到的APP KEY
+             placeholder: 'ヾﾉ≧∀≦)o来啊，快活啊!', // 留言框占位提示文字
+         });
+     </script>
 
 
 
