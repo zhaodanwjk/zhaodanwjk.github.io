@@ -218,24 +218,23 @@
 
   
   
+  <!-- valine 评论 start -->
+  <script type="text/javascript" src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script type="text/javascript" src='//unpkg.com/valine/dist/Valine.min.js'></script>
+  <script type="text/javascript">
+    new Valine({
+      el: "#valine_thread",
+      appId: "atxC7OKi5cU4kOoIXIsuaiYS-gzGzoHsz",
+      appKey: "tL6NhwpCUMckbjsucUjOnhVH",
+      avatar: "mm",
+      placeholder: "随便说点什么叭～",
+      notify: "true",
+      visitor: "true",
+      pageSize: "10",
+    });
 
-     <!--载入js，在</body>之前插入即可-->
-     <!--Leancloud 操作库:-->
-     <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-     <!--Valine 的核心代码库-->
-     <script src="./dist/Valine.min.js"></script>
-     <script>
-         new Valine({
-             // AV 对象来自上面引入av-min.js(老司机们不要开车➳♡゛扎心了老铁)
-             av: AV,
-             el: '.comment',
-             emoticon_url: 'https://cloud.panjunwen.com/alu',
-             emoticon_list: ["吐.png","期待.png","高兴.png","吐血倒地.png","哭泣.png","欢呼.png"],
-             app_id: 'atxC7OKi5cU4kOoIXIsuaiYS-gzGzoHsz', // 这里填写上面得到的APP ID
-             app_key: 'tL6NhwpCUMckbjsucUjOnhVH', // 这里填写上面得到的APP KEY
-             placeholder: 'ヾﾉ≧∀≦)o来啊，快活啊!', // 留言框占位提示文字
-         });
-     </script>
+  </script>
+  <!-- valine 评论 end -->
 
 
 
