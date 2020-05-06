@@ -1,131 +1,66 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN" class="loading">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-
-  
-
-  
-
-  
-    <meta name="author" content="zhaodan">
-  
-
-  
-    <meta name="copyright" content="zhaodan">
-  
-
-  
-
-  <title>「Python3」获取本地代码信息写入aws tag中 -- 整理版来了 | </title>
-
-  
-
-  
-    <link rel="icon" href="/chiguaxiaoji.jpg">
-  
-
-  
-    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
-    <link href="https://cdn.bootcss.com/highlight.js/9.15.6/styles/monokai.min.css" rel="stylesheet">
-  
-
-  
-<link rel="stylesheet" href="/css/style.css">
-
-<meta name="generator" content="Hexo 4.2.0"></head>
-<body>
-  <div class="root-container">
-    <!-- navbar -->
-<nav class="navbar">
-  <div class="navbar-content">
-    <!-- logo -->
-    <div class="navbar-logo">
-      <a href="/">
-        
-          
-        
-      </a>
-    </div>
-    <!-- link -->
-    <div class="navbar-link">
-      <div class="navbar-btn">
-        <div></div>
-        <div></div>
-        <div></div>
-      </div>
-      <ul class="navbar-list">
-        
-          <li class="navbar-list-item"><a href="/">主页</a></li>
-        
-          <li class="navbar-list-item"><a href="/about">关于</a></li>
-        
-          <li class="navbar-list-item"><a href="/archives">归档</a></li>
-        
-          <li class="navbar-list-item"><a href="/messages">留言板</a></li>
-        
-      </ul>
-    </div>
-  </div>
-</nav>
-
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>「Python3」获取本地代码信息写入aws tag中 -- 整理版来了 - null</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
     
-<!-- header container -->
-<header class="header-container post">
+    <meta name="description" content="此脚本是获取playbook/files/200-204下的fact信息，写入aws web备注,已在国服测试使用默认执行打印信息，如需导入aws web备注中，打开下面response注释即可因各,"> 
+    <meta name="author" content="zhaodan"> 
+    
+    <link rel="icon" href="/img/chiguaxiaoji.jpg"> 
+    
+    
+<link rel="stylesheet" href="/css/diaspora.css">
 
-  
-  
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({
+              google_ad_client: "ca-pub-8691406134231910",
+              enable_page_level_ads: true
+         });
+    </script>
+    <script async custom-element="amp-auto-ads"
+        src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+    </script>
+<meta name="generator" content="Hexo 4.2.0"></head>
 
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-    <div class="header-content">
-      <div class="post-image" style="background-image: url(https://i.postimg.cc/4d6Fw2rJ/images8.jpg)"></div>
-      <div class="post-text">
-        <div class="type-wrap">
-          
+<body class="loading">
+    <span id="config-title" style="display:none"></span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://yoursite.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">「Python3」获取本地代码信息写入aws tag中 -- 整理版来了</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
         </div>
-        <h1 class="title-wrap">「Python3」获取本地代码信息写入aws tag中 -- 整理版来了</h1>
-        <h2 class="title-sub-wrap">
-          <strong>zhaodan</strong>
-          <span>发布于</span>
-          
-  <a href="javascript:;" class="article-date">
-    <time datetime="2019-05-14T16:00:00.000Z" itemprop="datePublished">2019-05-15</time>
-  </a>
-
-        </h2>
-      </div>
     </div>
-  
+    <div class="scrollbar"></div>
+</div>
 
-  
-  
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">「Python3」获取本地代码信息写入aws tag中 -- 整理版来了</h1>
+        <div class="stuff">
+            <span>五月 15, 2019</span>
+            
 
-  </header>
-
-    <!-- 文章 -->
-
-<!-- 文章内容 -->
-
-<div class="body-container">
-  <article class="content-container article-container">
-    <div class="article-content">
-      
-      
-
-      <section class="article-entry">
-        <p>此脚本是获取playbook/files/200-204下的fact信息，写入aws web备注,已在国服测试使用<br>默认执行打印信息，如需导入aws web备注中，打开下面response注释即可<br>因各个地区可能目录结构和地区、秘钥不一样，需要更改3个地方使用</p>
+        </div>
+        <div class="content markdown">
+            <p>此脚本是获取playbook/files/200-204下的fact信息，写入aws web备注,已在国服测试使用<br>默认执行打印信息，如需导入aws web备注中，打开下面response注释即可<br>因各个地区可能目录结构和地区、秘钥不一样，需要更改3个地方使用</p>
 <ol>
 <li>更改秘钥credentials.ini</li>
 <li>更改地区local</li>
@@ -137,215 +72,112 @@
 <p>导入脚本：</p>
 <figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><code class="hljs vim">#此脚本是获取playbook/<span class="hljs-keyword">files</span>/<span class="hljs-number">200</span>-<span class="hljs-number">204</span>下的fact信息，写入aws web备注,已在国服测试使用<br>#默认执行打印信息，如需导入aws web备注中，打开下面response注释即可<br>#因各个地区可能目录结构和地区、秘钥不一样，需要更改<span class="hljs-number">3</span>个地方使用<br>#<span class="hljs-number">1</span>. 更改秘钥credentials.ini<br>#<span class="hljs-number">2</span>. 更改地区local<br>#<span class="hljs-number">3</span>. 更改目录dire<br>import configparser<br>import boto3<br>import json<br>import os<br><br>cfg = configparser.ConfigParser()<br>cfg.<span class="hljs-keyword">read</span>(<span class="hljs-string">'credentials.ini'</span>)<br>local = <span class="hljs-string">'aws_cn'</span><br>dire = <span class="hljs-string">'playbook/register/files/'</span><br>session = boto3.session.Session(aws_access_key_id=cfg.<span class="hljs-built_in">get</span>(local, <span class="hljs-string">'aws_access_key_id'</span>),<br>                                aws_secret_access_key=cfg.<span class="hljs-built_in">get</span>(local, <span class="hljs-string">'aws_secret_access_key'</span>),<br>                                region_name=cfg.<span class="hljs-built_in">get</span>(local, <span class="hljs-string">'aws_region'</span>))<br>def get_facts(directory):<br>    fact_list = []<br>    <span class="hljs-keyword">for</span> root,dirs,<span class="hljs-keyword">files</span> in os.walk(directory):<br>        <span class="hljs-keyword">for</span> <span class="hljs-keyword">file</span> in <span class="hljs-keyword">file</span><span class="hljs-variable">s:</span><br>            fact = os.path.<span class="hljs-keyword">join</span>(root,<span class="hljs-keyword">file</span>)<br>            <span class="hljs-keyword">fo</span> = <span class="hljs-keyword">open</span>(os.path.<span class="hljs-keyword">join</span>(fact))<br>            item = json.loads(<span class="hljs-keyword">fo</span>.<span class="hljs-keyword">read</span>())<br>            facts = &#123;&#125;<br>            facts[<span class="hljs-string">'hostname'</span>] = <span class="hljs-keyword">file</span><br>            facts[<span class="hljs-string">'facts'</span>] = [fact <span class="hljs-keyword">for</span> fact in item[<span class="hljs-string">'shardsinfo'</span>]]<br>            fact_list.<span class="hljs-keyword">append</span>(facts)<br>            <span class="hljs-keyword">fo</span>.<span class="hljs-keyword">close</span>()<br>    <span class="hljs-keyword">return</span> fact_list<br><br>def get_aws_info(local):<br>    ec2_resource = session.resource(<span class="hljs-string">'ec2'</span>)<br>    ec2_list = []<br>    <span class="hljs-keyword">for</span> instance in ec2_resource.instances.<span class="hljs-keyword">all</span>():<br>        ec2_server = &#123;&#125;<br>        gamex_server = &#123;&#125;<br>        ec2_Name_index = [i <span class="hljs-keyword">for</span> i, <span class="hljs-keyword">x</span> in enumerate(instance.<span class="hljs-keyword">tags</span>) <span class="hljs-keyword">if</span> <span class="hljs-keyword">x</span>[<span class="hljs-string">'Key'</span>].<span class="hljs-keyword">find</span>(<span class="hljs-string">'Name'</span>) == <span class="hljs-number">0</span>]<br>        ec2_Service_index = [i <span class="hljs-keyword">for</span> i, <span class="hljs-keyword">x</span> in enumerate(instance.<span class="hljs-keyword">tags</span>) <span class="hljs-keyword">if</span> <span class="hljs-keyword">x</span>[<span class="hljs-string">'Key'</span>].<span class="hljs-keyword">find</span>(<span class="hljs-string">'Service'</span>) == <span class="hljs-number">0</span>]<br>        ec2_server[<span class="hljs-string">'hostname'</span>] = instance.<span class="hljs-keyword">tags</span>[ec2_Name_index[<span class="hljs-number">0</span>]][<span class="hljs-string">'Value'</span>]<br>        <span class="hljs-keyword">if</span> ec2_server[<span class="hljs-string">'hostname'</span>].__contains__(<span class="hljs-string">'gamex'</span>):<br>            gamex_server[<span class="hljs-string">'id'</span>] = instance.id<br>            gamex_server[<span class="hljs-string">'hostname'</span>] = instance.<span class="hljs-keyword">tags</span>[ec2_Name_index[<span class="hljs-number">0</span>]][<span class="hljs-string">'Value'</span>]<br>            gamex_server[<span class="hljs-string">'service'</span>] = instance.<span class="hljs-keyword">tags</span>[ec2_Service_index[<span class="hljs-number">0</span>]][<span class="hljs-string">'Value'</span>]<br>            ec2_list.<span class="hljs-keyword">append</span>(gamex_server)<br>    <span class="hljs-keyword">return</span> ec2_list<br><br>def write_gamex_info():<br>    gamex_list = get_facts(dire)<br>    ec2_list = get_aws_info(local)<br>    gamex_service = []<br>    <span class="hljs-keyword">for</span> ec2_hostname in ec2_lis<span class="hljs-variable">t:</span><br>        ec2_service = &#123;&#125;<br>        <span class="hljs-keyword">for</span> gamex_hostname in gamex_lis<span class="hljs-variable">t:</span><br>            <span class="hljs-keyword">if</span> ec2_hostname[<span class="hljs-string">'hostname'</span>] == gamex_hostname[<span class="hljs-string">'hostname'</span>]:<br>                ec2_service[<span class="hljs-string">'id'</span>] = ec2_hostname[<span class="hljs-string">'id'</span>]<br>                ec2_service[<span class="hljs-string">'service'</span>] = gamex_hostname[<span class="hljs-string">'facts'</span>]<br>                gamex_service.<span class="hljs-keyword">append</span>(ec2_service)<br>    <span class="hljs-keyword">return</span> gamex_service<br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">'__main__'</span>:<br>    ec2_client = session.client(<span class="hljs-string">'ec2'</span>)<br>    service_list = write_gamex_info()<br>    <span class="hljs-keyword">for</span> i in service_lis<span class="hljs-variable">t:</span><br>        ami = i[<span class="hljs-string">'id'</span>]<br>        <span class="hljs-built_in">values</span> = i[<span class="hljs-string">'service'</span>]<br>        v = <span class="hljs-string">','</span>.<span class="hljs-keyword">join</span>(<span class="hljs-built_in">values</span>)<br>        <span class="hljs-keyword">print</span>(v)<br>        # response = ec2_client.create_tags(Resources=[ami,],Tags=[&#123;<span class="hljs-string">'Key'</span>: <span class="hljs-string">'Service'</span>,<span class="hljs-string">'Value'</span>: v,&#125;,],)<br>        # <span class="hljs-keyword">print</span>(response)<br></code></pre></td></tr></table></figure>
 
-      </section>
-
-      <section class="article-footer">
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title='0' data-url='http://link.hhtjim.com/163/425570952.mp3'></li>
+                        
+                    
+                        
+                            <li title='1' data-url='http://link.hhtjim.com/163/425570952.mp3'></li>
+                        
+                    
+                </ul>
+            
+        </div>
         
-      </section>
+    <div id='gitalk-container' class="comment link"
+		data-enable='false'
+        data-ae='false'
+        data-ci=''
+        data-cs=''
+        data-r=''
+        data-o=''
+        data-a=''
+        data-d='false'
+    >查看评论</div>
 
-      <section class="article-navs">
-        
-<nav class="card-container card-article-nav">
-  <div class="card-wrap">
-    
-      <div id="article-nav-newer" class="card-item">
-        <article>
-          
-          <a class="card-link article-nav-link" href="/2019/05/16/49_get_ec2_info_to_jump/"></a>
-          <strong class="article-nav-caption">Newer</strong>
-          <p class="article-nav-title">
-            
-              「Python3」实现获取aws实例信息导入jumpserver --整理版又来了
-            
-          </p>
-        </article>
-      </div>
-    
-    
-      <div id="article-nav-older" class="card-item">
-        <article>
-          
-          <a class="card-link article-nav-link" href="/2019/05/10/47_go/"></a>
-          <strong class="article-nav-caption">Older</strong>
-          <p class="article-nav-title">
-            
-              go环境安装升级整理
-            
-          </p>
-        </article>
-      </div>
-    
-  </div>
-</nav>
 
-      </section>
     </div>
-  </article>
+    
 </div>
 
-    <!-- footer container -->
-<footer id="footer" class="footer">
-  <div class="footer-container">
-    
-    <!-- <p>&copy; 2020 <a href="/" target="_blank">zhaodan</a></p> -->
 
-    
-      <p id="hitokoto"></p>
-      <script src="https://v1.hitokoto.cn/?c=h&amp;encode=js&select=%23hitokoto" defer></script>
-    
-
-    
-
-    <p>&copy; 2019 | zhaodan | 加油</p>
-  </div>
-</footer>
-
-  </div>
-
-  <div class="back-to-top-fixed">
-    <svg class="icon icon-back-to-top" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
-  <path d="M725.333333 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8l-213.333333-213.333333c-17.066667-17.066667-17.066667-42.666667 0-59.733333s42.666667-17.066667 59.733333 0l213.333333 213.333333c17.066667 17.066667 17.066667 42.666667 0 59.733333C746.666667 422.4 738.133333 426.666667 725.333333 426.666667z"></path>
-  <path d="M298.666667 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8-17.066667-17.066667-17.066667-42.666667 0-59.733333l213.333333-213.333333c17.066667-17.066667 42.666667-17.066667 59.733333 0s17.066667 42.666667 0 59.733333l-213.333333 213.333333C320 422.4 311.466667 426.666667 298.666667 426.666667z"></path>
-  <path d="M512 896c-25.6 0-42.666667-17.066667-42.666667-42.666667L469.333333 170.666667c0-25.6 17.066667-42.666667 42.666667-42.666667s42.666667 17.066667 42.666667 42.666667l0 682.666667C554.666667 878.933333 537.6 896 512 896z"></path>
-</svg> 
-  </div>
-
-  
-  
-  <!-- valine 评论 start -->
-  <script type="text/javascript" src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-  <script type="text/javascript" src='//unpkg.com/valine/dist/Valine.min.js'></script>
-  <script type="text/javascript">
-    new Valine({
-      el: "#valine_thread",
-      appId: "atxC7OKi5cU4kOoIXIsuaiYS-gzGzoHsz",
-      appKey: "tL6NhwpCUMckbjsucUjOnhVH",
-      avatar: "mm",
-      placeholder: "随便说点什么叭～",
-      notify: "true",
-      visitor: "true",
-      pageSize: "10",
-    });
-
-  </script>
-  <!-- valine 评论 end -->
-
-
-
-
-  <!-- aplayer 音频 start -->
-  
-<link rel="stylesheet" href="/lib/APlayer.min.css">
-
-  
-<script src="/lib/APlayer.min.js"></script>
-
-  <script type="text/javascript">
-    const aplayer = document.querySelectorAll(".aplayer");
-    aplayer && initaplayer(aplayer);
-    function initaplayer(els) {
-      let elsArr = Array.from(els);
-      elsArr.forEach(el => {
-        new APlayer({
-          container: el,
-          audio: { ...el.dataset },
-          theme: "#b7daff",
-          lrcType: 3,
-          autoplay: false,
-          loop: false,
-          mutex: true,
-        });
-      });
-    }
-  </script>
-  <!-- aplayer 音频 end -->
-  
-
-<!-- dplayer 视频 start -->
-
-<link rel="stylesheet" href="/lib/DPlayer.min.css">
-
-
-<script src="/lib/DPlayer.min.js"></script>
-
-<script type="text/javascript">
-  const dplayer = document.querySelectorAll(".dplayer");
-  dplayer && initDPlayer(dplayer);
-  function initDPlayer(els) {
-    let elsArr = Array.from(els);
-    elsArr.forEach(el => {
-      let url = el.dataset.url;
-      let cover = el.dataset.cover;
-      new DPlayer({
-        container: el,
-        video: { url: url, pic: cover },
-        theme: "#b7daff",
-        autoplay: false,
-        loop: false,
-        mutex: true,
-      });
-    });
-  }
-</script>
-<!-- dplayer 视频 end -->
-
-
-<!-- waterfall 瀑布流 start -->
-
-<script src="/lib/waterfall.min.js"></script>
-
-<script type="text/javascript">
-
-const waterfalls = document.querySelectorAll(".waterfall-container");
-
-if (waterfalls && waterfalls.length > 0) {
-  waterfalls.forEach((waterfall, index) => {
-    let cls = "waterfall-container-" + index;
-    waterfall.classList.add(cls);
-    initWaterfall(cls, waterfall);
-  });
-}
-
-function initWaterfall(selector, el) {
-  const options = {};
-  if (Object.keys(el.dataset).length > 0) {
-    for (let k in el.dataset) {
-      options[k] = el.dataset[k];
-    }
-  }
-  waterfall(`.${selector}`, options);
-}
-</script>
-<!-- waterfall 瀑布流 end -->
-
-
-  <!-- zoom start -->
-  
-<script src="/lib/zoom.min.js"></script>
-
-  <script type="text/javascript">
-    document.querySelector(".article-content") && zoom(".article-content");
-  </script>
-  <!-- zoom end -->
-  
-
-
-
-  
-
-
-  
-
-
-  
-
-
-
-
-<script src="/js/script.js"></script>
-
-  
-  <!-- 尾部用户自定义相关内容 -->
-
+    </div>
+</div>
 </body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
 </html>

@@ -1,343 +1,174 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN" class="loading">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>lrzsz安装文档 - null</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    
+    <meta name="description" content="服务器经常需要上传和下载一些不是很大的文件，这时服务器上有这么一个可以直接只是上传下载的工具会很方便
+123456789# wget http://ohse.de/uwe/releases/lrzs,"> 
+    <meta name="author" content="zhaodan"> 
+    
+    <link rel="icon" href="/img/chiguaxiaoji.jpg"> 
+    
+    
+<link rel="stylesheet" href="/css/diaspora.css">
 
-  
-
-  
-
-  
-    <meta name="author" content="zhaodan">
-  
-
-  
-    <meta name="copyright" content="zhaodan">
-  
-
-  
-
-  <title>lrzsz安装文档 | </title>
-
-  
-
-  
-    <link rel="icon" href="/chiguaxiaoji.jpg">
-  
-
-  
-    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
-    <link href="https://cdn.bootcss.com/highlight.js/9.15.6/styles/monokai.min.css" rel="stylesheet">
-  
-
-  
-<link rel="stylesheet" href="/css/style.css">
-
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({
+              google_ad_client: "ca-pub-8691406134231910",
+              enable_page_level_ads: true
+         });
+    </script>
+    <script async custom-element="amp-auto-ads"
+        src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+    </script>
 <meta name="generator" content="Hexo 4.2.0"></head>
-<body>
-  <div class="root-container">
-    <!-- navbar -->
-<nav class="navbar">
-  <div class="navbar-content">
-    <!-- logo -->
-    <div class="navbar-logo">
-      <a href="/">
-        
-          
-        
-      </a>
-    </div>
-    <!-- link -->
-    <div class="navbar-link">
-      <div class="navbar-btn">
-        <div></div>
-        <div></div>
-        <div></div>
-      </div>
-      <ul class="navbar-list">
-        
-          <li class="navbar-list-item"><a href="/">主页</a></li>
-        
-          <li class="navbar-list-item"><a href="/about">关于</a></li>
-        
-          <li class="navbar-list-item"><a href="/archives">归档</a></li>
-        
-          <li class="navbar-list-item"><a href="/messages">留言板</a></li>
-        
-      </ul>
-    </div>
-  </div>
-</nav>
 
-    
-<!-- header container -->
-<header class="header-container post">
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-    <div class="header-content">
-      <div class="post-image" style="background-image: url(https://i.postimg.cc/4d6Fw2rJ/images8.jpg)"></div>
-      <div class="post-text">
-        <div class="type-wrap">
-          
+<body class="loading">
+    <span id="config-title" style="display:none"></span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://yoursite.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">lrzsz安装文档</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
         </div>
-        <h1 class="title-wrap">lrzsz安装文档</h1>
-        <h2 class="title-sub-wrap">
-          <strong>zhaodan</strong>
-          <span>发布于</span>
-          
-  <a href="javascript:;" class="article-date">
-    <time datetime="2018-12-10T16:00:00.000Z" itemprop="datePublished">2018-12-11</time>
-  </a>
-
-        </h2>
-      </div>
     </div>
-  
-
-  
-  
-
-  </header>
-
-    <!-- 文章 -->
-
-<!-- 文章内容 -->
-
-<div class="body-container">
-  <article class="content-container article-container">
-    <div class="article-content">
-      
-      
-
-      <section class="article-entry">
-        <p>服务器经常需要上传和下载一些不是很大的文件，这时服务器上有这么一个可以直接只是上传下载的工具会很方便</p>
-<figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs vala"><span class="hljs-meta"># wget http://ohse.de/uwe/releases/lrzsz-0.12.20.tar.gz  --no-check-certificate</span><br><span class="hljs-meta"># yum install gcc -y</span><br><span class="hljs-meta"># tar zxvf lrzsz-0.12.20.tar.gz &amp;&amp; cd lrzsz-0.12.20</span><br><span class="hljs-meta"># ./configure &amp;&amp; make &amp;&amp; make install</span><br><br>上面安装过程默认把lsz和lrz安装到了/usr/local/bin/目录下, 下面创建软链接, 并命名为rz/sz:<br><span class="hljs-meta"># cd /usr/bin</span><br><span class="hljs-meta"># cp /usr/local/bin/lsz   /usr/bin/sz</span><br><span class="hljs-meta"># cp /usr/local/bin/lrz  /usr/bin/rz</span><br></code></pre></td></tr></table></figure>
-      </section>
-
-      <section class="article-footer">
-        
-      </section>
-
-      <section class="article-navs">
-        
-<nav class="card-container card-article-nav">
-  <div class="card-wrap">
-    
-      <div id="article-nav-newer" class="card-item img">
-        <article>
-          
-            <div class="card-cover" style="background-image: url(https://i.postimg.cc/Lscr5V4K/images16.jpg)"></div>
-          
-          <a class="card-link article-nav-link" href="/2018/12/18/58_jenkins%E6%B7%BB%E5%8A%A0%E9%82%AE%E4%BB%B6%E6%8A%A5%E8%AD%A6/"></a>
-          <strong class="article-nav-caption">Newer</strong>
-          <p class="article-nav-title">
-            
-              关于jenkins邮件报警设置文档
-            
-          </p>
-        </article>
-      </div>
-    
-    
-      <div id="article-nav-older" class="card-item">
-        <article>
-          
-          <a class="card-link article-nav-link" href="/2018/09/25/28_shellpprof/"></a>
-          <strong class="article-nav-caption">Older</strong>
-          <p class="article-nav-title">
-            
-              自动检测服务器load抓取pprof
-            
-          </p>
-        </article>
-      </div>
-    
-  </div>
-</nav>
-
-      </section>
-    </div>
-  </article>
+    <div class="scrollbar"></div>
 </div>
 
-    <!-- footer container -->
-<footer id="footer" class="footer">
-  <div class="footer-container">
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">lrzsz安装文档</h1>
+        <div class="stuff">
+            <span>十二月 11, 2018</span>
+            
+
+        </div>
+        <div class="content markdown">
+            <p>服务器经常需要上传和下载一些不是很大的文件，这时服务器上有这么一个可以直接只是上传下载的工具会很方便</p>
+<figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs vala"><span class="hljs-meta"># wget http://ohse.de/uwe/releases/lrzsz-0.12.20.tar.gz  --no-check-certificate</span><br><span class="hljs-meta"># yum install gcc -y</span><br><span class="hljs-meta"># tar zxvf lrzsz-0.12.20.tar.gz &amp;&amp; cd lrzsz-0.12.20</span><br><span class="hljs-meta"># ./configure &amp;&amp; make &amp;&amp; make install</span><br><br>上面安装过程默认把lsz和lrz安装到了/usr/local/bin/目录下, 下面创建软链接, 并命名为rz/sz:<br><span class="hljs-meta"># cd /usr/bin</span><br><span class="hljs-meta"># cp /usr/local/bin/lsz   /usr/bin/sz</span><br><span class="hljs-meta"># cp /usr/local/bin/lrz  /usr/bin/rz</span><br></code></pre></td></tr></table></figure>
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title='0' data-url='http://link.hhtjim.com/163/425570952.mp3'></li>
+                        
+                    
+                        
+                            <li title='1' data-url='http://link.hhtjim.com/163/425570952.mp3'></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id='gitalk-container' class="comment link"
+		data-enable='false'
+        data-ae='false'
+        data-ci=''
+        data-cs=''
+        data-r=''
+        data-o=''
+        data-a=''
+        data-d='false'
+    >查看评论</div>
+
+
+    </div>
     
-    <!-- <p>&copy; 2020 <a href="/" target="_blank">zhaodan</a></p> -->
-
-    
-      <p id="hitokoto"></p>
-      <script src="https://v1.hitokoto.cn/?c=h&amp;encode=js&select=%23hitokoto" defer></script>
-    
-
-    
-
-    <p>&copy; 2019 | zhaodan | 加油</p>
-  </div>
-</footer>
-
-  </div>
-
-  <div class="back-to-top-fixed">
-    <svg class="icon icon-back-to-top" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
-  <path d="M725.333333 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8l-213.333333-213.333333c-17.066667-17.066667-17.066667-42.666667 0-59.733333s42.666667-17.066667 59.733333 0l213.333333 213.333333c17.066667 17.066667 17.066667 42.666667 0 59.733333C746.666667 422.4 738.133333 426.666667 725.333333 426.666667z"></path>
-  <path d="M298.666667 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8-17.066667-17.066667-17.066667-42.666667 0-59.733333l213.333333-213.333333c17.066667-17.066667 42.666667-17.066667 59.733333 0s17.066667 42.666667 0 59.733333l-213.333333 213.333333C320 422.4 311.466667 426.666667 298.666667 426.666667z"></path>
-  <path d="M512 896c-25.6 0-42.666667-17.066667-42.666667-42.666667L469.333333 170.666667c0-25.6 17.066667-42.666667 42.666667-42.666667s42.666667 17.066667 42.666667 42.666667l0 682.666667C554.666667 878.933333 537.6 896 512 896z"></path>
-</svg> 
-  </div>
-
-  
-  
-  <!-- valine 评论 start -->
-  <script type="text/javascript" src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-  <script type="text/javascript" src='//unpkg.com/valine/dist/Valine.min.js'></script>
-  <script type="text/javascript">
-    new Valine({
-      el: "#valine_thread",
-      appId: "atxC7OKi5cU4kOoIXIsuaiYS-gzGzoHsz",
-      appKey: "tL6NhwpCUMckbjsucUjOnhVH",
-      avatar: "mm",
-      placeholder: "随便说点什么叭～",
-      notify: "true",
-      visitor: "true",
-      pageSize: "10",
-    });
-
-  </script>
-  <!-- valine 评论 end -->
+</div>
 
 
-
-
-  <!-- aplayer 音频 start -->
-  
-<link rel="stylesheet" href="/lib/APlayer.min.css">
-
-  
-<script src="/lib/APlayer.min.js"></script>
-
-  <script type="text/javascript">
-    const aplayer = document.querySelectorAll(".aplayer");
-    aplayer && initaplayer(aplayer);
-    function initaplayer(els) {
-      let elsArr = Array.from(els);
-      elsArr.forEach(el => {
-        new APlayer({
-          container: el,
-          audio: { ...el.dataset },
-          theme: "#b7daff",
-          lrcType: 3,
-          autoplay: false,
-          loop: false,
-          mutex: true,
-        });
-      });
-    }
-  </script>
-  <!-- aplayer 音频 end -->
-  
-
-<!-- dplayer 视频 start -->
-
-<link rel="stylesheet" href="/lib/DPlayer.min.css">
-
-
-<script src="/lib/DPlayer.min.js"></script>
-
-<script type="text/javascript">
-  const dplayer = document.querySelectorAll(".dplayer");
-  dplayer && initDPlayer(dplayer);
-  function initDPlayer(els) {
-    let elsArr = Array.from(els);
-    elsArr.forEach(el => {
-      let url = el.dataset.url;
-      let cover = el.dataset.cover;
-      new DPlayer({
-        container: el,
-        video: { url: url, pic: cover },
-        theme: "#b7daff",
-        autoplay: false,
-        loop: false,
-        mutex: true,
-      });
-    });
-  }
-</script>
-<!-- dplayer 视频 end -->
-
-
-<!-- waterfall 瀑布流 start -->
-
-<script src="/lib/waterfall.min.js"></script>
-
-<script type="text/javascript">
-
-const waterfalls = document.querySelectorAll(".waterfall-container");
-
-if (waterfalls && waterfalls.length > 0) {
-  waterfalls.forEach((waterfall, index) => {
-    let cls = "waterfall-container-" + index;
-    waterfall.classList.add(cls);
-    initWaterfall(cls, waterfall);
-  });
-}
-
-function initWaterfall(selector, el) {
-  const options = {};
-  if (Object.keys(el.dataset).length > 0) {
-    for (let k in el.dataset) {
-      options[k] = el.dataset[k];
-    }
-  }
-  waterfall(`.${selector}`, options);
-}
-</script>
-<!-- waterfall 瀑布流 end -->
-
-
-  <!-- zoom start -->
-  
-<script src="/lib/zoom.min.js"></script>
-
-  <script type="text/javascript">
-    document.querySelector(".article-content") && zoom(".article-content");
-  </script>
-  <!-- zoom end -->
-  
-
-
-
-  
-
-
-  
-
-
-  
-
-
-
-
-<script src="/js/script.js"></script>
-
-  
-  <!-- 尾部用户自定义相关内容 -->
-
+    </div>
+</div>
 </body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
 </html>

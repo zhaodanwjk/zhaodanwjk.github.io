@@ -1,131 +1,66 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN" class="loading">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-
-  
-
-  
-
-  
-    <meta name="author" content="zhaodan">
-  
-
-  
-    <meta name="copyright" content="zhaodan">
-  
-
-  
-
-  <title>harborV1.10.1 基于复制策略同步测试 | </title>
-
-  
-
-  
-    <link rel="icon" href="/chiguaxiaoji.jpg">
-  
-
-  
-    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
-    <link href="https://cdn.bootcss.com/highlight.js/9.15.6/styles/monokai.min.css" rel="stylesheet">
-  
-
-  
-<link rel="stylesheet" href="/css/style.css">
-
-<meta name="generator" content="Hexo 4.2.0"></head>
-<body>
-  <div class="root-container">
-    <!-- navbar -->
-<nav class="navbar">
-  <div class="navbar-content">
-    <!-- logo -->
-    <div class="navbar-logo">
-      <a href="/">
-        
-          
-        
-      </a>
-    </div>
-    <!-- link -->
-    <div class="navbar-link">
-      <div class="navbar-btn">
-        <div></div>
-        <div></div>
-        <div></div>
-      </div>
-      <ul class="navbar-list">
-        
-          <li class="navbar-list-item"><a href="/">主页</a></li>
-        
-          <li class="navbar-list-item"><a href="/about">关于</a></li>
-        
-          <li class="navbar-list-item"><a href="/archives">归档</a></li>
-        
-          <li class="navbar-list-item"><a href="/messages">留言板</a></li>
-        
-      </ul>
-    </div>
-  </div>
-</nav>
-
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>harborV1.10.1 基于复制策略同步测试 - null</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
     
-<!-- header container -->
-<header class="header-container post">
+    <meta name="description" content="复制原理： harbor的复制案例是基于harbor的registry复制策略进行设置的双主复制：其实就是复用主从同步实现两个harbor节点之间的双向同步测试环境：使用docker部署启动，两个节,"> 
+    <meta name="author" content="zhaodan"> 
+    
+    <link rel="icon" href="/img/chiguaxiaoji.jpg"> 
+    
+    
+<link rel="stylesheet" href="/css/diaspora.css">
 
-  
-  
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({
+              google_ad_client: "ca-pub-8691406134231910",
+              enable_page_level_ads: true
+         });
+    </script>
+    <script async custom-element="amp-auto-ads"
+        src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+    </script>
+<meta name="generator" content="Hexo 4.2.0"></head>
 
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-    <div class="header-content">
-      <div class="post-image" style="background-image: url(https://i.postimg.cc/0j5ZnkYf/images12.jpg)"></div>
-      <div class="post-text">
-        <div class="type-wrap">
-          
+<body class="loading">
+    <span id="config-title" style="display:none"></span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://yoursite.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">harborV1.10.1 基于复制策略同步测试</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
         </div>
-        <h1 class="title-wrap">harborV1.10.1 基于复制策略同步测试</h1>
-        <h2 class="title-sub-wrap">
-          <strong>zhaodan</strong>
-          <span>发布于</span>
-          
-  <a href="javascript:;" class="article-date">
-    <time datetime="2020-03-05T16:00:00.000Z" itemprop="datePublished">2020-03-06</time>
-  </a>
-
-        </h2>
-      </div>
     </div>
-  
+    <div class="scrollbar"></div>
+</div>
 
-  
-  
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">harborV1.10.1 基于复制策略同步测试</h1>
+        <div class="stuff">
+            <span>三月 06, 2020</span>
+            
 
-  </header>
-
-    <!-- 文章 -->
-
-<!-- 文章内容 -->
-
-<div class="body-container">
-  <article class="content-container article-container">
-    <div class="article-content">
-      
-      
-
-      <section class="article-entry">
-        <p>复制原理： harbor的复制案例是基于harbor的registry复制策略进行设置的<br>双主复制：其实就是复用主从同步实现两个harbor节点之间的双向同步<br>测试环境：使用docker部署启动，两个节点互为主从进行同步</p>
+        </div>
+        <div class="content markdown">
+            <p>复制原理： harbor的复制案例是基于harbor的registry复制策略进行设置的<br>双主复制：其实就是复用主从同步实现两个harbor节点之间的双向同步<br>测试环境：使用docker部署启动，两个节点互为主从进行同步</p>
 <p>测试过程：<br>CA认证</p>
 <figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><code class="hljs routeros">[root@VM_0_6_centos ~]# mkdir /data/ssl<br>[root@VM_0_6_centos ~]# cd /data/ssl/<br>[root@VM_0_6_centos ssl]# yum install openssl<br>已加载插件：fastestmirror, langpacks<br>Loading<span class="hljs-built_in"> mirror </span>speeds <span class="hljs-keyword">from</span> cached hostfile<br>epel                                                                      | 5.3 kB  00:00:00<br>extras                                                                    | 2.9 kB  00:00:00<br>os                                                                        | 3.6 kB  00:00:00<br>updates                                                                   | 2.9 kB  00:00:00<br>(1/2): epel/7/x86_64/updateinfo                                           | 1.0 MB  00:00:00<br>(2/2): epel/7/x86_64/primary_db                                           | 6.7 MB  00:00:00<br>软件包 1:openssl-1.0.2k-19.el7.x86_64 已安装并且是最新版本<br>无须任何处理<br>[root@VM_0_6_centos ssl]# openssl req -newkey rsa:4096 -nodes -sha256 -keyout ca.key -x509 -days 365 -out ca.crt<br>Generating a 4096 bit RSA private key<br><span class="hljs-built_in">..</span><span class="hljs-built_in">..</span><span class="hljs-built_in">..</span>.++<br><span class="hljs-built_in">..</span><span class="hljs-built_in">..</span><span class="hljs-built_in">..</span><span class="hljs-built_in">..</span><span class="hljs-built_in">..</span><span class="hljs-built_in">..</span><span class="hljs-built_in">..</span><span class="hljs-built_in">..</span><span class="hljs-built_in">..</span><span class="hljs-built_in">..</span><span class="hljs-built_in">..</span><span class="hljs-built_in">..</span><span class="hljs-built_in">..</span><span class="hljs-built_in">..</span><span class="hljs-built_in">..</span><span class="hljs-built_in">..</span><span class="hljs-built_in">..</span><span class="hljs-built_in">..</span><span class="hljs-built_in">..</span><span class="hljs-built_in">..</span><span class="hljs-built_in">..</span><span class="hljs-built_in">..</span><span class="hljs-built_in">..</span><span class="hljs-built_in">..</span><span class="hljs-built_in">..</span><span class="hljs-built_in">..</span><span class="hljs-built_in">..</span><span class="hljs-built_in">..</span><span class="hljs-built_in">..</span><span class="hljs-built_in">..</span><span class="hljs-built_in">..</span><span class="hljs-built_in">..</span><span class="hljs-built_in">..</span><span class="hljs-built_in">..</span><span class="hljs-built_in">..</span><span class="hljs-built_in">..</span><span class="hljs-built_in">..</span><span class="hljs-built_in">..</span><span class="hljs-built_in">..</span><span class="hljs-built_in">..</span>.++<br>writing new private key <span class="hljs-keyword">to</span> <span class="hljs-string">'ca.key'</span><br>-----<br>You are about <span class="hljs-keyword">to</span> be asked <span class="hljs-keyword">to</span> enter information that will be incorporated<br>into your certificate request.<br>What you are about <span class="hljs-keyword">to</span> enter is what is called a Distinguished Name <span class="hljs-keyword">or</span> a DN.<br>There are quite a few fields but you can leave some blank<br><span class="hljs-keyword">For</span> some fields there will be a<span class="hljs-built_in"> default </span>value,<br><span class="hljs-keyword">If</span> you enter <span class="hljs-string">'.'</span>, the field will be left blank.<br>-----<br>Country Name (2 letter code) [XX]:CN<br>State <span class="hljs-keyword">or</span> Province Name (full name) []:Shenzhen<br>Locality Name (eg, city) [Default City]:Shenzhen<br>Organization Name (eg, company) [Default Company Ltd]:lumitest<br>Organizational Unit Name (eg, section) []:lumitest<br>Common Name (eg, your name <span class="hljs-keyword">or</span> your server<span class="hljs-string">'s hostname) []:www.lumitest.com</span><br><span class="hljs-string">Email Address []:</span><br><span class="hljs-string">[root@VM_0_6_centos ssl]# ls</span><br><span class="hljs-string">ca.crt  ca.key</span><br><span class="hljs-string">[root@VM_0_6_centos ssl]# openssl req -newkey rsa:4096 -nodes -sha256 -keyout www.lumitest.com.key -out www.lumitest.com.csr</span><br><span class="hljs-string">Generating a 4096 bit RSA private key</span><br><span class="hljs-string">.........++</span><br><span class="hljs-string">.....................................................++</span><br><span class="hljs-string">writing new private key to '</span>www.lumitest.com.key<span class="hljs-string">'</span><br><span class="hljs-string">-----</span><br><span class="hljs-string">You are about to be asked to enter information that will be incorporated</span><br><span class="hljs-string">into your certificate request.</span><br><span class="hljs-string">What you are about to enter is what is called a Distinguished Name or a DN.</span><br><span class="hljs-string">There are quite a few fields but you can leave some blank</span><br><span class="hljs-string">For some fields there will be a default value,</span><br><span class="hljs-string">If you enter '</span>.<span class="hljs-string">', the field will be left blank.</span><br><span class="hljs-string">-----</span><br><span class="hljs-string">Country Name (2 letter code) [XX]:CN</span><br><span class="hljs-string">State or Province Name (full name) []:Shenzhen</span><br><span class="hljs-string">Locality Name (eg, city) [Default City]:Shenzhen</span><br><span class="hljs-string">Organization Name (eg, company) [Default Company Ltd]:lumitest</span><br><span class="hljs-string">Organizational Unit Name (eg, section) []:lumitest</span><br><span class="hljs-string">Common Name (eg, your name or your server'</span>s hostname) []:www.lumitest.com<br>Email<span class="hljs-built_in"> Address </span>[]:<br><br>Please enter the following <span class="hljs-string">'extra'</span> attributes<br><span class="hljs-keyword">to</span> be sent with your certificate request<br>A challenge password []:<br>An optional company name []:<br>[root@VM_0_6_centos ssl]# ls<br>ca.crt  ca.key  www.lumitest.com.csr  www.lumitest.com.key<br>[root@VM_0_6_centos ssl]# openssl x509 -req -days 365 -in www.lumitest.com.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out www.lumitest.com.crt<br>Signature ok<br><span class="hljs-attribute">subject</span>=/C=CN/ST=Shenzhen/L=Shenzhen/O=lumitest/OU=lumitest/CN=www.lumitest.com<br>Getting CA Private Key<br>[root@VM_0_6_centos ssl]# ls<br>ca.crt  ca.key  ca.srl  www.lumitest.com.crt  www.lumitest.com.csr  www.lumitest.com.key<br>[root@VM_0_6_centos ssl]# ls /etc/pki/ca-trust/source/anchors/<br>[root@VM_0_6_centos ssl]# cp www.lumitest.com.crt /etc/pki/ca-trust/source/anchors/<br>[root@VM_0_6_centos ssl]# update<br>update-alternatives   updatedb              update-pciids<br>update-ca-trust       update-mime-database<br>[root@VM_0_6_centos ssl]# update-ca-trust enable<br>[root@VM_0_6_centos ssl]# update-ca-trust extract<br><br>[root@VM_0_6_centos ssl]# mkdir /etc/ssl/harbor<br>[root@VM_0_6_centos ssl]# cp www.lumitest.com.crt www.lumitest.com.key /etc/ssl/harbor/<br>[root@VM_0_6_centos ssl]# ls /etc/ssl/harbor/<br>www.lumitest.com.crt  www.lumitest.com.key<br></code></pre></td></tr></table></figure>
 <p>查看环境</p>
@@ -150,219 +85,112 @@
 <p><a href="https://postimg.cc/tZhF3SGx" target="_blank" rel="noopener"><img src="https://i.postimg.cc/tTcDHwr2/harbor-ms3.png" alt="harbor-ms3.png"></a></p>
 <p>参考文档：<br><a href="https://www.cnblogs.com/breezey/p/9444231.html" target="_blank" rel="noopener">https://www.cnblogs.com/breezey/p/9444231.html</a><br><a href="https://www.cnblogs.com/wangzhangtao/p/12076816.html" target="_blank" rel="noopener">https://www.cnblogs.com/wangzhangtao/p/12076816.html</a><br>双主复制案例：<br><a href="https://www.dazhuanlan.com/2019/10/12/5da0faae2f6a5/" target="_blank" rel="noopener">https://www.dazhuanlan.com/2019/10/12/5da0faae2f6a5/</a><br><a href="https://segmentfault.com/a/1190000020144752" target="_blank" rel="noopener">https://segmentfault.com/a/1190000020144752</a><br>主从复制案例：<br><a href="http://www.imooc.com/article/270050" target="_blank" rel="noopener">http://www.imooc.com/article/270050</a><br><a href="https://www.cnblogs.com/cash-su/p/10103885.html" target="_blank" rel="noopener">https://www.cnblogs.com/cash-su/p/10103885.html</a></p>
 
-      </section>
-
-      <section class="article-footer">
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title='0' data-url='http://link.hhtjim.com/163/425570952.mp3'></li>
+                        
+                    
+                        
+                            <li title='1' data-url='http://link.hhtjim.com/163/425570952.mp3'></li>
+                        
+                    
+                </ul>
+            
+        </div>
         
-      </section>
+    <div id='gitalk-container' class="comment link"
+		data-enable='false'
+        data-ae='false'
+        data-ci=''
+        data-cs=''
+        data-r=''
+        data-o=''
+        data-a=''
+        data-d='false'
+    >查看评论</div>
 
-      <section class="article-navs">
-        
-<nav class="card-container card-article-nav">
-  <div class="card-wrap">
-    
-      <div id="article-nav-newer" class="card-item img">
-        <article>
-          
-            <div class="card-cover" style="background-image: url(https://i.postimg.cc/ncnfqT4n/images13.jpg)"></div>
-          
-          <a class="card-link article-nav-link" href="/2020/03/20/66_python3%E8%87%AA%E5%8A%A8%E7%94%9F%E6%88%90/"></a>
-          <strong class="article-nav-caption">Newer</strong>
-          <p class="article-nav-title">
-            
-              python3 自动生成配置
-            
-          </p>
-        </article>
-      </div>
-    
-    
-      <div id="article-nav-older" class="card-item img">
-        <article>
-          
-            <div class="card-cover" style="background-image: url(https://i.postimg.cc/7hXtrGHd/images1.jpg)"></div>
-          
-          <a class="card-link article-nav-link" href="/2020/03/05/64_harbor2/"></a>
-          <strong class="article-nav-caption">Older</strong>
-          <p class="article-nav-title">
-            
-              harborV1.10.1 共享存储库预演测试
-            
-          </p>
-        </article>
-      </div>
-    
-  </div>
-</nav>
 
-      </section>
     </div>
-  </article>
+    
 </div>
 
-    <!-- footer container -->
-<footer id="footer" class="footer">
-  <div class="footer-container">
-    
-    <!-- <p>&copy; 2020 <a href="/" target="_blank">zhaodan</a></p> -->
 
-    
-      <p id="hitokoto"></p>
-      <script src="https://v1.hitokoto.cn/?c=h&amp;encode=js&select=%23hitokoto" defer></script>
-    
-
-    
-
-    <p>&copy; 2019 | zhaodan | 加油</p>
-  </div>
-</footer>
-
-  </div>
-
-  <div class="back-to-top-fixed">
-    <svg class="icon icon-back-to-top" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
-  <path d="M725.333333 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8l-213.333333-213.333333c-17.066667-17.066667-17.066667-42.666667 0-59.733333s42.666667-17.066667 59.733333 0l213.333333 213.333333c17.066667 17.066667 17.066667 42.666667 0 59.733333C746.666667 422.4 738.133333 426.666667 725.333333 426.666667z"></path>
-  <path d="M298.666667 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8-17.066667-17.066667-17.066667-42.666667 0-59.733333l213.333333-213.333333c17.066667-17.066667 42.666667-17.066667 59.733333 0s17.066667 42.666667 0 59.733333l-213.333333 213.333333C320 422.4 311.466667 426.666667 298.666667 426.666667z"></path>
-  <path d="M512 896c-25.6 0-42.666667-17.066667-42.666667-42.666667L469.333333 170.666667c0-25.6 17.066667-42.666667 42.666667-42.666667s42.666667 17.066667 42.666667 42.666667l0 682.666667C554.666667 878.933333 537.6 896 512 896z"></path>
-</svg> 
-  </div>
-
-  
-  
-  <!-- valine 评论 start -->
-  <script type="text/javascript" src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-  <script type="text/javascript" src='//unpkg.com/valine/dist/Valine.min.js'></script>
-  <script type="text/javascript">
-    new Valine({
-      el: "#valine_thread",
-      appId: "atxC7OKi5cU4kOoIXIsuaiYS-gzGzoHsz",
-      appKey: "tL6NhwpCUMckbjsucUjOnhVH",
-      avatar: "mm",
-      placeholder: "随便说点什么叭～",
-      notify: "true",
-      visitor: "true",
-      pageSize: "10",
-    });
-
-  </script>
-  <!-- valine 评论 end -->
-
-
-
-
-  <!-- aplayer 音频 start -->
-  
-<link rel="stylesheet" href="/lib/APlayer.min.css">
-
-  
-<script src="/lib/APlayer.min.js"></script>
-
-  <script type="text/javascript">
-    const aplayer = document.querySelectorAll(".aplayer");
-    aplayer && initaplayer(aplayer);
-    function initaplayer(els) {
-      let elsArr = Array.from(els);
-      elsArr.forEach(el => {
-        new APlayer({
-          container: el,
-          audio: { ...el.dataset },
-          theme: "#b7daff",
-          lrcType: 3,
-          autoplay: false,
-          loop: false,
-          mutex: true,
-        });
-      });
-    }
-  </script>
-  <!-- aplayer 音频 end -->
-  
-
-<!-- dplayer 视频 start -->
-
-<link rel="stylesheet" href="/lib/DPlayer.min.css">
-
-
-<script src="/lib/DPlayer.min.js"></script>
-
-<script type="text/javascript">
-  const dplayer = document.querySelectorAll(".dplayer");
-  dplayer && initDPlayer(dplayer);
-  function initDPlayer(els) {
-    let elsArr = Array.from(els);
-    elsArr.forEach(el => {
-      let url = el.dataset.url;
-      let cover = el.dataset.cover;
-      new DPlayer({
-        container: el,
-        video: { url: url, pic: cover },
-        theme: "#b7daff",
-        autoplay: false,
-        loop: false,
-        mutex: true,
-      });
-    });
-  }
-</script>
-<!-- dplayer 视频 end -->
-
-
-<!-- waterfall 瀑布流 start -->
-
-<script src="/lib/waterfall.min.js"></script>
-
-<script type="text/javascript">
-
-const waterfalls = document.querySelectorAll(".waterfall-container");
-
-if (waterfalls && waterfalls.length > 0) {
-  waterfalls.forEach((waterfall, index) => {
-    let cls = "waterfall-container-" + index;
-    waterfall.classList.add(cls);
-    initWaterfall(cls, waterfall);
-  });
-}
-
-function initWaterfall(selector, el) {
-  const options = {};
-  if (Object.keys(el.dataset).length > 0) {
-    for (let k in el.dataset) {
-      options[k] = el.dataset[k];
-    }
-  }
-  waterfall(`.${selector}`, options);
-}
-</script>
-<!-- waterfall 瀑布流 end -->
-
-
-  <!-- zoom start -->
-  
-<script src="/lib/zoom.min.js"></script>
-
-  <script type="text/javascript">
-    document.querySelector(".article-content") && zoom(".article-content");
-  </script>
-  <!-- zoom end -->
-  
-
-
-
-  
-
-
-  
-
-
-  
-
-
-
-
-<script src="/js/script.js"></script>
-
-  
-  <!-- 尾部用户自定义相关内容 -->
-
+    </div>
+</div>
 </body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
 </html>
