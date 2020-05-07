@@ -15,6 +15,8 @@
     
     <link rel="icon" href="/img/chiguaxiaoji.jpg"> 
     
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
     
 <link rel="stylesheet" href="/css/diaspora.css">
 
@@ -38,6 +40,14 @@
         
         <li class="pview menu-item menu-item-type-post_type menu-item-object-page">
             <a href="//" title="首页" target="_blank" rel="noopener">首页</a>
+        </li>
+        
+        <li class="pview menu-item menu-item-type-post_type menu-item-object-page">
+            <a href="/categories/" title="分类" target="_blank" rel="noopener">分类</a>
+        </li>
+        
+        <li class="pview menu-item menu-item-type-post_type menu-item-object-page">
+            <a href="/tags/" title="标签" target="_blank" rel="noopener">标签</a>
         </li>
         
         <li class="pview menu-item menu-item-type-post_type menu-item-object-page">
@@ -96,6 +106,8 @@
         <div>
             <a class="image-logo" href="/"></a>
 			
+			<div class="iconfont icon-search switchsearch" href="/search/" title="搜索"></div>
+			
             <div class="iconfont icon-menu switchmenu"></div>
         </div>
     </div>
@@ -112,7 +124,7 @@
         
 <div class="post">
     <a href="/2019/01/09/33_collectd/" title="关于grafana collectd  解决合服后collectd有缓存的问题">
-        <img src="/img/cover.jpg" class="cover" width="680" height="440">
+        <img src="/img/welcome-cover.jpg" class="cover" width="680" height="440">
     </a>
     <div class="else">
         <p>一月 09, 2019</p>
@@ -137,7 +149,7 @@
 
 <div class="post">
     <a href="/2018/12/21/31_chevereto/" title="chevereto">
-        <img src="/img/welcome-cover.jpg" class="cover" width="680" height="440">
+        <img src="/img/cover.jpg" class="cover" width="680" height="440">
     </a>
     <div class="else">
         <p>十二月 21, 2018</p>
@@ -149,7 +161,7 @@
 
 <div class="post">
     <a href="/2018/12/19/30_shadowsocks/" title="shadowsocks">
-        <img src="/img/cover.jpg" class="cover" width="680" height="440">
+        <img src="/img/welcome-cover.jpg" class="cover" width="680" height="440">
     </a>
     <div class="else">
         <p>十二月 19, 2018</p>
@@ -183,7 +195,7 @@
 
 <div class="post">
     <a href="/2018/12/11/29_lrzsz/" title="lrzsz安装文档">
-        <img src="/img/welcome-cover.jpg" class="cover" width="680" height="440">
+        <img src="/img/cover.jpg" class="cover" width="680" height="440">
     </a>
     <div class="else">
         <p>十二月 11, 2018</p>
@@ -196,26 +208,13 @@
 
 <div class="post">
     <a href="/2018/09/25/28_shellpprof/" title="自动检测服务器load抓取pprof">
-        <img src="/img/cover.jpg" class="cover" width="680" height="440">
+        <img src="/img/welcome-cover.jpg" class="cover" width="680" height="440">
     </a>
     <div class="else">
         <p>九月 25, 2018</p>
         <h3><a href="/2018/09/25/28_shellpprof/" title="自动检测服务器load抓取pprof" class="posttitle">自动检测服务器load抓取pprof</a></h3>
         <p>因为线上服务存在Bug，服务器的压力会突增，需要抓取一些信息供开发查Bug，写了这个小脚本，手动执行挺好使的
 1234567891011121314#!/...</p>
-    </div>
-</div>
-
-
-<div class="post">
-    <a href="/2018/09/12/26_mac%E5%AE%89%E8%A3%85cherrytree/" title="mac下安装cherrytree">
-        <img src="/img/welcome-cover.jpg" class="cover" width="680" height="440">
-    </a>
-    <div class="else">
-        <p>九月 12, 2018</p>
-        <h3><a href="/2018/09/12/26_mac%E5%AE%89%E8%A3%85cherrytree/" title="mac下安装cherrytree" class="posttitle">mac下安装cherrytree</a></h3>
-        <p>mac上运行cherrytree先要有Python环境，mac自带的是Python2.7这样启动后如果终端断开cherrytree也会退出
-123# gi...</p>
     </div>
 </div>
 
@@ -237,8 +236,21 @@
 
 
 <div class="post">
+    <a href="/2018/09/12/26_mac%E5%AE%89%E8%A3%85cherrytree/" title="mac下安装cherrytree">
+        <img src="/img/welcome-cover.jpg" class="cover" width="680" height="440">
+    </a>
+    <div class="else">
+        <p>九月 12, 2018</p>
+        <h3><a href="/2018/09/12/26_mac%E5%AE%89%E8%A3%85cherrytree/" title="mac下安装cherrytree" class="posttitle">mac下安装cherrytree</a></h3>
+        <p>mac上运行cherrytree先要有Python环境，mac自带的是Python2.7这样启动后如果终端断开cherrytree也会退出
+123# gi...</p>
+    </div>
+</div>
+
+
+<div class="post">
     <a href="/2018/09/04/25_etcd%E6%90%AD%E5%BB%BA%E5%8F%8A%E5%A4%87%E4%BB%BD/" title="etcd搭建和备份">
-        <img src="/img/cover.jpg" class="cover" width="680" height="440">
+        <img src="/img/welcome-cover.jpg" class="cover" width="680" height="440">
     </a>
     <div class="else">
         <p>九月 04, 2018</p>
@@ -262,6 +274,8 @@ Download etcd.tar.gz
 
 
 </body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
 
 
 <script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
