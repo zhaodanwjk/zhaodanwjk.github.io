@@ -417,7 +417,7 @@ $(function() {
 					if($("#hitokoto").data('st') == true){
 						$.get("https://v1.hitokoto.cn/", function (data) {
 						var data = data;
-						// var str =  data.hitokoto + " ——  By "		
+						var str =  data.hitokoto
 						var options = {
 						  strings: [
 							//str + "Who??^1000",
