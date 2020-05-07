@@ -59,6 +59,8 @@
         <div class="stuff">
             <span>六月 21, 2018</span>
             
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/sed/" rel="tag">sed</a></li></ul>
+
 
         </div>
         <div class="content markdown">
@@ -97,7 +99,6 @@
 <figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs stata">在 <span class="hljs-keyword">test</span>.<span class="hljs-keyword">conf</span> 文件第2行之后插入 this is a <span class="hljs-keyword">test</span> <span class="hljs-keyword">line</span>：<br><br>sed -i '2a\this is a <span class="hljs-keyword">test</span> <span class="hljs-keyword">line</span>’ <span class="hljs-keyword">test</span>.<span class="hljs-keyword">conf</span><br></code></pre></td></tr></table></figure>
 
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs sql">互换模式空间和保持缓冲区的内容。也就是把包含test与<span class="hljs-keyword">check</span>的行互换：<br><br>sed -e <span class="hljs-string">'/test/h'</span> -e <span class="hljs-string">'/check/x’ file</span><br><span class="hljs-string"></span><br><span class="hljs-string">-e选项允许在同一行里执行多条命令：</span><br><span class="hljs-string"></span><br><span class="hljs-string">sed-e'</span><span class="hljs-number">1</span>,<span class="hljs-number">5</span>d<span class="hljs-string">'-e'</span>s/<span class="hljs-keyword">test</span>/<span class="hljs-keyword">check</span>/‘ <span class="hljs-keyword">file</span><br><br>上面sed表达式的第一条命令删除<span class="hljs-number">1</span>至<span class="hljs-number">5</span>行，第二条命令用<span class="hljs-keyword">check</span>替换<span class="hljs-keyword">test</span>。命令的执行顺序对结果有影响。如果两个命令都是替换命令，那么第一个替换命令将影响第二个替换命令的结果。<br></code></pre></td></tr></table></figure>
-
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">

@@ -60,11 +60,14 @@
         <div class="stuff">
             <span>十二月 11, 2018</span>
             
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/lrzsz/" rel="tag">lrzsz</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/%E5%B7%A5%E5%85%B7/" rel="tag">工具</a></li></ul>
+
 
         </div>
         <div class="content markdown">
             <p>服务器经常需要上传和下载一些不是很大的文件，这时服务器上有这么一个可以直接只是上传下载的工具会很方便</p>
 <figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs vala"><span class="hljs-meta"># wget http://ohse.de/uwe/releases/lrzsz-0.12.20.tar.gz  --no-check-certificate</span><br><span class="hljs-meta"># yum install gcc -y</span><br><span class="hljs-meta"># tar zxvf lrzsz-0.12.20.tar.gz &amp;&amp; cd lrzsz-0.12.20</span><br><span class="hljs-meta"># ./configure &amp;&amp; make &amp;&amp; make install</span><br><br>上面安装过程默认把lsz和lrz安装到了/usr/local/bin/目录下, 下面创建软链接, 并命名为rz/sz:<br><span class="hljs-meta"># cd /usr/bin</span><br><span class="hljs-meta"># cp /usr/local/bin/lsz   /usr/bin/sz</span><br><span class="hljs-meta"># cp /usr/local/bin/lrz  /usr/bin/rz</span><br></code></pre></td></tr></table></figure>
+
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
                 <source type="audio/mpeg" src="">
