@@ -279,6 +279,8 @@
           
           <category> linux </category>
           
+          <category> jenkins </category>
+          
       </categories>
       
       
@@ -366,6 +368,8 @@
         <tags>
             
             <tag> 工具 </tag>
+            
+            <tag> jenkins </tag>
             
         </tags>
       
@@ -512,6 +516,8 @@
           
           <category> linux </category>
           
+          <category> jenkins </category>
+          
       </categories>
       
       
@@ -617,6 +623,8 @@
       <categories>
           
           <category> linux </category>
+          
+          <category> jenkins </category>
           
       </categories>
       
@@ -1319,6 +1327,8 @@
       <categories>
           
           <category> linux </category>
+          
+          <category> jenkins </category>
           
       </categories>
       
